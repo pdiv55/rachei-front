@@ -1,16 +1,16 @@
 import React, { Component } from "react";
 import Onheader from "../on-header/Onheader";
-import "./rachadas.css";
+import "./create-rachada.css";
 
-class Rachadas extends Component {
+class CreateRachada extends Component {
   render() {
     return (
       <div>
         <Onheader />
-        <p>THIS IS THE MY RACHADAS PAGE</p>
+        <p>THIS IS THE CREATE RACHADA PAGE</p>
       </div>
     );
   }
 }
 
-export default Rachadas;
+export default CreateRachada;

@@ -8,6 +8,9 @@ class Signin extends Component {
       <div>
         <Offheader />
         <p>THIS IS THE SIGNIN PAGE</p>
+        <p>
+          Ainda nao é cadastrado? <a href="/signup">Crie sua conta</a>
+        </p>
       </div>
     );
   }

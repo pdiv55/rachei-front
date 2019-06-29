@@ -10,7 +10,7 @@ class Onheader extends Component {
           <nav className="navBar">
             <ul>
               <Link to="/">Logo</Link>
-              <Link to="/rachadas">My Rachadas</Link>
+              <Link to="/my-rachadas">My Rachadas</Link>
               <Link to="/carteira">My Carteira</Link>
               <Link to="/logout">Logout</Link>
             </ul>
