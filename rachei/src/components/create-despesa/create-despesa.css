@@ -1,0 +1,28 @@
+.form-container {
+  width: 60%;
+  position: relative;
+  margin-left: 20%;
+}
+
+.title {
+  text-align: center;
+}
+
+.subtitle {
+  text-align: center;
+}
+
+.checkbox {
+  display: inline-block;
+}
+
+.label-checkbox {
+  font-weight: bold;
+  margin-left: 10px;
+  display: block;
+}
+
+.title-container {
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
