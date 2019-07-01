@@ -1,8 +1,9 @@
 .hero {
-  background-image: url("../../../src/home-wallpaper.jpg");
+  background-image: url("https://images.unsplash.com/photo-1561777206-e5519697ec23?ixlib=rb-1.2.1&auto=format&fit=crop&w=2850&q=80");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
+  background-attachment: fixed;
 }
 
 .title {

@@ -1,0 +1,18 @@
+.form-container {
+  width: 60%;
+  position: relative;
+  margin-left: 20%;
+}
+
+.title {
+  text-align: center;
+}
+
+.subtitle {
+  text-align: center;
+}
+
+.title-container {
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
