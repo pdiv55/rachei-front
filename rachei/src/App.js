@@ -17,16 +17,35 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loggedin: true
+      loggedin: false,
+      isHome: false
     };
   }
+
+  handleChangeHomeState = () => {
+    this.setState({ isHome: true });
+  };
+
+  handleChange = () => {
+    this.setState({ isHome: false });
+  };
 
   render() {
     return (
       <div>
-        <NavBar logged={this.state.loggedin} />
+        <NavBar loggedin={this.state.loggedin} isHome={this.state.isHome} />
         <Switch>
-          <Route exact path="/" component={Home} />
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <Home
+                loggedin={this.state.loggedin}
+                handleChangeHomeState={this.handleChangeHomeState}
+                handleChange={this.handleChange}
+              />
+            )}
+          />
           <Route path="/signup" component={Signup} />
           <Route path="/signin" component={Signin} />
           <Route path="/my-rachadas" component={MyRachadas} />

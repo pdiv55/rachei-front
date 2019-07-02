@@ -3,10 +3,11 @@ import "./navbar.css";
 
 class NavBar extends Component {
   render() {
-    const loggedStatus = this.props.logged;
-    console.log(loggedStatus);
+    const loggedStatus = this.props.loggedin;
+    const isHome = this.props.isHome;
+
     return (
-      <div>
+      <div className={isHome ? "home" : " "}>
         {!loggedStatus ? (
           <nav
             className="navbar"
