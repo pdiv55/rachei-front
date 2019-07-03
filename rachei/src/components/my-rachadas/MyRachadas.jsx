@@ -29,15 +29,14 @@ class MyRachadas extends Component {
               <p className="title is-5">Name Rachada</p>
               <p className="subtitle is-7">Creation Date</p>
               <p className="subtitle is-6">Total</p>
-              <div />
             </article>
           </a>
+          <div />
           <a className="cool-tile" href="/rachada">
             <article className="notification">
               <p className="title is-5">Name Rachada</p>
               <p className="subtitle is-7">Creation Date</p>
               <p className="subtitle is-6">Total</p>
-              <div />
             </article>
           </a>
         </div>

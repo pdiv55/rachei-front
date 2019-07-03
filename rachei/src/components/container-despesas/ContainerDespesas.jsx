@@ -5,7 +5,38 @@ class ContainerDespesas extends Component {
   render() {
     return (
       <div>
-        <p>THIS IS THE DESPESAS CONTAINER PAGE</p>
+        <div>
+          <a className="cool-tile" href="/rachada">
+            <article className="notification">
+              <p>Name Despesa</p>
+              <p>Paid by</p>
+              <p>Creation Date</p>
+              <p>Total</p>
+            </article>
+          </a>
+        </div>
+
+        <div>
+          <a className="cool-tile" href="/rachada">
+            <article className="notification">
+              <p>Name Despesa</p>
+              <p>Paid by</p>
+              <p>Creation Date</p>
+              <p>Total</p>
+            </article>
+          </a>
+        </div>
+
+        <div>
+          <a className="cool-tile" href="/rachada">
+            <article className="notification">
+              <p>Name Despesa</p>
+              <p>Paid by</p>
+              <p>Creation Date</p>
+              <p>Total</p>
+            </article>
+          </a>
+        </div>
       </div>
     );
   }
