@@ -37,6 +37,15 @@ class ContainerDespesas extends Component {
             </article>
           </a>
         </div>
+        <div>
+          <p className="title is-5">Total Rachada</p>
+        </div>
+        <a className="button is-primary is-rounded centered is-large" href="/">
+          Adicionar Despesa
+        </a>
+        <div>
+          <p className="title is-5">Meu Total</p>
+        </div>
       </div>
     );
   }

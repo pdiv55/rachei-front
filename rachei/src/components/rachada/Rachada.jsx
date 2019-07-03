@@ -21,9 +21,6 @@ class Rachada extends Component {
         </div>
         <ContainerDespesas />
         <ContainerEquilibrio />
-        <a className="button is-primary is-rounded centered is-large" href="/">
-          Adicionar Despesa
-        </a>
       </div>
     );
   }
