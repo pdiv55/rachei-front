@@ -42,7 +42,7 @@ class MyRachadas extends Component {
         </div>
 
         <a
-          className="button is-primary is-rounded is-large centered-rachadas"
+          className="button is-primary is-rounded is-large centered"
           href="/create-rachada"
         >
           Criar Rachada
