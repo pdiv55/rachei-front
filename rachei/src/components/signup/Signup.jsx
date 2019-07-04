@@ -55,6 +55,13 @@ class Signup extends Component {
             <p className="help is-danger">This email is invalid</p>
           </div>
 
+          <div className="field">
+            <label className="label">Password</label>
+            <div className="control">
+              <input className="input" type="text" />
+            </div>
+          </div>
+
           <div className="field is-grouped">
             <div className="control">
               <button className="button is-link">Criar conta</button>

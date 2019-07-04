@@ -7,10 +7,20 @@ class Rachada extends Component {
   render() {
     return (
       <div>
-        <p>THIS IS THE SPECIFIC RACHADA PAGE</p>
+        <div className="title-container">
+          <h1 className="title">NOME DA RACHADA</h1>
+          <h2 className="subtitle">Descriçao da rachada</h2>
+        </div>
+        <div className="button-container">
+          <a className="button is-link is-large" href="/">
+            Despesas
+          </a>
+          <a className="button is-link is-large" href="/">
+            Equilibrio
+          </a>
+        </div>
         <ContainerDespesas />
         <ContainerEquilibrio />
-        <a href="/create-despesa">Criar Despesa</a>
       </div>
     );
   }

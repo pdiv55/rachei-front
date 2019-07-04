@@ -17,16 +17,20 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loggedin: true
+      loggedin: false
     };
   }
 
   render() {
     return (
       <div>
-        <NavBar logged={this.state.loggedin} />
+        <NavBar loggedin={this.state.loggedin} />
         <Switch>
-          <Route exact path="/" component={Home} />
+          <Route
+            exact
+            path="/"
+            render={() => <Home loggedin={this.state.loggedin} />}
+          />
           <Route path="/signup" component={Signup} />
           <Route path="/signin" component={Signin} />
           <Route path="/my-rachadas" component={MyRachadas} />

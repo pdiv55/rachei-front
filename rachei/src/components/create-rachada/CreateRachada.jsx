@@ -43,9 +43,7 @@ class CreateRachada extends Component {
                 value="username do user (editavel)"
                 placeholder="Procure o username do Pagador"
               />
-              <button className="button is-success add-member-button">
-                Adicionar participante
-              </button>
+              <button className="button is-primary add-member-button">+</button>
             </div>
             <p className="help is-danger">This email is invalid</p>
           </div>
