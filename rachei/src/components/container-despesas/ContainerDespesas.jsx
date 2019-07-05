@@ -1,50 +1,27 @@
 import React, { Component } from "react";
 import "./container-despesas.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
+import Despesa from "../despesa/Despesa";
 
 class ContainerDespesas extends Component {
   render() {
+    const despesas = [0, 1, 2];
     return (
       <div>
-        <div>
-          <a className="cool-tile" href="/rachada">
-            <article className="notification">
-              <p>Name Despesa</p>
-              <p>Paid by</p>
-              <p>Creation Date</p>
-              <p>Total</p>
-            </article>
+        {despesas.map(() => (
+          <Despesa />
+        ))}
+        <div className="flex-totals">
+          <div>
+            <p className="title is-5">Total Rachada</p>
+          </div>
+          <a className="button is-primary is-rounded is-large" href="/">
+            Adicionar Despesa
           </a>
-        </div>
-
-        <div>
-          <a className="cool-tile" href="/rachada">
-            <article className="notification">
-              <p>Name Despesa</p>
-              <p>Paid by</p>
-              <p>Creation Date</p>
-              <p>Total</p>
-            </article>
-          </a>
-        </div>
-
-        <div>
-          <a className="cool-tile" href="/rachada">
-            <article className="notification">
-              <p>Name Despesa</p>
-              <p>Paid by</p>
-              <p>Creation Date</p>
-              <p>Total</p>
-            </article>
-          </a>
-        </div>
-        <div>
-          <p className="title is-5">Total Rachada</p>
-        </div>
-        <a className="button is-primary is-rounded centered is-large" href="/">
-          Adicionar Despesa
-        </a>
-        <div>
-          <p className="title is-5">Meu Total</p>
+          <div>
+            <p className="title is-5">Meu Total</p>
+          </div>
         </div>
       </div>
     );
