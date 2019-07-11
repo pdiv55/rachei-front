@@ -6,17 +6,30 @@
   text-align: center;
 }
 
-.title-container {
-  margin-top: 20px;
-  margin-bottom: 50px;
-}
-
 .button-container {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  margin-bottom: 25px;
 }
 
 .button {
-  margin: 10px 30px;
+  margin: 0px 30px;
+}
+
+.title-container {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.container-cool {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.actions-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }

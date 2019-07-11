@@ -1,3 +1,31 @@
-.container {
-  text-align: left;
+.despesa-container {
+  margin: 3px 0px;
+  border-bottom: 2px solid #cccc;
+}
+
+.flex-despesa {
+  display: flex;
+  flex-direction: row;
+  align-content: space-between;
+}
+
+.mini-actions-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.flex-totals {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.info-container {
+  width: 60%;
+  margin-right: 20%;
+}
+
+.spaced {
+  margin-top: 10px;
 }
