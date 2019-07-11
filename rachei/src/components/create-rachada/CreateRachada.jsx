@@ -1,7 +1,40 @@
 import React, { Component } from "react";
 import "./create-rachada.css";
+import axios from 'axios';
+
 
 class CreateRachada extends Component {
+  constructor (props) {
+    super(props);
+
+    this.state = {
+      users: [],
+      name: '',
+      description: '',
+      currency: '',
+    }
+
+    this.getUsers = this.getUsers.bind(this);
+  }
+
+  getUsers (id) {
+    console.log(process.env.REACT_APP_DEV_API_URL+'/users/group/'+id);
+    axios.get(process.env.REACT_APP_DEV_API_URL+'/users/group/'+id)
+    .then(response => {
+      console.log(response.data);
+      this.setState({
+        users: response.data,
+      })
+    })
+    .catch(error => {
+      console.log(error);
+    })
+  }
+
+  componentWillMount() {
+    this.getUsers('5d1f87608d749fc84ccb49a0');
+  }
+
   render() {
     return (
       <div>
