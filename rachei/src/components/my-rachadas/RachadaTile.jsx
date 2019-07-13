@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import "../my-rachadas/my-rachadas.css";
+import "./my-rachadas.css";
 
 class RachadaTile extends Component {
   render() {
     return (
-      <div className="cool-tile">
+      <div className="rachada-tile">
         <a href="/rachada">
           <article className="notification">
             <p className="title is-5">Name Rachada</p>

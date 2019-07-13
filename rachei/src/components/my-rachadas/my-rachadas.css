@@ -4,7 +4,7 @@
   align-items: center !important;
 }
 
-.cool-tile-container {
+.rachada-tile-container {
   padding: 0 20px;
   display: flex !important;
   justify-content: center !important;
@@ -12,6 +12,6 @@
   flex-wrap: wrap;
 }
 
-.cool-tile {
+.rachada-tile {
   margin: 10px !important;
 }

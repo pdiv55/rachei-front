@@ -1,8 +1,10 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import "./despesa-form.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
 import Axios from "axios";
+import MemberCheckbox from "../member-checkbox/MemberCheckbox";
 
 class DespesaForm extends Component {
   constructor(props) {
@@ -12,11 +14,13 @@ class DespesaForm extends Component {
     };
   }
 
-  componentWillMount() {}
-
   render() {
+    const members = [1, 2, 3];
     return (
       <div>
+        <Link to="/rachada" className="button return">
+          {"< Retornar à Rachada"}
+        </Link>
         <div className="title-container">
           {this.state.isEdit ? (
             <h1 className="title">Edite sua Despesa</h1>
@@ -69,11 +73,10 @@ class DespesaForm extends Component {
 
           <div className="field">
             <label className="label">Para</label>
-            <div className="control">
-              <input type="checkbox" name="member1" className="checkbox" />
-              <label className="label-checkbox">Membro Grupo 1</label>
-              <input type="checkbox" name="member2" className="checkbox" />
-              <label className="label-checkbox">Membro Grupo 2</label>
+            <div className="checkbox-container">
+              {members.map(() => (
+                <MemberCheckbox />
+              ))}
             </div>
           </div>
 

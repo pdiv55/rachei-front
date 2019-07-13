@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./container-despesas.css";
 import { Link } from "react-router-dom";
-import DespesaTile from "../despesa-tile/DespesaTile";
+import DespesaTile from "./DespesaTile";
 
 class ContainerDespesas extends Component {
   render() {

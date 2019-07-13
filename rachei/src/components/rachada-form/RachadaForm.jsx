@@ -42,9 +42,15 @@ class RachadaForm extends Component {
   render() {
     return (
       <div>
-        <Link to="/my-rachadas" className="button return">
-          {"< Retornar ao Meu Painel"}
-        </Link>
+        {this.state.isEdit ? (
+          <Link to="/rachada" className="button return">
+            {"< Retornar à Rachada"}
+          </Link>
+        ) : (
+          <Link to="/my-rachadas" className="button return">
+            {"< Retornar ao Meu Painel"}
+          </Link>
+        )}
         <div className="title-container">
           {this.state.isEdit ? (
             <h1 className="title">Edite sua Rachada</h1>
@@ -80,7 +86,7 @@ class RachadaForm extends Component {
             <div className="control">
               <textarea
                 className="textarea"
-                placeholder="ex: Rachada para feriadao com squad"
+                placeholder="ex: Rachada para feriadão com squad"
               />
             </div>
             <p className="help is-success">This username is available</p>

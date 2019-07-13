@@ -2,31 +2,75 @@
   padding: 0 25%;
 }
 
-.equilibrio-tile {
-  margin-top: 3px;
-  border-bottom: 1px solid #cccc;
+/* RESULTS */
+
+.result-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 30px 0;
 }
 
-.info-tile {
-  width: 60%;
-  margin-right: 20%;
-}
-
-.flex-despesa {
+.result-tile {
   display: flex;
   flex-direction: row;
-  align-content: stretch;
+  justify-content: space-around;
+  align-items: center;
 }
 
-.totals-container {
+.chart-tile {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  align-items: center;
+  width: 25%;
+}
+
+.chart-positive {
+  position: absolute;
+  height: 30px;
+  width: 100px;
+  opacity: 0.3;
+  background-color: green;
+  z-index: 1;
+}
+
+.chart-negative {
+  position: absolute;
+  height: 30px;
+  width: 100px;
+  opacity: 0.3;
+  background-color: red;
+  z-index: 1;
+}
+
+/* EQUILIBRIOS */
+
+.how-to-container {
   margin-top: 40px;
 }
 
-.info-total {
+.notification {
+  margin: 0 !important;
+}
+
+.equilibrio-tile {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 3px !important;
+  border-bottom: 1px solid #cccc;
+  height: 140px;
+}
+
+.notification {
+  padding: 20px !important;
+}
+
+.info-equilibrios-tile {
   display: flex;
   flex-direction: column;
   text-align: center;
+}
+
+.info-total {
+  margin-top: 30px !important;
 }

@@ -43,7 +43,7 @@ class Signin extends Component {
           <div className="form-container">
             <div className="field">
               <label className="label">Username</label>
-              <div className="control">
+              <div>
                 <input
                   className="input"
                   type="text"
@@ -59,7 +59,7 @@ class Signin extends Component {
 
             <div className="field">
               <label className="label">Senha</label>
-              <div className="control">
+              <div>
                 <input
                   className="input is-danger"
                   type="password"

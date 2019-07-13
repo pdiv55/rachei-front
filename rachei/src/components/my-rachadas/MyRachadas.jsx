@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./my-rachadas.css";
 import { Link } from "react-router-dom";
-import RachadaTile from "../rachada-tile/RachadaTile";
+import RachadaTile from "./RachadaTile";
 
 class MyRachadas extends Component {
   render() {
@@ -26,7 +26,7 @@ class MyRachadas extends Component {
           </p>
         </div>
 
-        <div className="cool-tile-container">
+        <div className="rachada-tile-container">
           {rachadas.map(() => (
             <RachadaTile />
           ))}

@@ -41,7 +41,7 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div className="app">
         <NavBar loggedin={this.state.loggedin} />
         <Switch>
           <Route

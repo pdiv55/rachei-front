@@ -1,28 +1,18 @@
-.form-container {
-  width: 60%;
-  position: relative;
-  margin-left: 20%;
+.checkbox-container {
+  display: flex;
+  flex-direction: column;
 }
 
-.title {
-  text-align: center;
-}
-
-.subtitle {
-  text-align: center;
+.checkbox-tile {
+  display: flex;
+  flex-direction: row;
+  margin: 3px !important;
 }
 
 .checkbox {
-  display: inline-block;
+  margin-top: 5px !important;
 }
 
 .label-checkbox {
-  font-weight: bold;
-  margin-left: 10px;
-  display: block;
-}
-
-.title-container {
-  margin-top: 20px;
-  margin-bottom: 50px;
+  margin-left: 20px !important;
 }

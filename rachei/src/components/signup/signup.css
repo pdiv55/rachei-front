@@ -1,17 +1,3 @@
-.form-container {
-  width: 60%;
-  position: relative;
-  margin-left: 20%;
-}
-
-.title {
-  text-align: center;
-}
-
-.subtitle {
-  text-align: center;
-}
-
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
