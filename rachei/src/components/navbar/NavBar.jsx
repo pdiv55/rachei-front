@@ -69,6 +69,7 @@ class NavBar extends Component {
 
               <div className="navbar-end">
                 <div className="navbar-item">
+                  <p className="title is-6">Oi, Paul 👋</p>
                   <div className="buttons">
                     <Link to="/logout" className="button is-danger">
                       <strong>Log Out</strong>

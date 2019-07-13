@@ -18,7 +18,7 @@
   align-items: center;
 }
 
-.chart-tile {
+.chart-tile-positive {
   display: flex;
   align-items: center;
   width: 25%;
@@ -31,6 +31,14 @@
   opacity: 0.3;
   background-color: green;
   z-index: 1;
+}
+
+.chart-tile-negative {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  width: 25%;
 }
 
 .chart-negative {
@@ -49,20 +57,16 @@
 }
 
 .notification {
-  margin: 0 !important;
+  margin: 3px !important;
+  padding: 20px !important;
+  border-bottom: 1px solid #cccc;
 }
 
 .equilibrio-tile {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-top: 3px !important;
-  border-bottom: 1px solid #cccc;
   height: 140px;
-}
-
-.notification {
-  padding: 20px !important;
 }
 
 .info-equilibrios-tile {

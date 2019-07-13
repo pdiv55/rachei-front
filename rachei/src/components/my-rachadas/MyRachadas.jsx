@@ -21,9 +21,7 @@ class MyRachadas extends Component {
             type="text"
             placeholder="Procure uma rachada"
           />
-          <p className="control">
-            <button className="button">Buscar</button>
-          </p>
+          <button className="button">Buscar</button>
         </div>
 
         <div className="rachada-tile-container">
@@ -31,7 +29,6 @@ class MyRachadas extends Component {
             <RachadaTile />
           ))}
         </div>
-
         <div className="centered-button">
           <Link
             className="button is-primary is-rounded is-large"

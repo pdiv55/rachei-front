@@ -6,12 +6,12 @@ class ResultTile extends Component {
     return (
       <div className="notification">
         <div className="result-tile">
-          <div className="chart-tile">
+          <div className="chart-tile-negative">
             <div className="chart-negative" />
             <p>Montante</p>
           </div>
           <p>Name Member</p>
-          <div className="chart-tile">
+          <div className="chart-tile-positive">
             <div className="chart-positive" />
             <p>Montante</p>
           </div>

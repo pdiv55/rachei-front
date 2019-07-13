@@ -1,7 +1,15 @@
 .search-bar {
-  width: 60% !important;
+  width: 60%;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  margin-left: 20%;
+  margin-bottom: 40px;
+}
+
+.search-bar button {
   display: flex !important;
-  align-items: center !important;
+  margin: 0px 0px 0px 10px !important;
 }
 
 .rachada-tile-container {
