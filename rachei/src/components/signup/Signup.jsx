@@ -1,51 +1,52 @@
 import React, { Component } from "react";
 import "./signup.css";
-import axios from 'axios';
-require('dotenv').config()
+import axios from "axios";
+require("dotenv").config();
 
 class Signup extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.state = {
-      username: '',
-      name: '',
-      surname: '',
-      cpf: '',
-      email: '',
-      password: '',
-      message: '',
-    }
+      username: "",
+      name: "",
+      surname: "",
+      cpf: "",
+      email: "",
+      password: "",
+      message: ""
+    };
 
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
 
-  handleChange (event) {
+  handleChange(event) {
     const state = {};
     state[event.target.name] = event.target.value;
     this.setState(state);
   }
 
-  handleFormSubmit () {
+  handleFormSubmit() {
     const state = this.state;
-    axios.post(process.env.REACT_APP_DEV_API_URL+'/users/create', state)
-    .then(response => {
-      if (response.data.message) {
-        this.setState({
-          username: '',
-          name: '',
-          surname: '',
-          cpf: '',
-          email: '',
-          password: '',
-          message: response.data.message,
-        });
-      } else {
-        this.setState({
-          message: 'Tentar novamente'
-        })
-      }
-    })
+    axios
+      .post(process.env.REACT_APP_DEV_API_URL + "/users/create", state)
+      .then(response => {
+        if (response.data.message) {
+          this.setState({
+            username: "",
+            name: "",
+            surname: "",
+            cpf: "",
+            email: "",
+            password: "",
+            message: response.data.message
+          });
+        } else {
+          this.setState({
+            message: "Tentar novamente"
+          });
+        }
+      });
   }
 
   render() {
@@ -62,13 +63,16 @@ class Signup extends Component {
           <div className="field">
             <label className="label">Username</label>
             <div className="control">
-              <input 
-              name="username"
-              className="input" 
-              type="text" 
-              placeholder="ex: sicuts"
-              value={this.state.username}
-              onChange={(e) => {this.handleChange(e)}} />
+              <input
+                name="username"
+                className="input"
+                type="text"
+                placeholder="ex: sicuts"
+                value={this.state.username}
+                onChange={e => {
+                  this.handleChange(e);
+                }}
+              />
             </div>
           </div>
 
@@ -81,7 +85,9 @@ class Signup extends Component {
                 type="text"
                 placeholder="ex: Gabriel"
                 value={this.state.name}
-                onChange={(e) => {this.handleChange(e)}}
+                onChange={e => {
+                  this.handleChange(e);
+                }}
               />
             </div>
             <p className="help is-success">This username is available</p>
@@ -96,7 +102,9 @@ class Signup extends Component {
                 type="number"
                 placeholder="ex: 23647902802"
                 value={this.state.cpf}
-                onChange={(e) => {this.handleChange(e)}}
+                onChange={e => {
+                  this.handleChange(e);
+                }}
               />
             </div>
           </div>
@@ -110,23 +118,35 @@ class Signup extends Component {
                 type="email"
                 placeholder="ex: sicutinho@ironhack.com"
                 value={this.state.email}
-                onChange={(e) => {this.handleChange(e)}}
+                onChange={e => {
+                  this.handleChange(e);
+                }}
               />
             </div>
             <p className="help is-danger">This email is invalid</p>
           </div>
 
           <div className="field">
-            <label className="label">Password</label>
+            <label className="label">Senha</label>
             <div className="control">
-              <input value={this.state.password} name="password" className="input" type="text" onChange={(e) => {this.handleChange(e)}} />
+              <input
+                value={this.state.password}
+                name="password"
+                className="input"
+                type="text"
+                onChange={e => {
+                  this.handleChange(e);
+                }}
+              />
             </div>
           </div>
-
-          <div className="field is-grouped">
-            <div className="control">
-              <button className="button is-link" onClick={this.handleFormSubmit}>Criar conta</button>
-            </div>
+          <div className="centered-button">
+            <button
+              className="button is-link is-large"
+              onClick={this.handleFormSubmit}
+            >
+              Criar conta
+            </button>
           </div>
         </div>
       </div>

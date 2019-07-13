@@ -1,0 +1,32 @@
+.equilibrio-container {
+  padding: 0 25%;
+}
+
+.equilibrio-tile {
+  margin-top: 3px;
+  border-bottom: 1px solid #cccc;
+}
+
+.info-tile {
+  width: 60%;
+  margin-right: 20%;
+}
+
+.flex-despesa {
+  display: flex;
+  flex-direction: row;
+  align-content: stretch;
+}
+
+.totals-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 40px;
+}
+
+.info-total {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}

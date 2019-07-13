@@ -2,29 +2,29 @@ import React, { Component } from "react";
 import "./signin.css";
 
 class Signin extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.state = {
-      username: '',
-      password: '',
-    }
+      username: "",
+      password: ""
+    };
 
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
 
-  handleChange (event) {
+  handleChange(event) {
     const state = {};
     state[event.target.name] = event.target.value;
     this.setState(state);
   }
 
-  handleFormSubmit () {
+  handleFormSubmit() {
     console.log(this.state);
     const user = {
       username: this.state.username,
-      password: this.state.password,
-    }
+      password: this.state.password
+    };
     const result = this.props.loginUser(user);
     console.log(result);
   }
@@ -44,27 +44,46 @@ class Signin extends Component {
             <div className="field">
               <label className="label">Username</label>
               <div className="control">
-                <input className="input" type="text" name="username" placeholder="ex: sicuts" value={this.state.username} onChange={(e) => {this.handleChange(e)}}/>
+                <input
+                  className="input"
+                  type="text"
+                  name="username"
+                  placeholder="ex: sicuts"
+                  value={this.state.username}
+                  onChange={e => {
+                    this.handleChange(e);
+                  }}
+                />
               </div>
             </div>
 
             <div className="field">
-              <label className="label">Password</label>
+              <label className="label">Senha</label>
               <div className="control">
-                <input className="input is-danger" type="password" name="password" value={this.state.password} onChange={(e) => {this.handleChange(e)}}/>
+                <input
+                  className="input is-danger"
+                  type="password"
+                  name="password"
+                  value={this.state.password}
+                  onChange={e => {
+                    this.handleChange(e);
+                  }}
+                />
               </div>
               <p className="help is-danger">This password is invalid</p>
             </div>
 
-            <div className="field is-grouped">
-              <div className="control">
-                <button className="button is-link" onClick={this.handleFormSubmit}>Acessar</button>
-              </div>
+            <div className="centered-button">
+              <button
+                className="button is-link is-large"
+                onClick={this.handleFormSubmit}
+              >
+                Acessar
+              </button>
+              <p>
+                Ainda não se cadastrou? <a href="/signup">Crie sua conta</a>
+              </p>
             </div>
-
-            <p>
-              Ainda nao é cadastrado? <a href="/signup">Crie sua conta</a>
-            </p>
           </div>
         </div>
       </div>
