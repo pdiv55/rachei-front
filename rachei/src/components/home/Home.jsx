@@ -38,7 +38,7 @@ class Home extends Component {
                   />
                 </div>
                 <div className="icon-text">
-                  <p className="title is-4">Equilibrio</p>
+                  <p className="title is-4">Equilíbrio</p>
                   <p>
                     Saiba, a todo momento, como equilibrar as dividas entre seus
                     amigos.

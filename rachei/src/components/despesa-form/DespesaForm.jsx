@@ -2,16 +2,36 @@ import React, { Component } from "react";
 import Link from "../link/Link";
 import "./despesa-form.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
+import {
+  faTrashAlt,
+  faEdit,
+  faFileInvoice
+} from "@fortawesome/free-solid-svg-icons";
 import MemberCheckbox from "../member-checkbox/MemberCheckbox";
+import SuggestionBox from "../suggestion-box/SuggestionBox";
 
 class DespesaForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isMemberSearch: false,
       isEdit: false
     };
   }
+
+  handleMemberSearch = event => {
+    const state = event.target.value;
+    this.setState({ currentsearch: state });
+    if (state === "") {
+      this.setState({ isMemberSearch: false });
+    } else {
+      this.setState({ isMemberSearch: true });
+    }
+  };
+
+  handleMemberBlur = () => {
+    this.setState({ isMemberSearch: false });
+  };
 
   render() {
     const members = [1, 2, 3];
@@ -32,6 +52,9 @@ class DespesaForm extends Component {
         </div>
 
         <div className="form-container">
+          <button className="button is-primary bill">
+            <FontAwesomeIcon icon={faFileInvoice} />+
+          </button>
           <div className="field">
             <label className="label">Name</label>
             <div className="control">
@@ -62,12 +85,14 @@ class DespesaForm extends Component {
             <label className="label">De</label>
             <div className="control">
               <input
-                className="input is-danger"
+                className="input"
                 type="email"
                 placeholder="Procure o username do Pagador"
+                onChange={this.handleMemberSearch}
+                onBlur={this.handleMemberBlur}
               />
             </div>
-            <p className="help is-danger">This email is invalid</p>
+            {this.state.isMemberSearch ? <SuggestionBox /> : ""}
           </div>
 
           <div className="field">
@@ -93,7 +118,7 @@ class DespesaForm extends Component {
               </div>
             ) : (
               <button className="button is-link is-large">
-                Adicionar despesa
+                Adicionar Despesa
               </button>
             )}
           </div>

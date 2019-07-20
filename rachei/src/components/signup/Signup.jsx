@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "./signup.css";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCamera } from "@fortawesome/free-solid-svg-icons";
 require("dotenv").config();
 
 class Signup extends Component {
@@ -60,6 +62,9 @@ class Signup extends Component {
         </div>
 
         <div className="form-container">
+          <button className="button is-primary camera">
+            <FontAwesomeIcon icon={faCamera} />+
+          </button>
           <div className="field">
             <label className="label">Username</label>
             <div className="control">
@@ -67,7 +72,7 @@ class Signup extends Component {
                 name="username"
                 className="input"
                 type="text"
-                placeholder="ex: sicuts"
+                placeholder="ex: sicuts69"
                 value={this.state.username}
                 onChange={e => {
                   this.handleChange(e);
@@ -161,7 +166,7 @@ class Signup extends Component {
               className="button is-link is-large"
               onClick={this.handleFormSubmit}
             >
-              Criar conta
+              Criar Conta
             </button>
           </div>
         </div>

@@ -16,7 +16,8 @@ class RachadaForm extends Component {
       description: "",
       currency: "",
       currentsearch: "",
-      isSearch: false,
+      isMemberSearch: false,
+      isCurrencySearch: false,
       isEdit: false
     };
 
@@ -42,17 +43,33 @@ class RachadaForm extends Component {
     this.getUsers("5d1f87608d749fc84ccb49a0");
   }
 
-  handleSearch = event => {
-    this.setState({ isSearch: true });
+  handleMemberSearch = event => {
     const state = event.target.value;
     this.setState({ currentsearch: state });
+    if (state === "") {
+      this.setState({ isMemberSearch: false });
+    } else {
+      this.setState({ isMemberSearch: true });
+    }
   };
 
-  handleBlur = () => {
-    this.setState({ isSearch: false });
+  handleMemberBlur = () => {
+    this.setState({ isMemberSearch: false });
   };
 
-  handleAddMember = () => {};
+  handleCurrencySearch = event => {
+    const state = event.target.value;
+    this.setState({ currentsearch: state });
+    if (state === "") {
+      this.setState({ isCurrencySearch: false });
+    } else {
+      this.setState({ isCurrencySearch: true });
+    }
+  };
+
+  handleCurrencyBlur = () => {
+    this.setState({ isCurrencySearch: false });
+  };
 
   render() {
     return (
@@ -115,11 +132,11 @@ class RachadaForm extends Component {
                 className="input"
                 type="text"
                 placeholder="Procure o username"
-                onChange={this.handleSearch}
-                onBlur={this.handleBlur}
+                onChange={this.handleMemberSearch}
+                onBlur={this.handleMemberBlur}
               />
             </div>
-            {this.state.isSearch ? <SuggestionBox /> : ""}
+            {this.state.isMemberSearch ? <SuggestionBox /> : ""}
           </div>
 
           <div className="field">
@@ -129,8 +146,11 @@ class RachadaForm extends Component {
                 className="input"
                 type="text"
                 placeholder="ex: Euros (EUR)"
+                onChange={this.handleCurrencySearch}
+                onBlur={this.handleCurrencyBlur}
               />
             </div>
+            {this.state.isCurrencySearch ? <SuggestionBox /> : ""}
           </div>
 
           <div className="centered-button">

@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import "./suggestion-box.css";
 
 class SuggestionLine extends Component {
-  handleAddMember() {
+  handleSearchElement() {
     console.log("clickou");
   }
 
   render() {
     return (
-      <div onClick={this.handleAddMember} className="suggestion-line">
+      <div onClick={this.handleSearchElement} className="suggestion-line">
         <div className="suggestion-info">
           <p>username</p>
         </div>
