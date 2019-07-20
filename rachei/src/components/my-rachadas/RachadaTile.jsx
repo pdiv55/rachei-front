@@ -16,7 +16,7 @@ class RachadaTile extends Component {
   componentWillMount() {
     const rachada = this.props.rachada;
     axios
-      .get(process.env.REACT_APP_DEV_API_URL + "/group/" + rachada._id)
+      .get(process.env.REACT_APP_DEV_API_URL + "/groups/" + rachada._id)
       .then(response => {
         console.log(response);
         this.setState({
