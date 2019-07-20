@@ -25,9 +25,11 @@ class MyRachadas extends Component {
         </div>
 
         <div className="rachada-tile-container">
-          {rachadas.map(rachada => (
-            <RachadaTile rachada={rachada} />
-          ))}
+          {(rachadas) ? 
+            rachadas.map(rachada => {
+            return <RachadaTile rachada={rachada} />
+          })
+          : <p>Você não tem nenhuma rachada!</p> }
         </div>
         <div className="centered-button">
           <Link
