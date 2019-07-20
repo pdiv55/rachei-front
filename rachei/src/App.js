@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import { Switch, Route } from "react-router-dom";
+import ProtectedRoute from './components/protected-route/ProtectedRoute';
 import Home from "./components/home/Home";
 import NavBar from "./components/navbar/NavBar";
 import Signup from "./components/signup/Signup";
@@ -73,17 +74,18 @@ class App extends Component {
               );
             }}
           />
-          <Route
+          <ProtectedRoute
             path="/my-rachadas"
+            loggedIn={this.state.loggedin}
             render={() => {
               return <MyRachadas groups={this.state.groups} />;
             }}
           />
-          <Route path="/rachada-form" component={RachadaForm} />
-          <Route path="/rachada" component={RachadaView} />
-          <Route path="/despesa-form" component={DespesaForm} />
-          <Route path="/my-carteira" component={Carteira} />
-          <Route path="/logout" component={Logout} />
+          <ProtectedRoute loggedIn={this.state.loggedin} path="/rachada-form" component={RachadaForm} />
+          <ProtectedRoute loggedIn={this.state.loggedin} path="/rachada" component={RachadaView} />
+          <ProtectedRoute loggedIn={this.state.loggedin} path="/despesa-form" component={DespesaForm} />
+          <ProtectedRoute loggedIn={this.state.loggedin} path="/my-carteira" component={Carteira} />
+          <ProtectedRoute loggedIn={this.state.loggedin} path="/logout" component={Logout} />
         </Switch>
         <Footer />
       </div>
