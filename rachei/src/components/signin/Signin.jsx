@@ -27,7 +27,8 @@ class Signin extends Component {
     this.setState(state);
   }
 
-  handleFormSubmit() {
+  handleFormSubmit(event) {
+    event.preventDefault();
     const user = {
       username: this.state.username,
       password: this.state.password
@@ -41,7 +42,7 @@ class Signin extends Component {
     } else {
       return (
         <div>
-          <div>
+          <form onSubmit={this.handleFormSubmit}>
             <div className="title-container">
               <h1 className="title">Faça seu Login</h1>
               <h2 className="subtitle">
@@ -57,7 +58,7 @@ class Signin extends Component {
                     className="input"
                     type="text"
                     name="username"
-                    placeholder="ex: sicuts"
+                    placeholder="ex: sicuts69"
                     value={this.state.username}
                     onChange={e => {
                       this.handleChange(e);
@@ -84,8 +85,9 @@ class Signin extends Component {
 
               <div className="centered-button">
                 <button
+                  type="submit"
                   className="button is-link is-large"
-                  onClick={this.handleFormSubmit}
+                  onSubmit={this.handleFormSubmit}
                 >
                   Acessar
                 </button>
@@ -94,7 +96,7 @@ class Signin extends Component {
                 </p>
               </div>
             </div>
-          </div>
+          </form>
         </div>
       );
     }

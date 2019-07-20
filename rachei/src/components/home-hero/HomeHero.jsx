@@ -8,7 +8,9 @@ class HomeHero extends Component {
         <section className="hero is-info is-fullheight-with-navbar">
           <div className="hero-body">
             <div className="container has-text-centered">
-              <p className="title is-1 is-spaced">Rache sem estresse</p>
+              <p className="title title-special is-1 is-spaced">
+                Rache sem estresse
+              </p>
               <p className="subtitle is-4">
                 Dividir despesas com amigos nunca foi tão fácil
               </p>

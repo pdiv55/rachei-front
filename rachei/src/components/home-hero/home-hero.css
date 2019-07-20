@@ -4,10 +4,11 @@
   background-size: cover;
   background-position: center center;
   background-attachment: fixed;
+  border-bottom: 7px solid goldenrod;
 }
 
-.title {
-  font-size: 6em;
+.title-special {
+  font-size: 4.2em !important;
 }
 
 .home-hero-nav-bar {

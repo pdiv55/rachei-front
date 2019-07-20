@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import Link from "../link/Link";
 import ContainerDespesas from "../container-despesas/ContainerDespesas";
 import ContainerEquilibrio from "../container-equilibrio/ContainerEquilibrio";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

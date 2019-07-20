@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./container-despesas.css";
-import { Link } from "react-router-dom";
+import Link from "../link/Link";
 import DespesaTile from "./DespesaTile";
 
 class ContainerDespesas extends Component {

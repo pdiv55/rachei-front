@@ -149,7 +149,7 @@ class Signup extends Component {
                 value={this.state.password}
                 name="password"
                 className="input"
-                type="text"
+                type="password"
                 onChange={e => {
                   this.handleChange(e);
                 }}

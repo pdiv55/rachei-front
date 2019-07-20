@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./my-rachadas.css";
-import { Link } from "react-router-dom";
+import Link from "../link/Link";
 import RachadaTile from "./RachadaTile";
 
 class MyRachadas extends Component {

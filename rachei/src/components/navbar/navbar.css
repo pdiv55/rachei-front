@@ -3,6 +3,13 @@
   border-bottom: 2px solid #cccc;
 }
 
+.navbar-logo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .navbar-item {
-  margin: 0 5px;
+  margin: 0 10px !important;
 }
