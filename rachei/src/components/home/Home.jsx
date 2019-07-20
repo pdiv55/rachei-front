@@ -10,7 +10,7 @@ class Home extends Component {
         <section className="section">
           <div className="container">
             <h1 className="title">Funcionalidades</h1>
-            <h2 className="subtitle">
+            <h2 className="circle-container">
               <div className="circle" />
               <div className="circle" />
               <div className="circle" />
