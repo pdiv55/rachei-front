@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import Link from "../link/Link";
 import "./navbar.css";
 
 class NavBar extends Component {
@@ -16,13 +16,8 @@ class NavBar extends Component {
             aria-label="main navigation"
           >
             <div className="navbar-brand">
-              <Link to="/" className="navbar-item">
-                <img
-                  src="https://bulma.io/images/bulma-logo.png"
-                  width="112"
-                  height="28"
-                  alt="rachei-logo"
-                />
+              <Link to="/" className="navbar-logo">
+                <img src="/img/logo.svg" width="80%" alt="rachei-logo" />
               </Link>
             </div>
 
@@ -49,12 +44,7 @@ class NavBar extends Component {
           >
             <div className="navbar-brand">
               <Link to="/" className="navbar-item">
-                <img
-                  src="https://bulma.io/images/bulma-logo.png"
-                  width="112"
-                  height="28"
-                  alt="rachei-logo"
-                />
+                <img src="/img/logo.svg" width="80%" alt="rachei-logo" />
               </Link>
             </div>
 

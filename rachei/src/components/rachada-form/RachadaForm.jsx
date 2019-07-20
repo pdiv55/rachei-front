@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import Link from "../link/Link";
+import SuggestionBox from "../suggestion-box/SuggestionBox";
 import "./rachada-form.css";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,6 +15,8 @@ class RachadaForm extends Component {
       name: "",
       description: "",
       currency: "",
+      currentsearch: "",
+      isSearch: false,
       isEdit: false
     };
 
@@ -38,6 +41,18 @@ class RachadaForm extends Component {
   componentWillMount() {
     this.getUsers("5d1f87608d749fc84ccb49a0");
   }
+
+  handleSearch = event => {
+    this.setState({ isSearch: true });
+    const state = event.target.value;
+    this.setState({ currentsearch: state });
+  };
+
+  handleBlur = () => {
+    this.setState({ isSearch: false });
+  };
+
+  handleAddMember = () => {};
 
   render() {
     return (
@@ -97,14 +112,14 @@ class RachadaForm extends Component {
             <label className="label">Participantes</label>
             <div className="control">
               <input
-                className="input is-danger"
+                className="input"
                 type="text"
-                value="username do user (editavel)"
-                placeholder="Procure o username do Pagador"
+                placeholder="Procure o username"
+                onChange={this.handleSearch}
+                onBlur={this.handleBlur}
               />
-              <button className="button is-primary add-member-button">+</button>
             </div>
-            <p className="help is-danger">This email is invalid</p>
+            {this.state.isSearch ? <SuggestionBox /> : ""}
           </div>
 
           <div className="field">

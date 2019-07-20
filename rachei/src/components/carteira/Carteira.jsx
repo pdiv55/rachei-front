@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import Link from "../link/Link";
 import "./carteira.css";
 import PendenciaTile from "./PendenciaTile";
 
@@ -11,7 +11,7 @@ class Carteira extends Component {
         <div className="title-container">
           <h1 className="title">Sua Carteira Pessoal</h1>
           <h2 className="subtitle">
-            Resolva suas pendências e atualize seu Saldo pessoal
+            Resolva suas pendências e atualize seu saldo pessoal
           </h2>
         </div>
 

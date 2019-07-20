@@ -1,0 +1,30 @@
+.suggestion-container {
+  background-color: #cccc;
+  width: 100%;
+  border-radius: 4px;
+  border: 0.5px solid #7d7d7d;
+  padding: 0 1px !important;
+}
+
+.suggestion-line {
+  margin: 3px 0 !important;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: row;
+  align-content: stretch;
+}
+
+.suggestion-line:hover {
+  background-color: #ccc;
+  cursor: default;
+}
+
+.suggestion-info {
+  width: 60%;
+  margin-right: 20%;
+  font-size: 0.9rem !important;
+}
+
+.real-name {
+  color: #7d7d7d !important;
+}

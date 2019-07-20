@@ -28,6 +28,10 @@ class App extends Component {
     this.loginUser = this.loginUser.bind(this);
   }
 
+  componentWillMount() {
+    window.scrollTo(0, 0);
+  }
+
   loginUser(user) {
     axios
       .post(process.env.REACT_APP_DEV_API_URL + "/auth/login/", user)
@@ -40,6 +44,7 @@ class App extends Component {
           expenses: response.data.data[0],
           groups: response.data.data[1]
         });
+        console.log(this.state);
       })
       .catch(error => {
         console.log(error);
