@@ -94,6 +94,22 @@ class Signup extends Component {
           </div>
 
           <div className="field">
+            <label className="label">Surname</label>
+            <div className="control">
+              <input
+                name="surname"
+                className="input"
+                type="text"
+                placeholder="ex: Sicutinho"
+                value={this.state.surname}
+                onChange={e => {
+                  this.handleChange(e);
+                }}
+              />
+            </div>
+          </div>
+
+          <div className="field">
             <label className="label">CPF</label>
             <div className="control">
               <input

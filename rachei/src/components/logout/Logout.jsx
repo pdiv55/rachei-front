@@ -3,11 +3,7 @@ import "./logout.css";
 
 class Logout extends Component {
   render() {
-    return (
-      <div>
-        <p>THIS IS THE LOGOUT PAGE</p>
-      </div>
-    );
+    return <div />;
   }
 }
 

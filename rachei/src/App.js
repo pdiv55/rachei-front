@@ -11,6 +11,7 @@ import RachadaView from "./components/rachada-view/RachadaView";
 import DespesaForm from "./components/despesa-form/DespesaForm";
 import Carteira from "./components/carteira/Carteira";
 import Logout from "./components/logout/Logout";
+import Footer from "./components/footer/Footer";
 import "bulma/css/bulma.css";
 import axios from "axios";
 
@@ -20,19 +21,25 @@ class App extends Component {
     this.state = {
       loggedin: false,
       loginType: "",
-      loginMessage: ""
+      loginMessage: "",
+      user: {}
     };
 
     this.loginUser = this.loginUser.bind(this);
   }
 
   loginUser(user) {
-    console.log("chamou");
     axios
-      .post(process.env.REACT_APP_DEV_API_URL + "/users/login/", user)
+      .post(process.env.REACT_APP_DEV_API_URL + "/auth/login/", user)
       .then(response => {
-        console.log(response);
-        return "é nóis";
+        this.setState({
+          loggedin: true,
+          loginType: "",
+          loginMessage: "",
+          user: response.data.user,
+          expenses: response.data.data[0],
+          groups: response.data.data[1]
+        });
       })
       .catch(error => {
         console.log(error);
@@ -42,7 +49,7 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-        <NavBar loggedin={this.state.loggedin} />
+        <NavBar loggedin={this.state.loggedin} name={this.state.user.name} />
         <Switch>
           <Route
             exact
@@ -53,16 +60,27 @@ class App extends Component {
           <Route
             path="/signin"
             render={() => {
-              return <Signin loginUser={this.loginUser} />;
+              return (
+                <Signin
+                  loginUser={this.loginUser}
+                  loggedin={this.state.loggedin}
+                />
+              );
             }}
           />
-          <Route path="/my-rachadas" component={MyRachadas} />
+          <Route
+            path="/my-rachadas"
+            render={() => {
+              return <MyRachadas groups={this.state.groups} />;
+            }}
+          />
           <Route path="/rachada-form" component={RachadaForm} />
           <Route path="/rachada" component={RachadaView} />
           <Route path="/despesa-form" component={DespesaForm} />
           <Route path="/my-carteira" component={Carteira} />
           <Route path="/logout" component={Logout} />
         </Switch>
+        <Footer />
       </div>
     );
   }

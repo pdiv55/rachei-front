@@ -5,6 +5,7 @@ import "./navbar.css";
 class NavBar extends Component {
   render() {
     const loggedStatus = this.props.loggedin;
+    const name = this.props.name;
 
     return (
       <div>
@@ -69,7 +70,7 @@ class NavBar extends Component {
 
               <div className="navbar-end">
                 <div className="navbar-item">
-                  <p className="title is-6">Oi, Paul 👋</p>
+                  <p className="title is-6">Oi, {name} 👋</p>
                   <div className="buttons">
                     <Link to="/logout" className="button is-danger">
                       <strong>Log Out</strong>

@@ -10,7 +10,7 @@ class HomeHero extends Component {
             <div className="container has-text-centered">
               <p className="title is-1 is-spaced">Rache sem estresse</p>
               <p className="subtitle is-4">
-                Dividir despesas com amigos nunca foi tão facil
+                Dividir despesas com amigos nunca foi tão fácil
               </p>
             </div>
           </div>

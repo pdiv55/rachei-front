@@ -76,7 +76,8 @@ class RachadaForm extends Component {
               <input
                 className="input"
                 type="text"
-                placeholder="ex: Ilhabela com Ironhack"
+                placeholder="ex: Viagem Ilhabela"
+                maxlength="15"
               />
             </div>
           </div>

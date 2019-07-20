@@ -5,7 +5,7 @@ import RachadaTile from "./RachadaTile";
 
 class MyRachadas extends Component {
   render() {
-    const rachadas = [0, 1, 2, 3, 4, 5, 6];
+    const rachadas = this.props.groups;
     return (
       <div>
         <div className="title-container">
@@ -25,8 +25,8 @@ class MyRachadas extends Component {
         </div>
 
         <div className="rachada-tile-container">
-          {rachadas.map(() => (
-            <RachadaTile />
+          {rachadas.map(rachada => (
+            <RachadaTile rachada={rachada} />
           ))}
         </div>
         <div className="centered-button">
