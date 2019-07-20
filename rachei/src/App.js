@@ -6,11 +6,12 @@ import NavBar from "./components/navbar/NavBar";
 import Signup from "./components/signup/Signup";
 import Signin from "./components/signin/Signin";
 import MyRachadas from "./components/my-rachadas/MyRachadas";
-import CreateRachada from "./components/create-rachada/CreateRachada";
-import Rachada from "./components/rachada/Rachada";
-import CreateDespesa from "./components/create-despesa/CreateDespesa";
+import RachadaForm from "./components/rachada-form/RachadaForm";
+import RachadaView from "./components/rachada-view/RachadaView";
+import DespesaForm from "./components/despesa-form/DespesaForm";
 import Carteira from "./components/carteira/Carteira";
 import Logout from "./components/logout/Logout";
+import Footer from "./components/footer/Footer";
 import "bulma/css/bulma.css";
 import axios from "axios";
 
@@ -19,29 +20,36 @@ class App extends Component {
     super(props);
     this.state = {
       loggedin: false,
-      loginType: '',
-      loginMessage: '',
+      loginType: "",
+      loginMessage: "",
+      user: {}
     };
 
     this.loginUser = this.loginUser.bind(this);
   }
 
-  loginUser (user) {
-    console.log('chamou');
-    axios.post(process.env.REACT_APP_DEV_API_URL+'/users/login/', user)
-    .then(response => {
-      console.log(response);
-      return 'é nóis';
-    })
-    .catch(error => {
-      console.log(error);
-    })
+  loginUser(user) {
+    axios
+      .post(process.env.REACT_APP_DEV_API_URL + "/auth/login/", user)
+      .then(response => {
+        this.setState({
+          loggedin: true,
+          loginType: "",
+          loginMessage: "",
+          user: response.data.user,
+          expenses: response.data.data[0],
+          groups: response.data.data[1]
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   render() {
     return (
-      <div>
-        <NavBar loggedin={this.state.loggedin} />
+      <div className="app">
+        <NavBar loggedin={this.state.loggedin} name={this.state.user.name} />
         <Switch>
           <Route
             exact
@@ -49,16 +57,30 @@ class App extends Component {
             render={() => <Home loggedin={this.state.loggedin} />}
           />
           <Route path="/signup" component={Signup} />
-          <Route path="/signin" render={() => {
-            return <Signin loginUser={this.loginUser} />
-          }} />
-          <Route path="/my-rachadas" component={MyRachadas} />
-          <Route path="/create-rachada" component={CreateRachada} />
-          <Route path="/rachada" component={Rachada} />
-          <Route path="/create-despesa" component={CreateDespesa} />
-          <Route path="/carteira" component={Carteira} />
+          <Route
+            path="/signin"
+            render={() => {
+              return (
+                <Signin
+                  loginUser={this.loginUser}
+                  loggedin={this.state.loggedin}
+                />
+              );
+            }}
+          />
+          <Route
+            path="/my-rachadas"
+            render={() => {
+              return <MyRachadas groups={this.state.groups} />;
+            }}
+          />
+          <Route path="/rachada-form" component={RachadaForm} />
+          <Route path="/rachada" component={RachadaView} />
+          <Route path="/despesa-form" component={DespesaForm} />
+          <Route path="/my-carteira" component={Carteira} />
           <Route path="/logout" component={Logout} />
         </Switch>
+        <Footer />
       </div>
     );
   }

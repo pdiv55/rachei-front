@@ -1,0 +1,18 @@
+.checkbox-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.checkbox-tile {
+  display: flex;
+  flex-direction: row;
+  margin: 3px !important;
+}
+
+.checkbox {
+  margin-top: 5px !important;
+}
+
+.label-checkbox {
+  margin-left: 20px !important;
+}

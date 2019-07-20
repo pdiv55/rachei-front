@@ -1,26 +1,30 @@
 import React, { Component } from "react";
 import "./container-despesas.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
-import Despesa from "../despesa/Despesa";
+import { Link } from "react-router-dom";
+import DespesaTile from "./DespesaTile";
 
 class ContainerDespesas extends Component {
   render() {
     const despesas = [0, 1, 2];
     return (
-      <div>
+      <div className="despesa-container">
         {despesas.map(() => (
-          <Despesa />
+          <DespesaTile />
         ))}
-        <div className="flex-totals">
-          <div>
+        <div className="totals-container">
+          <div className="info-total">
             <p className="title is-5">Total Rachada</p>
+            <p>numero</p>
           </div>
-          <a className="button is-primary is-rounded is-large" href="/">
+          <Link
+            to="/despesa-form"
+            className="button is-primary is-rounded is-large"
+          >
             Adicionar Despesa
-          </a>
-          <div>
+          </Link>
+          <div className="info-total">
             <p className="title is-5">Meu Total</p>
+            <p>numero</p>
           </div>
         </div>
       </div>

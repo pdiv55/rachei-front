@@ -1,31 +1,30 @@
 .despesa-container {
-  margin: 3px 0px;
-  border-bottom: 2px solid #cccc;
+  padding: 0 25%;
 }
 
-.flex-despesa {
+.despesa-tile {
+  margin: 3px 0 !important;
+  border-bottom: 1px solid #cccc;
   display: flex;
   flex-direction: row;
-  align-content: space-between;
+  align-content: stretch;
 }
 
-.mini-actions-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.flex-totals {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
-.info-container {
+.info-tile {
   width: 60%;
   margin-right: 20%;
 }
 
-.spaced {
-  margin-top: 10px;
+.totals-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.info-total {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
 }

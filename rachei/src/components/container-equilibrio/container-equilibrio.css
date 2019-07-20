@@ -1,0 +1,80 @@
+.equilibrio-container {
+  padding: 0 25%;
+}
+
+/* RESULTS */
+
+.result-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 30px 0;
+}
+
+.result-tile {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.chart-tile-positive {
+  display: flex;
+  align-items: center;
+  width: 25%;
+}
+
+.chart-positive {
+  position: absolute;
+  height: 30px;
+  width: 100px;
+  opacity: 0.3;
+  background-color: green;
+  z-index: 1;
+}
+
+.chart-tile-negative {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  width: 25%;
+}
+
+.chart-negative {
+  position: absolute;
+  height: 30px;
+  width: 100px;
+  opacity: 0.3;
+  background-color: red;
+  z-index: 1;
+}
+
+/* EQUILIBRIOS */
+
+.how-to-container {
+  margin-top: 40px;
+}
+
+.notification {
+  margin: 3px !important;
+  padding: 20px !important;
+  border-bottom: 1px solid #cccc;
+}
+
+.equilibrio-tile {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 140px;
+}
+
+.info-equilibrios-tile {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.info-total {
+  margin-top: 30px !important;
+}

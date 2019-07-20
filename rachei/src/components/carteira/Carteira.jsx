@@ -1,54 +1,33 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import "./carteira.css";
+import PendenciaTile from "./PendenciaTile";
 
 class Carteira extends Component {
   render() {
+    const pendencias = [0, 1, 2];
     return (
       <div>
-        <div>
-          <div className="title-container">
-            <h1 className="title">Sua Carteira Pessoal</h1>
-            <h2 className="subtitle">
-              Encontre aqui uma visao global de suas despesas no nosso app
-            </h2>
-          </div>
+        <div className="title-container">
+          <h1 className="title">Sua Carteira Pessoal</h1>
+          <h2 className="subtitle">
+            Resolva suas pendências e atualize seu Saldo pessoal
+          </h2>
+        </div>
 
-          <div className="search-bar">
-            <input
-              className="input"
-              type="text"
-              placeholder="Procure uma rachada"
-            />
-            <p className="control">
-              <button className="button">Buscar</button>
-            </p>
-          </div>
+        <div className="equilibrio-container">
+          {pendencias.map(() => (
+            <PendenciaTile />
+          ))}
+        </div>
 
-          <div className="tile-container">
-            <a className="cool-tile" href="/rachada">
-              <article className="notification">
-                <p className="title is-5">Name Rachada</p>
-                <p className="subtitle is-7">Creation Date</p>
-                <p className="subtitle is-6">Total</p>
-                <div />
-              </article>
-            </a>
-            <a className="cool-tile" href="/rachada">
-              <article className="notification">
-                <p className="title is-5">Name Rachada</p>
-                <p className="subtitle is-7">Creation Date</p>
-                <p className="subtitle is-6">Total</p>
-                <div />
-              </article>
-            </a>
-          </div>
-
-          <a
-            className="button is-primary is-rounded centered is-large"
-            href="/"
+        <div className="centered-button">
+          <Link
+            className="button is-primary is-rounded is-large"
+            to="/rachada-form"
           >
-            Pagar Dividas
-          </a>
+            Depositar Grana
+          </Link>
         </div>
       </div>
     );

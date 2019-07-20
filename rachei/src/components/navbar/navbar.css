@@ -1,4 +1,8 @@
 .navbar {
-  padding: 20px;
+  padding: 10px;
   border-bottom: 2px solid #cccc;
+}
+
+.navbar-item {
+  margin: 0 5px;
 }

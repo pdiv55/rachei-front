@@ -1,36 +1,25 @@
-.title {
-  text-align: center;
-}
-
-.subtitle {
-  text-align: center;
-}
-
-.title-container {
-  margin-top: 20px;
-  margin-bottom: 50px;
-}
-
 .search-bar {
   width: 60%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  flex-direction: row;
   margin-left: 20%;
   margin-bottom: 40px;
 }
 
-.centered {
-  margin-top: 40px;
-  margin-left: 42%;
+.search-bar button {
+  display: flex !important;
+  margin: 0px 0px 0px 10px !important;
 }
 
-.tile-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+.rachada-tile-container {
+  padding: 0 20px;
+  display: flex !important;
+  justify-content: center !important;
+  flex-direction: row !important;
+  flex-wrap: wrap;
 }
 
-.cool-tile {
-  margin: 10px;
+.rachada-tile {
+  margin: 10px !important;
 }

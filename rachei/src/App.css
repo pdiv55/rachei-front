@@ -1,4 +1,37 @@
-* {
-  padding: 0;
-  margin: 0;
+.app {
+  padding-bottom: 20px;
+}
+
+.title-container {
+  display: flex !important;
+  align-items: center !important;
+  flex-direction: column !important;
+  margin: 70px !important;
+}
+
+p {
+  margin: 8px !important;
+}
+
+.button {
+  margin: 20px !important;
+}
+
+.centered-button {
+  display: flex !important;
+  align-items: center !important;
+  flex-direction: column !important;
+  margin: 30px !important;
+}
+
+.form-container {
+  width: 50%;
+  margin: 0 auto;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+}
+
+.field {
+  margin-bottom: 20px !important;
 }

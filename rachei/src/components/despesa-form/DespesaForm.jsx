@@ -1,12 +1,31 @@
 import React, { Component } from "react";
-import "./create-despesa.css";
+import { Link } from "react-router-dom";
+import "./despesa-form.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
+import MemberCheckbox from "../member-checkbox/MemberCheckbox";
 
-class CreateDespesa extends Component {
+class DespesaForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isEdit: false
+    };
+  }
+
   render() {
+    const members = [1, 2, 3];
     return (
       <div>
+        <Link to="/rachada" className="button return">
+          {"< Retornar à Rachada"}
+        </Link>
         <div className="title-container">
-          <h1 className="title">Adicione uma Despesa</h1>
+          {this.state.isEdit ? (
+            <h1 className="title">Edite sua Despesa</h1>
+          ) : (
+            <h1 className="title">Adicione uma Despesa</h1>
+          )}
           <h2 className="subtitle">
             Entre as informaçoes da despesa para rachar o valor com seus amigos
           </h2>
@@ -45,7 +64,6 @@ class CreateDespesa extends Component {
               <input
                 className="input is-danger"
                 type="email"
-                value="username do user (editavel)"
                 placeholder="Procure o username do Pagador"
               />
             </div>
@@ -54,19 +72,30 @@ class CreateDespesa extends Component {
 
           <div className="field">
             <label className="label">Para</label>
-            <div className="control">
-              <input type="checkbox" name="member1" className="checkbox" />
-              <label className="label-checkbox">Membro Grupo 1</label>
-              <input type="checkbox" name="member2" className="checkbox" />
-              <label className="label-checkbox">Membro Grupo 2</label>
+            <div className="checkbox-container">
+              {members.map(() => (
+                <MemberCheckbox />
+              ))}
             </div>
-            <p className="help is-danger">This email is invalid</p>
           </div>
 
-          <div className="field is-grouped">
-            <div className="control">
-              <button className="button is-link">Adicionar despesa</button>
-            </div>
+          <div className="centered-button">
+            {this.state.isEdit ? (
+              <div>
+                <a className="button is-warning" href="/">
+                  <FontAwesomeIcon icon={faEdit} />
+                  Editar
+                </a>
+                <a className="button is-danger" href="/">
+                  <FontAwesomeIcon icon={faTrashAlt} />
+                  Deletar
+                </a>
+              </div>
+            ) : (
+              <button className="button is-link is-large">
+                Adicionar despesa
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -74,4 +103,4 @@ class CreateDespesa extends Component {
   }
 }
 
-export default CreateDespesa;
+export default DespesaForm;
