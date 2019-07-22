@@ -3,13 +3,15 @@ import "./my-rachadas.css";
 import Link from "../link/Link";
 import RachadaTile from "./RachadaTile";
 import SuggestionBox from "../suggestion-box/SuggestionBox";
+import axios from '../../utils/interceptor';
 
 class MyRachadas extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      isSearch: false
+      isSearch: false,
+      groups: [],
     };
   }
 
@@ -27,8 +29,18 @@ class MyRachadas extends Component {
     this.setState({ isSearch: false });
   };
 
+  componentWillMount() {
+    axios.get(process.env.REACT_APP_DEV_API_URL + "/groups/user/")
+    .then(response => {
+      this.setState({ groups: response.data });
+    })
+    .catch(error => {
+      console.log(error);
+    })
+  }
+
   render() {
-    const rachadas = this.props.groups;
+    const rachadas = this.state.groups;
     return (
       <div>
         <div className="title-container">
@@ -53,8 +65,8 @@ class MyRachadas extends Component {
 
         <div className="rachada-tile-container">
           {rachadas ? (
-            rachadas.map(rachada => {
-              return <RachadaTile rachada={rachada} />;
+            rachadas.map((rachada, index) => {
+              return <RachadaTile key={index} rachada={rachada} />;
             })
           ) : (
             <p>Você não tem nenhuma rachada!</p>

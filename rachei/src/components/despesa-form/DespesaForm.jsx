@@ -9,13 +9,15 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import MemberCheckbox from "../member-checkbox/MemberCheckbox";
 import SuggestionBox from "../suggestion-box/SuggestionBox";
+import axios from '../../utils/interceptor';
 
 class DespesaForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isMemberSearch: false,
-      isEdit: false
+      isEdit: false,
+      users: [],
     };
   }
 
@@ -30,8 +32,17 @@ class DespesaForm extends Component {
   };
 
   handleMemberBlur = () => {
-    this.setState({ isMemberSearch: false });
+    setTimeout(() => {
+      this.setState({ isMemberSearch: false, currentsearch: '' });
+    }, 100);
   };
+
+  componentWillMount() {
+    axios.get(process.env.REACT_APP_DEV_API_URL + "/users/group/" + this.props.match.params.groupId)
+    .then(response => {
+      console.log(response);
+    })
+  }
 
   render() {
     const members = [1, 2, 3];

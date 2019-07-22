@@ -5,11 +5,11 @@ import DespesaTile from "./DespesaTile";
 
 class ContainerDespesas extends Component {
   render() {
-    const despesas = [0, 1, 2];
+    const { expenses, groupId } = this.props;
     return (
       <div className="despesa-container">
-        {despesas.map(() => (
-          <DespesaTile />
+        {expenses.map((element, index) => (
+          <DespesaTile key={index} expense={element} />
         ))}
         <div className="totals-container">
           <div className="info-total">
@@ -17,7 +17,7 @@ class ContainerDespesas extends Component {
             <p>numero</p>
           </div>
           <Link
-            to="/despesa-form"
+            to={`/despesa-form/${groupId}`}
             className="button is-primary is-rounded is-large"
           >
             Adicionar Despesa

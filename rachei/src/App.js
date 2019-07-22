@@ -14,7 +14,7 @@ import Carteira from "./components/carteira/Carteira";
 import Logout from "./components/logout/Logout";
 import Footer from "./components/footer/Footer";
 import "bulma/css/bulma.css";
-import axios from "axios";
+import axios from "./utils/interceptor";
 
 class App extends Component {
   constructor(props) {
@@ -31,21 +31,31 @@ class App extends Component {
 
   componentWillMount() {
     window.scrollTo(0, 0);
+    if (localStorage.getItem('authorization') && !this.state.loggedin) this.checkLogin();
+  }
+  
+  checkLogin () {
+    axios.get(process.env.REACT_APP_DEV_API_URL + "/auth/refresh/")
+    .then(response => {
+      this.setState({
+        loggedin: true,
+        loginType: "",
+        loginMessage: "",
+        user: response.data,
+      });
+    })
   }
 
   loginUser(user) {
-    axios
-      .post(process.env.REACT_APP_DEV_API_URL + "/auth/login/", user)
+    axios.post(process.env.REACT_APP_DEV_API_URL + "/auth/login/", user)
       .then(response => {
         this.setState({
           loggedin: true,
           loginType: "",
           loginMessage: "",
           user: response.data.user,
-          expenses: response.data.data[0],
-          groups: response.data.data[1]
         });
-        console.log(this.state);
+        localStorage.setItem('authorization', response.data.token);
       })
       .catch(error => {
         console.log(error);
@@ -82,8 +92,8 @@ class App extends Component {
             }}
           />
           <ProtectedRoute loggedIn={this.state.loggedin} path="/rachada-form" component={RachadaForm} />
-          <ProtectedRoute loggedIn={this.state.loggedin} path="/rachada" component={RachadaView} />
-          <ProtectedRoute loggedIn={this.state.loggedin} path="/despesa-form" component={DespesaForm} />
+          <ProtectedRoute loggedIn={this.state.loggedin} path="/rachada/:id" component={RachadaView} />
+          <ProtectedRoute loggedIn={this.state.loggedin} path="/despesa-form/:groupId" component={DespesaForm} />
           <ProtectedRoute loggedIn={this.state.loggedin} path="/my-carteira" component={Carteira} />
           <ProtectedRoute loggedIn={this.state.loggedin} path="/logout" component={Logout} />
         </Switch>

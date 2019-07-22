@@ -4,11 +4,11 @@ import SuggestionLine from "./SuggestionLine";
 
 class SuggestionBox extends Component {
   render() {
-    const suggestions = [0, 1, 2];
+    const { items, pickItem } = this.props;
     return (
       <div className="suggestion-container">
-        {suggestions.map(() => (
-          <SuggestionLine />
+        {items.map((element, index) => (
+          <SuggestionLine key={index} item={element} pickItem={pickItem}/>
         ))}
       </div>
     );

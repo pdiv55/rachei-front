@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import Link from "../link/Link";
+import { Redirect } from 'react-router-dom';
 import SuggestionBox from "../suggestion-box/SuggestionBox";
 import "./rachada-form.css";
-import axios from "axios";
+import axios from "../../utils/interceptor";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
 
@@ -12,6 +13,7 @@ class RachadaForm extends Component {
 
     this.state = {
       users: [],
+      chosenUsers: [],
       name: "",
       description: "",
       currency: "",
@@ -22,14 +24,13 @@ class RachadaForm extends Component {
     };
 
     this.getUsers = this.getUsers.bind(this);
+    this.choseUser = this.choseUser.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  getUsers(id) {
-    console.log(process.env.REACT_APP_DEV_API_URL + "/users/group/" + id);
-    axios
-      .get(process.env.REACT_APP_DEV_API_URL + "/users/group/" + id)
+  getUsers() {
+    axios.get(process.env.REACT_APP_DEV_API_URL + "/users/")
       .then(response => {
-        console.log(response.data);
         this.setState({
           users: response.data
         });
@@ -40,12 +41,18 @@ class RachadaForm extends Component {
   }
 
   componentWillMount() {
-    this.getUsers("5d1f87608d749fc84ccb49a0");
+    if (this.state.users.length <= 0) this.getUsers();
+  }
+
+  handleChange(event) {
+    const state = {};
+    state[event.target.name] = event.target.value;
+    this.setState(state);
   }
 
   handleMemberSearch = event => {
     const state = event.target.value;
-    this.setState({ currentsearch: state });
+    this.setState({ currentsearch: state, isMemberSearch: true });
     if (state === "") {
       this.setState({ isMemberSearch: false });
     } else {
@@ -54,7 +61,9 @@ class RachadaForm extends Component {
   };
 
   handleMemberBlur = () => {
-    this.setState({ isMemberSearch: false });
+    setTimeout(() => {
+      this.setState({ isMemberSearch: false, currentsearch: '' });
+    }, 100);
   };
 
   handleCurrencySearch = event => {
@@ -71,9 +80,39 @@ class RachadaForm extends Component {
     this.setState({ isCurrencySearch: false });
   };
 
+  handleSubmit(event) {
+    event.preventDefault();
+    const chosenUsers = this.state.chosenUsers.map(element => {
+      return element._id;
+    })
+    const group = {
+      name: this.state.name,
+      description: this.state.description,
+      currency: this.state.currency,
+      users: chosenUsers,
+    }
+    axios.post(process.env.REACT_APP_DEV_API_URL + "/groups/create/", group)
+    .then(response => {
+      return (<Redirect to={`/rachada/${response.data._id}`}/>)
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  }
+
+  choseUser(user) {
+    const chosenUsers = this.state.chosenUsers;
+    chosenUsers.push(user);
+    let users = this.state.users;
+    users = users.filter(element => {
+      return chosenUsers.indexOf(element) < 0;
+    })
+    this.setState({ chosenUsers: chosenUsers, users: users });
+  }
+
   render() {
     return (
-      <div>
+      <form onSubmit={this.handleSubmit}>
         {this.state.isEdit ? (
           <Link to="/rachada" className="button return">
             {"< Retornar à Rachada"}
@@ -106,10 +145,13 @@ class RachadaForm extends Component {
             <label className="label">Name</label>
             <div className="control">
               <input
+                name="name"
                 className="input"
                 type="text"
                 placeholder="ex: Viagem Ilhabela"
-                maxlength="15"
+                maxLength="15"
+                value={this.state.name}
+                onChange={(e) => this.handleChange(e)}
               />
             </div>
           </div>
@@ -118,11 +160,13 @@ class RachadaForm extends Component {
             <label className="label">Description</label>
             <div className="control">
               <textarea
+                name="description"
                 className="textarea"
                 placeholder="ex: Rachada para feriadão com squad"
+                value={this.state.description}
+                onChange={(e) => this.handleChange(e)}
               />
             </div>
-            <p className="help is-success">This username is available</p>
           </div>
 
           <div className="field">
@@ -134,9 +178,24 @@ class RachadaForm extends Component {
                 placeholder="Procure o username"
                 onChange={this.handleMemberSearch}
                 onBlur={this.handleMemberBlur}
+                value={this.state.currentsearch}
               />
             </div>
-            {this.state.isMemberSearch ? <SuggestionBox /> : ""}
+            {this.state.isMemberSearch ? <SuggestionBox items={this.state.users} pickItem={this.choseUser}/> : ""}
+            {
+              this.state.chosenUsers.map((element, index) => {
+                return ( 
+                <div key={index} className="suggestion-line">
+                  <div className="suggestion-info">
+                    <p>{element.username}</p>
+                  </div>
+                  <div className="suggestion-info">
+                    <p className="real-name">~ {element.name} + {element.surname}</p>
+                  </div>
+                </div>
+                )
+              })
+            }
           </div>
 
           <div className="field">
@@ -166,11 +225,12 @@ class RachadaForm extends Component {
                 </a>
               </div>
             ) : (
-              <button className="button is-link is-large">Criar Rachada</button>
+              ''
             )}
           </div>
         </div>
-      </div>
+        <button type="submit" className="button is-link is-large" onSubmit={this.handleSubmit}>Criar Rachada</button>
+      </form>
     );
   }
 }
