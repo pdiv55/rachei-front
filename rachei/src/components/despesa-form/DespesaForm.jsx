@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Link from "../link/Link";
+import { Redirect } from 'react-router-dom';
 import "./despesa-form.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -15,13 +16,29 @@ class DespesaForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      name: '',
+      value: '',
+      date: '',
       isMemberSearch: false,
       isEdit: false,
-      users: [],
+      users: this.props.location.state.users,
+      currentsearch: '',
+      chosenFromUser: '',
+      chosenToUsers: [],
     };
+
+    this.handleChosenUsers = this.handleChosenUsers.bind(this);
+    this.handleFromUser = this.handleFromUser.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleMemberSearch = event => {
+  handleChange(event) {
+    const state = {};
+    state[event.target.name] = event.target.value;
+    this.setState(state);
+  }
+
+  handleMemberSearch = (event) => {
     const state = event.target.value;
     this.setState({ currentsearch: state });
     if (state === "") {
@@ -37,15 +54,56 @@ class DespesaForm extends Component {
     }, 100);
   };
 
-  componentWillMount() {
-    axios.get(process.env.REACT_APP_DEV_API_URL + "/users/group/" + this.props.match.params.groupId)
+  handleFromUser (user) {
+    const chosenFromUser = user;
+    this.setState({ chosenFromUser: chosenFromUser });
+  }
+
+  handleChosenUsers (id, event) {
+    const chosenToUsers = this.state.chosenToUsers;
+    if (event) {
+      chosenToUsers.push(id);
+      this.setState({
+        chosenToUsers: chosenToUsers
+      })
+    } else {
+      const filteredUsers = chosenToUsers.filter(element => {
+        return element !== id;
+      })
+      this.setState({
+        chosenToUsers: filteredUsers
+      })
+    }
+  }
+
+  handleSubmit (event) {
+    event.preventDefault();
+    const expense = {
+      name: this.state.name,
+      value: this.state.value,
+      date: this.state.date,
+      from: this.state.chosenFromUser._id,
+      to: this.state.chosenToUsers,
+    }
+
+    axios.post(process.env.REACT_APP_DEV_API_URL + '/expenses/create/' + this.props.match.params.id, expense)
     .then(response => {
-      console.log(response);
+      this.setState({
+        name: '',
+        value: '',
+        date: '',
+        from: '',
+        to: [],
+        chosenFromUser: ''
+      })
+      (<Redirect to={`/rachada/${this.props.match.params.id}`}/>)
+    })
+    .catch(error => {
+      console.log(error);
     })
   }
 
   render() {
-    const members = [1, 2, 3];
     return (
       <div>
         <Link to="/rachada" className="button return">
@@ -62,14 +120,14 @@ class DespesaForm extends Component {
           </h2>
         </div>
 
-        <div className="form-container">
+        <form className="form-container" onSubmit={this.handleSubmit}>
           <button className="button is-primary bill">
             <FontAwesomeIcon icon={faFileInvoice} />+
           </button>
           <div className="field">
             <label className="label">Name</label>
             <div className="control">
-              <input className="input" type="text" placeholder="ex: Drinks" />
+              <input className="input" type="text" placeholder="ex: Drinks" name="name" value={this.state.name} onChange={(e) => this.handleChange(e)}/>
             </div>
           </div>
 
@@ -77,18 +135,20 @@ class DespesaForm extends Component {
             <label className="label">Valor</label>
             <div className="control">
               <input
-                className="input is-success"
+                className="input"
                 type="number"
                 placeholder="ex: 36.00"
+                name="value"
+                value={this.state.value}
+                onChange={(e) => this.handleChange(e)}
               />
             </div>
-            <p className="help is-success">This username is available</p>
           </div>
 
           <div className="field">
             <label className="label">Data</label>
             <div className="control">
-              <input className="input" type="date" />
+              <input className="input" type="date" name="date" value={this.state.date} onChange={(e) => this.handleChange(e)}/>
             </div>
           </div>
 
@@ -103,14 +163,28 @@ class DespesaForm extends Component {
                 onBlur={this.handleMemberBlur}
               />
             </div>
-            {this.state.isMemberSearch ? <SuggestionBox /> : ""}
+            {this.state.isMemberSearch ? <SuggestionBox items={this.state.users}  pickItem={this.handleFromUser}/> : ""}
+            {
+              (this.state.chosenFromUser)
+              ?
+                <div className="suggestion-line">
+                  <div className="suggestion-info">
+                    <p>{this.state.chosenFromUser.username}</p>
+                  </div>
+                  <div className="suggestion-info">
+                    <p className="real-name">~ {this.state.chosenFromUser.name} + {this.state.chosenFromUser.surname}</p>
+                  </div>
+                </div>
+              :
+              ''
+            }
           </div>
 
           <div className="field">
             <label className="label">Para</label>
             <div className="checkbox-container">
-              {members.map(() => (
-                <MemberCheckbox />
+              {this.state.users.map((element, index) => (
+                <MemberCheckbox key={index} user={element} handleUser={this.handleChosenUsers}/>
               ))}
             </div>
           </div>
@@ -128,12 +202,12 @@ class DespesaForm extends Component {
                 </a>
               </div>
             ) : (
-              <button className="button is-link is-large">
+              <button type="submit" className="button is-link is-large" onClick={this.handleSubmit}>
                 Adicionar Despesa
               </button>
             )}
           </div>
-        </div>
+        </form>
       </div>
     );
   }

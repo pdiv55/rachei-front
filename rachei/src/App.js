@@ -93,7 +93,7 @@ class App extends Component {
           />
           <ProtectedRoute loggedIn={this.state.loggedin} path="/rachada-form" component={RachadaForm} />
           <ProtectedRoute loggedIn={this.state.loggedin} path="/rachada/:id" component={RachadaView} />
-          <ProtectedRoute loggedIn={this.state.loggedin} path="/despesa-form/:groupId" component={DespesaForm} />
+          <ProtectedRoute loggedIn={this.state.loggedin} path="/despesa-form/:id" component={DespesaForm} />
           <ProtectedRoute loggedIn={this.state.loggedin} path="/my-carteira" component={Carteira} />
           <ProtectedRoute loggedIn={this.state.loggedin} path="/logout" component={Logout} />
         </Switch>

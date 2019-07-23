@@ -5,7 +5,7 @@ import DespesaTile from "./DespesaTile";
 
 class ContainerDespesas extends Component {
   render() {
-    const { expenses, groupId } = this.props;
+    const { expenses, users, rachada } = this.props;
     return (
       <div className="despesa-container">
         {expenses.map((element, index) => (
@@ -17,7 +17,12 @@ class ContainerDespesas extends Component {
             <p>numero</p>
           </div>
           <Link
-            to={`/despesa-form/${groupId}`}
+            to={{
+              pathname: `/despesa-form/${rachada._id}`,
+              state: {
+                users: users
+              }
+            }}
             className="button is-primary is-rounded is-large"
           >
             Adicionar Despesa

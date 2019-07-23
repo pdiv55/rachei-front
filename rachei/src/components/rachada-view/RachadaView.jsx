@@ -5,16 +5,15 @@ import ContainerEquilibrio from "../container-equilibrio/ContainerEquilibrio";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
 import "./rachada-view.css";
-import axios from '../../utils/interceptor';
 
 class RachadaView extends Component {
   constructor(props) {
     super(props);
     this.state = {
       equilibrio: false,
-      rachada: {},
-      expenses: [],
-      isLoading: true
+      users: this.props.location.state.users,
+      expenses: this.props.location.state.expenses,
+      rachada: this.props.location.state.rachada,
     };
   }
 
@@ -26,25 +25,8 @@ class RachadaView extends Component {
     this.setState({ equilibrio: false });
   };
 
-  async componentWillMount() {
-    const id = this.props.match.params.id;
-    const group = axios.get(process.env.REACT_APP_DEV_API_URL + "/groups/" + id);
-    const expenses = axios.get(process.env.REACT_APP_DEV_API_URL + "/expenses/group/" + id);
-    await axios.all([group, expenses])
-    .then(axios.spread((group, expenses) => {
-      console.log(group);
-      console.log(expenses);
-      this.setState({ rachada: group.data, expenses: expenses.data, isLoading: false });
-    }))
-    .catch(err => {
-      console.log(err);
-    })
-  }
-
   render() {
     return (
-      (!this.state.isLoading) 
-      ?
       <div>
         <div className="actions-container">
           <Link to="/my-rachadas" className="button return">
@@ -83,12 +65,10 @@ class RachadaView extends Component {
           {this.state.equilibrio ? (
             <ContainerEquilibrio />
           ) : (
-            <ContainerDespesas expenses={this.state.expenses} groupId={this.state.rachada._id}/>
+            <ContainerDespesas expenses={this.state.expenses} rachada={this.state.rachada} users={this.state.users}/>
           )}
         </div>
       </div>
-      :
-      <p>Carregando...</p>
     );
   }
 }

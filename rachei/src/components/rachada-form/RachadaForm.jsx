@@ -24,7 +24,7 @@ class RachadaForm extends Component {
     };
 
     this.getUsers = this.getUsers.bind(this);
-    this.choseUser = this.choseUser.bind(this);
+    this.handleChosenUsers = this.handleChosenUsers.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -80,6 +80,16 @@ class RachadaForm extends Component {
     this.setState({ isCurrencySearch: false });
   };
 
+  handleChosenUsers (user) {
+    const chosenUsers = this.state.chosenUsers;
+    chosenUsers.push(user);
+    let users = this.state.users;
+    users = users.filter(element => {
+      return chosenUsers.indexOf(element) < 0;
+    })
+    this.setState({ chosenUsers: chosenUsers, users: users });
+  }
+
   handleSubmit(event) {
     event.preventDefault();
     const chosenUsers = this.state.chosenUsers.map(element => {
@@ -93,21 +103,17 @@ class RachadaForm extends Component {
     }
     axios.post(process.env.REACT_APP_DEV_API_URL + "/groups/create/", group)
     .then(response => {
-      return (<Redirect to={`/rachada/${response.data._id}`}/>)
+      this.setState({
+        name: '',
+        description: '',
+        currency: '',
+        users: [],
+        chosenUsers: [],
+      })  
     })
     .catch(err => {
       console.log(err);
     })
-  }
-
-  choseUser(user) {
-    const chosenUsers = this.state.chosenUsers;
-    chosenUsers.push(user);
-    let users = this.state.users;
-    users = users.filter(element => {
-      return chosenUsers.indexOf(element) < 0;
-    })
-    this.setState({ chosenUsers: chosenUsers, users: users });
   }
 
   render() {
@@ -181,7 +187,7 @@ class RachadaForm extends Component {
                 value={this.state.currentsearch}
               />
             </div>
-            {this.state.isMemberSearch ? <SuggestionBox items={this.state.users} pickItem={this.choseUser}/> : ""}
+            {this.state.isMemberSearch ? <SuggestionBox items={this.state.users} pickItem={this.handleChosenUsers}/> : ""}
             {
               this.state.chosenUsers.map((element, index) => {
                 return ( 
