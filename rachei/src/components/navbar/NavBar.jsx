@@ -3,11 +3,32 @@ import Link from "../link/Link";
 import "./navbar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import axios from "../../utils/interceptor";
 
 class NavBar extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.logout = this.logout.bind(this);
+  }
+
+  logout () {
+    const { updateStatus } = this.props;
+    axios.get(process.env.REACT_APP_DEV_API_URL + "/auth/logout/")
+    .then(() => {
+      console.log('entrou');
+      localStorage.removeItem('authorization');
+      updateStatus(true);
+    })
+    .catch(error => {
+      console.log(error);
+    })
+  }
+
   render() {
     const loggedStatus = this.props.loggedin;
-    const name = this.props.name;
+    const user = this.props.user;
 
     return (
       <div>
@@ -73,12 +94,10 @@ class NavBar extends Component {
                   >
                     <FontAwesomeIcon icon={faUser} />
                   </Link>
-                  <p className="title is-6">Oi, {name} 👋</p>
-                  <div className="buttons">
-                    <Link to="/logout" className="button is-danger">
+                  <p className="title is-6">Oi, {user.name} 👋</p>
+                  <button className="button is-danger" onClick={this.logout}>
                       <strong>Log Out</strong>
-                    </Link>
-                  </div>
+                  </button>
                 </div>
               </div>
             </div>

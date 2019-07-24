@@ -30,8 +30,10 @@ class UserForm extends Component {
   }
 
   componentWillMount() {
-    if (this.props.location.state.isEdit) {
-      this.setState({ isEdit: true });
+    if (this.props.location.state) {
+      if (this.props.location.state.isEdit) {
+        this.setState({ isEdit: true });
+      }
     }
   }
 
@@ -82,7 +84,7 @@ class UserForm extends Component {
     const state = this.state;
     if (state.validationClass === "help is-danger") {
       this.setState({
-        message: "Necessário validar todos os campos!"
+        message: "Campos com erro!"
       });
       return;
     }
@@ -92,6 +94,7 @@ class UserForm extends Component {
     for (let i = 0; i <= 6; i++) {
       if (stateArray[i][1] === "") {
         formValidator = false;
+        this.setState({ message: 'Necessário preencher todos os campos' })
       }
     }
 
@@ -100,31 +103,21 @@ class UserForm extends Component {
         .post(process.env.REACT_APP_DEV_API_URL + "/auth/signup", state)
         .then(response => {
           if (response.data.message) {
-            const formData = new FormData();
-            formData.append("image", this.state.file);
-            axios
-              .post(
-                process.env.REACT_APP_DEV_API_URL +
-                  "/files/upload/user/" +
-                  response.data.data._id,
-                formData
-              )
-              .then(data => {
-                console.log(data);
-                this.setState({
-                  username: "",
-                  name: "",
-                  surname: "",
-                  cpf: "",
-                  email: "",
-                  password: "",
-                  repassword: "",
-                  message: response.data.message
-                });
-              })
-              .catch(error => {
-                console.log(error);
-              });
+            this.setState({
+              username: "",
+              name: "",
+              surname: "",
+              cpf: "",
+              email: "",
+              password: "",
+              repassword: "",
+              message: response.data.message
+            });
+            if (this.state.file) {
+              const formData = new FormData();
+              formData.append("image", this.state.file);
+              axios.post(process.env.REACT_APP_DEV_API_URL + "/files/upload/user/" + response.data.data._id, formData);
+            }
           } else {
             this.setState({
               message: "Tente novamente"

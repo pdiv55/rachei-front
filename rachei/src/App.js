@@ -30,6 +30,7 @@ class App extends Component {
     };
 
     this.loginUser = this.loginUser.bind(this);
+    this.updateLoginStatus = this.updateLoginStatus.bind(this);
   }
 
   componentWillMount() {
@@ -68,10 +69,16 @@ class App extends Component {
       });
   }
 
+  updateLoginStatus(answer) {
+    if (answer) {
+      this.setState({ loggedin: false });
+    }
+  }
+
   render() {
     return (
       <div className="app">
-        <NavBar loggedin={this.state.loggedin} name={this.state.user.name} />
+        <NavBar loggedin={this.state.loggedin} user={this.state.user} updateStatus={this.updateLoginStatus} />
         <Switch>
           <Route
             exact
@@ -91,7 +98,7 @@ class App extends Component {
             }}
           />
           <Route path="/forgot-password" component={ForgotPassword} />
-          <Route path="/new-password" component={NewPassword} />
+          <Route path="/new-password/:token" component={NewPassword} />
           <ProtectedRoute
             path="/my-rachadas"
             loggedIn={this.state.loggedin}

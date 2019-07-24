@@ -1,31 +1,49 @@
 import React, { Component } from "react";
-import Link from "../link/Link";
 import "./forgot-password.css";
+import axios from "../../utils/interceptor";
 
 class ForgotPassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: ""
+      email: "",
+      message: '',
     };
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
 
   handleChange(event) {
-    this.setState({ email: event.target.email });
+    const state = {};
+    state[event.target.name] = event.target.value;
+    this.setState(state);
   }
 
   handleFormSubmit(event) {
     event.preventDefault();
-    const user = {
-      email: this.state.email
-    };
-    this.props.loginUser(user);
+    axios.post(process.env.REACT_APP_DEV_API_URL + `/password/forgot/${this.state.email}`)
+    .then(response => {
+      this.setState({ 
+        message: response.data.message,
+        email: '',
+      });
+    })
+    .catch(error => {
+      console.log(error);
+    })
   }
 
   render() {
     return (
       <div>
+        {
+          (this.state.message)
+          ?
+          <div className="notification is-danger">
+            <strong>{this.state.message}</strong>
+          </div>
+          :
+          ''
+        }
         <form onSubmit={this.handleFormSubmit}>
           <div className="title-container">
             <h1 className="title">Receba um email de recuperação</h1>
@@ -51,14 +69,9 @@ class ForgotPassword extends Component {
           </div>
 
           <div className="centered-button">
-            <Link
-              to="/new-password"
-              type="submit"
-              className="button is-link is-large"
-              onSubmit={this.handleFormSubmit}
-            >
+            <button type="submit" className="button is-link is-large" onSubmit={this.handleFormSubmit}>
               Enviar email
-            </Link>
+            </button>
           </div>
         </form>
       </div>

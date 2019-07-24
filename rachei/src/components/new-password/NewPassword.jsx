@@ -1,19 +1,24 @@
 import React, { Component } from "react";
 import Link from "../link/Link";
 import "./new-password.css";
+import axios from "../../utils/interceptor";
 
 class NewPassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      user: '',
       password: "",
-      repassword: ""
+      repassword: "",
+      message: '',
     };
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
 
   handleChange(event) {
-    this.setState({ email: event.target.password });
+    const state = {};
+    state[event.target.name] = event.target.value;
+    this.setState(state);
   }
 
   handleFormSubmit(event) {
@@ -24,9 +29,25 @@ class NewPassword extends Component {
     this.props.loginUser(user);
   }
 
+  componentWillMount () {
+    axios.get(process.env.REACT_APP_DEV_API_URL + `/password/reset/${this.props.match.params.token}`)
+    .then(response => {
+      if (response.data.message) {
+        this.setState({ message: response.data.message });
+      } else {
+        this.setState({ user: response.data });
+      }
+    })
+    .catch(error => {
+      console.log(error);
+    })
+  }
+
   render() {
     return (
       <div>
+        {(this.state.message === '')
+        ?
         <form onSubmit={this.handleFormSubmit}>
           <div className="title-container">
             <h1 className="title">Crie uma nova senha</h1>
@@ -75,6 +96,9 @@ class NewPassword extends Component {
             </Link>
           </div>
         </form>
+        :
+        <p>{this.state.message}</p>
+        }
       </div>
     );
   }
