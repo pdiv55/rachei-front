@@ -1,16 +1,19 @@
 import React, { Component } from "react";
 import "./App.css";
 import { Switch, Route } from "react-router-dom";
-import ProtectedRoute from './components/protected-route/ProtectedRoute';
+import ProtectedRoute from "./components/protected-route/ProtectedRoute";
 import Home from "./components/home/Home";
 import NavBar from "./components/navbar/NavBar";
-import Signup from "./components/signup/Signup";
+import UserForm from "./components/user-form/UserForm";
 import Signin from "./components/signin/Signin";
+import ForgotPassword from "./components/forgot-password/ForgotPassword";
+import NewPassword from "./components/new-password/NewPassword";
 import MyRachadas from "./components/my-rachadas/MyRachadas";
 import RachadaForm from "./components/rachada-form/RachadaForm";
 import RachadaView from "./components/rachada-view/RachadaView";
 import DespesaForm from "./components/despesa-form/DespesaForm";
 import Carteira from "./components/carteira/Carteira";
+import Deposit from "./components/deposit/Deposit";
 import Logout from "./components/logout/Logout";
 import Footer from "./components/footer/Footer";
 import "bulma/css/bulma.css";
@@ -31,31 +34,34 @@ class App extends Component {
 
   componentWillMount() {
     window.scrollTo(0, 0);
-    if (localStorage.getItem('authorization') && !this.state.loggedin) this.checkLogin();
-  }
-  
-  checkLogin () {
-    axios.get(process.env.REACT_APP_DEV_API_URL + "/auth/refresh/")
-    .then(response => {
-      this.setState({
-        loggedin: true,
-        loginType: "",
-        loginMessage: "",
-        user: response.data,
-      });
-    })
+    if (localStorage.getItem("authorization") && !this.state.loggedin)
+      this.checkLogin();
   }
 
-  loginUser(user) {
-    axios.post(process.env.REACT_APP_DEV_API_URL + "/auth/login/", user)
+  checkLogin() {
+    axios
+      .get(process.env.REACT_APP_DEV_API_URL + "/auth/refresh/")
       .then(response => {
         this.setState({
           loggedin: true,
           loginType: "",
           loginMessage: "",
-          user: response.data.user,
+          user: response.data
         });
-        localStorage.setItem('authorization', response.data.token);
+      });
+  }
+
+  loginUser(user) {
+    axios
+      .post(process.env.REACT_APP_DEV_API_URL + "/auth/login/", user)
+      .then(response => {
+        this.setState({
+          loggedin: true,
+          loginType: "",
+          loginMessage: "",
+          user: response.data.user
+        });
+        localStorage.setItem("authorization", response.data.token);
       })
       .catch(error => {
         console.log(error);
@@ -72,7 +78,7 @@ class App extends Component {
             path="/"
             render={() => <Home loggedin={this.state.loggedin} />}
           />
-          <Route path="/signup" component={Signup} />
+          <Route path="/user-form" component={UserForm} />
           <Route
             path="/signin"
             render={() => {
@@ -84,6 +90,8 @@ class App extends Component {
               );
             }}
           />
+          <Route path="/forgot-password" component={ForgotPassword} />
+          <Route path="/new-password" component={NewPassword} />
           <ProtectedRoute
             path="/my-rachadas"
             loggedIn={this.state.loggedin}
@@ -91,11 +99,36 @@ class App extends Component {
               return <MyRachadas groups={this.state.groups} />;
             }}
           />
-          <ProtectedRoute loggedIn={this.state.loggedin} path="/rachada-form" component={RachadaForm} />
-          <ProtectedRoute loggedIn={this.state.loggedin} path="/rachada/:id" component={RachadaView} />
-          <ProtectedRoute loggedIn={this.state.loggedin} path="/despesa-form/:id" component={DespesaForm} />
-          <ProtectedRoute loggedIn={this.state.loggedin} path="/my-carteira" component={Carteira} />
-          <ProtectedRoute loggedIn={this.state.loggedin} path="/logout" component={Logout} />
+          <ProtectedRoute
+            loggedIn={this.state.loggedin}
+            path="/rachada-form"
+            component={RachadaForm}
+          />
+          <ProtectedRoute
+            loggedIn={this.state.loggedin}
+            path="/rachada/:id"
+            component={RachadaView}
+          />
+          <ProtectedRoute
+            loggedIn={this.state.loggedin}
+            path="/despesa-form/:id"
+            component={DespesaForm}
+          />
+          <ProtectedRoute
+            loggedIn={this.state.loggedin}
+            path="/my-carteira"
+            component={Carteira}
+          />
+          <ProtectedRoute
+            loggedIn={this.state.loggedin}
+            path="/deposit"
+            component={Deposit}
+          />
+          <ProtectedRoute
+            loggedIn={this.state.loggedin}
+            path="/logout"
+            component={Logout}
+          />
         </Switch>
         <Footer />
       </div>

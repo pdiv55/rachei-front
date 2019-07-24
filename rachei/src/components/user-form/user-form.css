@@ -4,9 +4,9 @@
 }
 
 .upload-wrapper {
-  position: relative;
   overflow: hidden;
-  display: inline-block;
+  justify-content: center;
+  display: flex;
 }
 
 .upload-wrapper button {
@@ -14,10 +14,10 @@
   font-size: 20px;
 }
 
-.upload-wrapper input[type=file] {
-  font-size: 100px;
+.upload-wrapper input[type="file"] {
   position: absolute;
   left: 0;
-  top: 0;
+  width: 53px;
+  height: 40px;
   opacity: 0;
 }

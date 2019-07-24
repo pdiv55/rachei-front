@@ -60,7 +60,7 @@ class Home extends Component {
             </div>
           </div>
           <div className="centered-button specific">
-            <Link to="/signup">
+            <Link to="/user-form">
               <button className="button is-link is-large">
                 Começar a Rachar
               </button>

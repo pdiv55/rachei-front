@@ -38,7 +38,7 @@ class Signin extends Component {
 
   render() {
     if (this.state.redirect === true) {
-      return <Redirect to="/" />;
+      return <Redirect to="/my-rachadas" />;
     } else {
       return (
         <div>
@@ -92,7 +92,13 @@ class Signin extends Component {
                   Acessar
                 </button>
                 <p>
-                  Ainda não se cadastrou? <a href="/signup">Crie sua conta</a>
+                  Ainda não se cadastrou?{" "}
+                  <a href="/user-form">Crie sua conta</a>
+                </p>
+                <p>
+                  {" "}
+                  Esqueceu sua senha?{" "}
+                  <a href="/forgot-password">Crie uma nova</a>
                 </p>
               </div>
             </div>

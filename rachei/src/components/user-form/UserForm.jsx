@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import "./signup.css";
+import "./user-form.css";
+import Link from "../link/Link";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCamera } from "@fortawesome/free-solid-svg-icons";
+import { faCamera, faEdit } from "@fortawesome/free-solid-svg-icons";
 require("dotenv").config();
 
-class Signup extends Component {
+class UserForm extends Component {
   constructor(props) {
     super(props);
 
@@ -16,50 +17,57 @@ class Signup extends Component {
       cpf: "",
       email: "",
       password: "",
-      repassword: '',
-      file: '',
-      field: '',
-      validationClass: '', 
-      fieldMessage: '',
+      repassword: "",
+      file: "",
+      field: "",
+      validationClass: "",
+      fieldMessage: "",
       message: "",
+      isEdit: false
     };
 
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
 
+  componentWillMount() {
+    if (this.props.location.state.isEdit) {
+      this.setState({ isEdit: true });
+    }
+  }
+
   handleChange(event) {
     const state = {};
     state[event.target.name] = event.target.value;
-    if (event.target.name === 'email') {
-      state.field = 'email';
+    if (event.target.name === "email") {
+      state.field = "email";
       const email = event.target.value;
       const regex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
       if (regex.test(email.toLowerCase())) {
-        state.validationClass = 'help is-success';
-        state.fieldMessage = 'E-mail válido!';
+        state.validationClass = "help is-success";
+        state.fieldMessage = "E-mail válido!";
       } else {
-        state.validationClass = 'help is-danger';
-        state.fieldMessage = 'E-mail inválido!';
+        state.validationClass = "help is-danger";
+        state.fieldMessage = "E-mail inválido!";
       }
-    } else if (event.target.name === 'password') {
-      state.field = 'password';
+    } else if (event.target.name === "password") {
+      state.field = "password";
       const password = event.target.value;
       if (password.length < 6) {
-        state.validationClass = 'help is-danger';
-        state.fieldMessage = 'Senha muito curta!'
+        state.validationClass = "help is-danger";
+        state.fieldMessage = "Senha muito curta!";
       } else {
-        state.validationClass = '';
-        state.fieldMessage = ''; 
+        state.validationClass = "";
+        state.fieldMessage = "";
       }
-    } else if (event.target.name === 'repassword') {
-      state.field = 'repassword';
+    } else if (event.target.name === "repassword") {
+      state.field = "repassword";
       const repassword = event.target.value;
       if (this.state.password !== repassword) {
-        state.validationClass = 'help is-danger';
-        state.fieldMessage = 'Diferente da senha!'
+        state.validationClass = "help is-danger";
+        state.fieldMessage = "Diferente da senha!";
       } else {
-        state.validationClass = '';
-        state.fieldMessage = ''; 
+        state.validationClass = "";
+        state.fieldMessage = "";
       }
     }
     this.setState(state);
@@ -72,7 +80,7 @@ class Signup extends Component {
   handleFormSubmit(event) {
     event.preventDefault();
     const state = this.state;
-    if (state.validationClass === 'help is-danger') {
+    if (state.validationClass === "help is-danger") {
       this.setState({
         message: "Necessário validar todos os campos!"
       });
@@ -82,43 +90,50 @@ class Signup extends Component {
     let formValidator = true;
     const stateArray = Object.entries(state);
     for (let i = 0; i <= 6; i++) {
-      if (stateArray[i][1] === '') {
+      if (stateArray[i][1] === "") {
         formValidator = false;
       }
     }
 
     if (formValidator) {
-      axios.post(process.env.REACT_APP_DEV_API_URL + "/auth/signup", state)
-      .then(response => {
-        if (response.data.message) {
-          const formData = new FormData();
-          formData.append('image',this.state.file);
-          axios.post(process.env.REACT_APP_DEV_API_URL + '/files/upload/user/' + response.data.data._id, formData)
-          .then(data => {
-            console.log(data);
+      axios
+        .post(process.env.REACT_APP_DEV_API_URL + "/auth/signup", state)
+        .then(response => {
+          if (response.data.message) {
+            const formData = new FormData();
+            formData.append("image", this.state.file);
+            axios
+              .post(
+                process.env.REACT_APP_DEV_API_URL +
+                  "/files/upload/user/" +
+                  response.data.data._id,
+                formData
+              )
+              .then(data => {
+                console.log(data);
+                this.setState({
+                  username: "",
+                  name: "",
+                  surname: "",
+                  cpf: "",
+                  email: "",
+                  password: "",
+                  repassword: "",
+                  message: response.data.message
+                });
+              })
+              .catch(error => {
+                console.log(error);
+              });
+          } else {
             this.setState({
-              username: "",
-              name: "",
-              surname: "",
-              cpf: "",
-              email: "",
-              password: "",
-              repassword: '',
-              message: response.data.message
+              message: "Tente novamente"
             });
-          })
-          .catch(error => {
-            console.log(error);
-          })
-        } else {
-          this.setState({
-            message: "Tentar novamente"
-          });
-        }
-      });
+          }
+        });
     } else {
       this.setState({
-        message: "Necessário preencher todos os campos!"
+        message: "Por favor, preencha todos os campos!"
       });
     }
   }
@@ -126,29 +141,47 @@ class Signup extends Component {
   render() {
     return (
       <form onSubmit={this.handleFormSubmit}>
+        {this.state.isEdit ? (
+          <Link to="/my-rachadas" className="button return">
+            {"< Retornar ao Meu Painel"}
+          </Link>
+        ) : (
+          ""
+        )}
         <div className="title-container">
-          <h1 className="title">Cadastro de Rachador</h1>
-          <h2 className="subtitle">
-            Comece a rachar com seus amigos em um click !
-          </h2>
-          {
-            (this.state.message)
-            ?
-          <div className="notification is-danger">
-            <strong>{this.state.message}</strong>
-          </div>
-          :
-          ''
-          }
-          
+          {this.state.isEdit ? (
+            <h1 className="title">Edite seu Cadastro de Rachador</h1>
+          ) : (
+            <h1 className="title">Cadastro de Rachador</h1>
+          )}
+          {this.state.isEdit ? (
+            <h2 className="subtitle">
+              Atualize aqui suas informações de usuário
+            </h2>
+          ) : (
+            <h2 className="subtitle">
+              Comece a rachar com seus amigos em um click !
+            </h2>
+          )}
+          {this.state.message ? (
+            <div className="notification is-danger">
+              <strong>{this.state.message}</strong>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
 
         <div className="form-container">
           <div className="upload-wrapper">
             <button className="button is-primary camera">
               <FontAwesomeIcon icon={faCamera} />+
+              <input
+                type="file"
+                name="image"
+                onChange={e => this.handleFile(e)}
+              />
             </button>
-            <input type="file" name="image" onChange={(e) => this.handleFile(e)}/>
           </div>
           <div className="field">
             <label className="label">Username</label>
@@ -167,7 +200,7 @@ class Signup extends Component {
           </div>
 
           <div className="field">
-            <label className="label">Name</label>
+            <label className="label">Nome</label>
             <div className="control">
               <input
                 name="name"
@@ -183,7 +216,7 @@ class Signup extends Component {
           </div>
 
           <div className="field">
-            <label className="label">Surname</label>
+            <label className="label">Sobrenome</label>
             <div className="control">
               <input
                 name="surname"
@@ -227,13 +260,13 @@ class Signup extends Component {
                   this.handleChange(e);
                 }}
               />
-              {
-                (this.state.field === 'email')
-                ?
-                <p className={this.state.validationClass}>{this.state.fieldMessage}</p>
-                :
-                ''
-              }
+              {this.state.field === "email" ? (
+                <p className={this.state.validationClass}>
+                  {this.state.fieldMessage}
+                </p>
+              ) : (
+                ""
+              )}
             </div>
           </div>
 
@@ -249,18 +282,18 @@ class Signup extends Component {
                   this.handleChange(e);
                 }}
               />
-              {
-                (this.state.field === 'password')
-                ?
-                <p className={this.state.validationClass}>{this.state.fieldMessage}</p>
-                :
-                ''
-              }
+              {this.state.field === "password" ? (
+                <p className={this.state.validationClass}>
+                  {this.state.fieldMessage}
+                </p>
+              ) : (
+                ""
+              )}
             </div>
           </div>
 
           <div className="field">
-            <label className="label">Re-digitar Senha</label>
+            <label className="label">Confirmar Senha</label>
             <div className="control">
               <input
                 value={this.state.repassword}
@@ -271,23 +304,30 @@ class Signup extends Component {
                   this.handleChange(e);
                 }}
               />
-              {
-                (this.state.field === 'repassword')
-                ?
-                <p className={this.state.validationClass}>{this.state.fieldMessage}</p>
-                :
-                ''
-              }
+              {this.state.field === "repassword" ? (
+                <p className={this.state.validationClass}>
+                  {this.state.fieldMessage}
+                </p>
+              ) : (
+                ""
+              )}
             </div>
           </div>
           <div className="centered-button">
-            <button
-            type="submit"
-              className="button is-link is-large"
-              onSubmit={this.handleFormSubmit}
-            >
-              Criar Conta
-            </button>
+            {this.state.isEdit ? (
+              <Link to="/" className="button is-warning is-large">
+                <FontAwesomeIcon icon={faEdit} />
+                Editar
+              </Link>
+            ) : (
+              <button
+                type="submit"
+                className="button is-link is-large"
+                onSubmit={this.handleFormSubmit}
+              >
+                Criar Conta
+              </button>
+            )}
           </div>
         </div>
       </form>
@@ -295,4 +335,4 @@ class Signup extends Component {
   }
 }
 
-export default Signup;
+export default UserForm;

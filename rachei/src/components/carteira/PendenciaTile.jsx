@@ -12,8 +12,8 @@ class PendenciaTile extends Component {
 
   render() {
     return (
-      <div className="notification equilibrio-tile">
-        <div className="info-equilibrios-tile">
+      <div className="notification pendency-tile">
+        <div className="info-pendency-tile">
           <p className="title is-5">Name Member</p>
           {this.state.isEarning ? (
             <p className="subtitle is-7">te deve</p>

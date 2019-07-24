@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Link from "../link/Link";
-import { Redirect } from 'react-router-dom';
+import { Redirect } from "react-router-dom";
 import "./despesa-form.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -10,21 +10,21 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import MemberCheckbox from "../member-checkbox/MemberCheckbox";
 import SuggestionBox from "../suggestion-box/SuggestionBox";
-import axios from '../../utils/interceptor';
+import axios from "../../utils/interceptor";
 
 class DespesaForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      value: '',
-      date: '',
+      name: "",
+      value: "",
+      date: "",
       isMemberSearch: false,
       isEdit: false,
       users: this.props.location.state.users,
-      currentsearch: '',
-      chosenFromUser: '',
-      chosenToUsers: [],
+      currentsearch: "",
+      chosenFromUser: "",
+      chosenToUsers: []
     };
 
     this.handleChosenUsers = this.handleChosenUsers.bind(this);
@@ -38,7 +38,7 @@ class DespesaForm extends Component {
     this.setState(state);
   }
 
-  handleMemberSearch = (event) => {
+  handleMemberSearch = event => {
     const state = event.target.value;
     this.setState({ currentsearch: state });
     if (state === "") {
@@ -50,57 +50,62 @@ class DespesaForm extends Component {
 
   handleMemberBlur = () => {
     setTimeout(() => {
-      this.setState({ isMemberSearch: false, currentsearch: '' });
+      this.setState({ isMemberSearch: false, currentsearch: "" });
     }, 100);
   };
 
-  handleFromUser (user) {
+  handleFromUser(user) {
     const chosenFromUser = user;
     this.setState({ chosenFromUser: chosenFromUser });
   }
 
-  handleChosenUsers (id, event) {
+  handleChosenUsers(id, event) {
     const chosenToUsers = this.state.chosenToUsers;
     if (event) {
       chosenToUsers.push(id);
       this.setState({
         chosenToUsers: chosenToUsers
-      })
+      });
     } else {
       const filteredUsers = chosenToUsers.filter(element => {
         return element !== id;
-      })
+      });
       this.setState({
         chosenToUsers: filteredUsers
-      })
+      });
     }
   }
 
-  handleSubmit (event) {
+  handleSubmit(event) {
     event.preventDefault();
     const expense = {
       name: this.state.name,
       value: this.state.value,
       date: this.state.date,
       from: this.state.chosenFromUser._id,
-      to: this.state.chosenToUsers,
-    }
+      to: this.state.chosenToUsers
+    };
 
-    axios.post(process.env.REACT_APP_DEV_API_URL + '/expenses/create/' + this.props.match.params.id, expense)
-    .then(response => {
-      this.setState({
-        name: '',
-        value: '',
-        date: '',
-        from: '',
-        to: [],
-        chosenFromUser: ''
+    axios
+      .post(
+        process.env.REACT_APP_DEV_API_URL +
+          "/expenses/create/" +
+          this.props.match.params.id,
+        expense
+      )
+      .then(response => {
+        this.setState({
+          name: "",
+          value: "",
+          date: "",
+          from: "",
+          to: [],
+          chosenFromUser: ""
+        })(<Redirect to={`/rachada/${this.props.match.params.id}`} />);
       })
-      (<Redirect to={`/rachada/${this.props.match.params.id}`}/>)
-    })
-    .catch(error => {
-      console.log(error);
-    })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   render() {
@@ -127,7 +132,14 @@ class DespesaForm extends Component {
           <div className="field">
             <label className="label">Name</label>
             <div className="control">
-              <input className="input" type="text" placeholder="ex: Drinks" name="name" value={this.state.name} onChange={(e) => this.handleChange(e)}/>
+              <input
+                className="input"
+                type="text"
+                placeholder="ex: Drinks"
+                name="name"
+                value={this.state.name}
+                onChange={e => this.handleChange(e)}
+              />
             </div>
           </div>
 
@@ -140,7 +152,7 @@ class DespesaForm extends Component {
                 placeholder="ex: 36.00"
                 name="value"
                 value={this.state.value}
-                onChange={(e) => this.handleChange(e)}
+                onChange={e => this.handleChange(e)}
               />
             </div>
           </div>
@@ -148,7 +160,13 @@ class DespesaForm extends Component {
           <div className="field">
             <label className="label">Data</label>
             <div className="control">
-              <input className="input" type="date" name="date" value={this.state.date} onChange={(e) => this.handleChange(e)}/>
+              <input
+                className="input"
+                type="date"
+                name="date"
+                value={this.state.date}
+                onChange={e => this.handleChange(e)}
+              />
             </div>
           </div>
 
@@ -163,28 +181,40 @@ class DespesaForm extends Component {
                 onBlur={this.handleMemberBlur}
               />
             </div>
-            {this.state.isMemberSearch ? <SuggestionBox items={this.state.users}  pickItem={this.handleFromUser}/> : ""}
-            {
-              (this.state.chosenFromUser)
-              ?
-                <div className="suggestion-line">
-                  <div className="suggestion-info">
-                    <p>{this.state.chosenFromUser.username}</p>
-                  </div>
-                  <div className="suggestion-info">
-                    <p className="real-name">~ {this.state.chosenFromUser.name} + {this.state.chosenFromUser.surname}</p>
-                  </div>
+            {this.state.isMemberSearch ? (
+              <SuggestionBox
+                items={this.state.users}
+                pickItem={this.handleFromUser}
+              />
+            ) : (
+              ""
+            )}
+            {this.state.chosenFromUser ? (
+              <div className="suggestion-line">
+                <div className="suggestion-info">
+                  <p>{this.state.chosenFromUser.username}</p>
                 </div>
-              :
-              ''
-            }
+                <div className="suggestion-info">
+                  <p className="real-name">
+                    ~ {this.state.chosenFromUser.name} +{" "}
+                    {this.state.chosenFromUser.surname}
+                  </p>
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
 
           <div className="field">
             <label className="label">Para</label>
             <div className="checkbox-container">
               {this.state.users.map((element, index) => (
-                <MemberCheckbox key={index} user={element} handleUser={this.handleChosenUsers}/>
+                <MemberCheckbox
+                  key={index}
+                  user={element}
+                  handleUser={this.handleChosenUsers}
+                />
               ))}
             </div>
           </div>
@@ -192,17 +222,21 @@ class DespesaForm extends Component {
           <div className="centered-button">
             {this.state.isEdit ? (
               <div>
-                <a className="button is-warning" href="/">
+                <Link to="/" className="button is-warning">
                   <FontAwesomeIcon icon={faEdit} />
                   Editar
-                </a>
-                <a className="button is-danger" href="/">
+                </Link>
+                <Link to="/" className="button is-danger">
                   <FontAwesomeIcon icon={faTrashAlt} />
                   Deletar
-                </a>
+                </Link>
               </div>
             ) : (
-              <button type="submit" className="button is-link is-large" onClick={this.handleSubmit}>
+              <button
+                type="submit"
+                className="button is-link is-large"
+                onClick={this.handleSubmit}
+              >
                 Adicionar Despesa
               </button>
             )}

@@ -15,17 +15,19 @@ class Carteira extends Component {
           </h2>
         </div>
 
-        <div className="equilibrio-container">
+        <div className="wallet-container">
+          <p className="title is-5">Seu Saldo</p>
+          <p>numero</p>
+        </div>
+
+        <div className="pendency-container">
           {pendencias.map(() => (
             <PendenciaTile />
           ))}
         </div>
 
         <div className="centered-button">
-          <Link
-            className="button is-primary is-rounded is-large"
-            to="/rachada-form"
-          >
+          <Link className="button is-primary is-rounded is-large" to="/deposit">
             Depositar Grana
           </Link>
         </div>

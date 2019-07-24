@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Link from "../link/Link";
 import "./navbar.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 class NavBar extends Component {
   render() {
@@ -25,7 +27,7 @@ class NavBar extends Component {
               <div className="navbar-end">
                 <div className="navbar-item">
                   <div className="buttons">
-                    <Link to="/signup" className="button is-primary">
+                    <Link to="/user-form" className="button is-primary">
                       <strong>Sign up</strong>
                     </Link>
                     <Link to="/signin" className="button is-light">
@@ -43,7 +45,7 @@ class NavBar extends Component {
             aria-label="main navigation"
           >
             <div className="navbar-brand">
-              <Link to="/" className="navbar-item">
+              <Link to="/" className="navbar-logo">
                 <img src="/img/logo.svg" width="80%" alt="rachei-logo" />
               </Link>
             </div>
@@ -60,6 +62,17 @@ class NavBar extends Component {
 
               <div className="navbar-end">
                 <div className="navbar-item">
+                  <Link
+                    to={{
+                      pathname: "/user-form",
+                      state: {
+                        isEdit: true
+                      }
+                    }}
+                    className="profile-pic"
+                  >
+                    <FontAwesomeIcon icon={faUser} />
+                  </Link>
                   <p className="title is-6">Oi, {name} 👋</p>
                   <div className="buttons">
                     <Link to="/logout" className="button is-danger">

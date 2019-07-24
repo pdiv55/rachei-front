@@ -1,0 +1,40 @@
+.wallet-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ffdd57;
+  color: black;
+  border-width: 1px;
+  padding-bottom: calc(0.375em - 1px);
+  padding-left: 0.75em;
+  padding-right: 0.75em;
+  padding-top: calc(0.375em - 1px);
+  text-align: center;
+  white-space: nowrap;
+  width: 17%;
+  margin: 0 auto 40px auto;
+  -webkit-appearance: none;
+  border: 1px solid transparent;
+  border-radius: 290486px;
+  box-shadow: none;
+  height: 20%;
+  justify-content: flex-start;
+  line-height: 1.5;
+}
+
+.pendency-container {
+  padding: 0 25%;
+}
+
+.pendency-tile {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 140px;
+}
+
+.info-pendency-tile {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}

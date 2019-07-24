@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Link from "../link/Link";
-import { Redirect } from 'react-router-dom';
 import SuggestionBox from "../suggestion-box/SuggestionBox";
 import "./rachada-form.css";
 import axios from "../../utils/interceptor";
@@ -29,7 +28,8 @@ class RachadaForm extends Component {
   }
 
   getUsers() {
-    axios.get(process.env.REACT_APP_DEV_API_URL + "/users/")
+    axios
+      .get(process.env.REACT_APP_DEV_API_URL + "/users/")
       .then(response => {
         this.setState({
           users: response.data
@@ -62,7 +62,7 @@ class RachadaForm extends Component {
 
   handleMemberBlur = () => {
     setTimeout(() => {
-      this.setState({ isMemberSearch: false, currentsearch: '' });
+      this.setState({ isMemberSearch: false, currentsearch: "" });
     }, 100);
   };
 
@@ -80,13 +80,13 @@ class RachadaForm extends Component {
     this.setState({ isCurrencySearch: false });
   };
 
-  handleChosenUsers (user) {
+  handleChosenUsers(user) {
     const chosenUsers = this.state.chosenUsers;
     chosenUsers.push(user);
     let users = this.state.users;
     users = users.filter(element => {
       return chosenUsers.indexOf(element) < 0;
-    })
+    });
     this.setState({ chosenUsers: chosenUsers, users: users });
   }
 
@@ -94,26 +94,27 @@ class RachadaForm extends Component {
     event.preventDefault();
     const chosenUsers = this.state.chosenUsers.map(element => {
       return element._id;
-    })
+    });
     const group = {
       name: this.state.name,
       description: this.state.description,
       currency: this.state.currency,
-      users: chosenUsers,
-    }
-    axios.post(process.env.REACT_APP_DEV_API_URL + "/groups/create/", group)
-    .then(response => {
-      this.setState({
-        name: '',
-        description: '',
-        currency: '',
-        users: [],
-        chosenUsers: [],
-      })  
-    })
-    .catch(err => {
-      console.log(err);
-    })
+      users: chosenUsers
+    };
+    axios
+      .post(process.env.REACT_APP_DEV_API_URL + "/groups/create/", group)
+      .then(response => {
+        this.setState({
+          name: "",
+          description: "",
+          currency: "",
+          users: [],
+          chosenUsers: []
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   render() {
@@ -157,7 +158,7 @@ class RachadaForm extends Component {
                 placeholder="ex: Viagem Ilhabela"
                 maxLength="15"
                 value={this.state.name}
-                onChange={(e) => this.handleChange(e)}
+                onChange={e => this.handleChange(e)}
               />
             </div>
           </div>
@@ -170,7 +171,7 @@ class RachadaForm extends Component {
                 className="textarea"
                 placeholder="ex: Rachada para feriadão com squad"
                 value={this.state.description}
-                onChange={(e) => this.handleChange(e)}
+                onChange={e => this.handleChange(e)}
               />
             </div>
           </div>
@@ -187,21 +188,28 @@ class RachadaForm extends Component {
                 value={this.state.currentsearch}
               />
             </div>
-            {this.state.isMemberSearch ? <SuggestionBox items={this.state.users} pickItem={this.handleChosenUsers}/> : ""}
-            {
-              this.state.chosenUsers.map((element, index) => {
-                return ( 
+            {this.state.isMemberSearch ? (
+              <SuggestionBox
+                items={this.state.users}
+                pickItem={this.handleChosenUsers}
+              />
+            ) : (
+              ""
+            )}
+            {this.state.chosenUsers.map((element, index) => {
+              return (
                 <div key={index} className="suggestion-line">
                   <div className="suggestion-info">
                     <p>{element.username}</p>
                   </div>
                   <div className="suggestion-info">
-                    <p className="real-name">~ {element.name} + {element.surname}</p>
+                    <p className="real-name">
+                      ~ {element.name} + {element.surname}
+                    </p>
                   </div>
                 </div>
-                )
-              })
-            }
+              );
+            })}
           </div>
 
           <div className="field">
@@ -221,21 +229,29 @@ class RachadaForm extends Component {
           <div className="centered-button">
             {this.state.isEdit ? (
               <div>
-                <a className="button is-warning" href="/">
+                <Link to="/" className="button is-warning">
                   <FontAwesomeIcon icon={faEdit} />
                   Editar
-                </a>
-                <a className="button is-danger" href="/">
+                </Link>
+                <Link to="/" className="button is-danger">
                   <FontAwesomeIcon icon={faTrashAlt} />
                   Deletar
-                </a>
+                </Link>
               </div>
             ) : (
-              ''
+              ""
             )}
           </div>
         </div>
-        <button type="submit" className="button is-link is-large" onSubmit={this.handleSubmit}>Criar Rachada</button>
+        <div className="centered-button">
+          <button
+            type="submit"
+            className="button is-link is-large"
+            onSubmit={this.handleSubmit}
+          >
+            Criar Rachada
+          </button>
+        </div>
       </form>
     );
   }
