@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Link from "../link/Link";
-import { Redirect } from "react-router-dom";
 import "./despesa-form.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -22,6 +21,7 @@ class DespesaForm extends Component {
       isMemberSearch: false,
       isEdit: false,
       users: this.props.location.state.users,
+      usersSearch: this.props.location.state.users,
       currentsearch: "",
       chosenFromUser: "",
       chosenToUsers: []
@@ -40,12 +40,23 @@ class DespesaForm extends Component {
 
   handleMemberSearch = event => {
     const state = event.target.value;
-    this.setState({ currentsearch: state });
+    const oldText = this.state.currentsearch;
     if (state === "") {
       this.setState({ isMemberSearch: false });
     } else {
       this.setState({ isMemberSearch: true });
     }
+    let items;
+    if (state !== oldText) {
+      items = [...this.state.users];
+      const filteredItems = items.filter(e => {
+        return e.name.toUpperCase().indexOf(state.toUpperCase()) > -1;
+      })
+      this.setState({ usersSearch: filteredItems })
+    } else {
+      this.setState({ users: this.state.users });
+    }
+    this.setState({ currentsearch: state });
   };
 
   handleMemberBlur = () => {
@@ -78,30 +89,37 @@ class DespesaForm extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
+
+    const users = [...this.state.chosenToUsers];
+    users.push(this.state.chosenFromUser._id);
+
     const expense = {
       name: this.state.name,
-      value: this.state.value,
       date: this.state.date,
-      from: this.state.chosenFromUser._id,
-      to: this.state.chosenToUsers
+      group: this.props.match.params,
+      users: users,
     };
 
-    axios
-      .post(
-        process.env.REACT_APP_DEV_API_URL +
-          "/expenses/create/" +
-          this.props.match.params.id,
-        expense
-      )
+    const chosenToUsers = this.state.chosenToUsers;
+
+    const individualExpenses = chosenToUsers.map(element => {
+      return {
+        value: parseInt(this.state.value/chosenToUsers.length),
+        from: this.state.chosenFromUser._id,
+        to: element,
+      }
+    })
+
+    axios.post(process.env.REACT_APP_DEV_API_URL + "/expenses/create/" + this.props.match.params.id, { expense, individualExpenses })
       .then(response => {
-        this.setState({
-          name: "",
-          value: "",
-          date: "",
-          from: "",
-          to: [],
-          chosenFromUser: ""
-        })(<Redirect to={`/rachada/${this.props.match.params.id}`} />);
+        // this.setState({
+        //   name: "",
+        //   value: "",
+        //   date: "",
+        //   from: "",
+        //   to: [],
+        //   chosenFromUser: ""
+        // })
       })
       .catch(error => {
         console.log(error);
@@ -179,11 +197,12 @@ class DespesaForm extends Component {
                 placeholder="Procure o username do Pagador"
                 onChange={this.handleMemberSearch}
                 onBlur={this.handleMemberBlur}
+                value={this.state.currentsearch}
               />
             </div>
             {this.state.isMemberSearch ? (
               <SuggestionBox
-                items={this.state.users}
+                items={this.state.usersSearch}
                 pickItem={this.handleFromUser}
               />
             ) : (

@@ -2,10 +2,31 @@ import React, { Component } from "react";
 import Link from "../link/Link";
 import "./carteira.css";
 import PendenciaTile from "./PendenciaTile";
+import axios from "../../utils/interceptor";
 
 class Carteira extends Component {
+  constructor (props) {
+    super (props);
+
+    this.state = {
+      expenses: [],
+    }
+  }
+
+  componentWillMount () {
+    axios.get(process.env.REACT_APP_DEV_API_URL + "/expenses/user/")
+    .then(response => {
+      this.setState({
+        expenses: response.data,
+      })
+    })
+    .catch(error => {
+      console.log(error);
+    })
+  }
+  
   render() {
-    const pendencias = [0, 1, 2];
+    const expenses = this.state.expenses;
     return (
       <div>
         <div className="title-container">
@@ -21,8 +42,8 @@ class Carteira extends Component {
         </div>
 
         <div className="pendency-container">
-          {pendencias.map(() => (
-            <PendenciaTile />
+          {expenses.map((expense) => (
+            <PendenciaTile expense={expense}/>
           ))}
         </div>
 
