@@ -1,0 +1,25 @@
+.search-bar {
+  width: 60%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-left: 20%;
+  margin-bottom: 40px;
+}
+
+.search-bar button {
+  display: flex !important;
+  margin: 0px 0px 0px 10px !important;
+}
+
+.rachada-tile-container {
+  padding: 0 20px;
+  display: flex !important;
+  justify-content: center !important;
+  flex-direction: row !important;
+  flex-wrap: wrap;
+}
+
+.rachada-tile {
+  margin: 10px !important;
+}

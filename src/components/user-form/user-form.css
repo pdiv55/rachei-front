@@ -1,0 +1,23 @@
+.camera {
+  width: 8%;
+  margin: 0 auto 30px auto !important;
+}
+
+.upload-wrapper {
+  overflow: hidden;
+  justify-content: center;
+  display: flex;
+}
+
+.upload-wrapper button {
+  border-radius: 8px;
+  font-size: 20px;
+}
+
+.upload-wrapper input[type="file"] {
+  position: absolute;
+  left: 0;
+  width: 53px;
+  height: 40px;
+  opacity: 0;
+}

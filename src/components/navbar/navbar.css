@@ -1,0 +1,25 @@
+.navbar {
+  padding: 10px;
+  border-bottom: 2px solid #cccc;
+}
+
+.navbar-logo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar-item {
+  margin: 0 10px !important;
+}
+
+.profile-pic {
+  border: 1px solid;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

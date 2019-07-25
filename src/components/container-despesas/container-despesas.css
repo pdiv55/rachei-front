@@ -1,0 +1,30 @@
+.despesa-container {
+  padding: 0 25%;
+}
+
+.despesa-tile {
+  margin: 3px 0 !important;
+  border-bottom: 1px solid #cccc;
+  display: flex;
+  flex-direction: row;
+  align-content: stretch;
+}
+
+.info-tile {
+  width: 60%;
+  margin-right: 20%;
+}
+
+.totals-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.info-total {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
