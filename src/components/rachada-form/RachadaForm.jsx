@@ -33,6 +33,7 @@ class RachadaForm extends Component {
         this.setState({ isEdit: true });
       }
     }
+    if (this.state.users.length <= 0) this.getUsers();
   }
 
   getUsers() {
@@ -46,10 +47,6 @@ class RachadaForm extends Component {
       .catch(error => {
         console.log(error);
       });
-  }
-
-  componentWillMount() {
-    if (this.state.users.length <= 0) this.getUsers();
   }
 
   handleChange(event) {
@@ -215,6 +212,7 @@ class RachadaForm extends Component {
                       ~ {element.name} + {element.surname}
                     </p>
                   </div>
+                  <button className="is-danger">X</button>
                 </div>
               );
             })}

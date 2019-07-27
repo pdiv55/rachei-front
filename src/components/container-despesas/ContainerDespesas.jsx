@@ -33,6 +33,12 @@ class ContainerDespesas extends Component {
             <p>numero</p>
           </div>
         </div>
+
+        <div>
+          {expenses.map((element, index) => (
+            <DespesaTile key={index} expense={element} />
+          ))}
+        </div>
       </div>
     );
   }

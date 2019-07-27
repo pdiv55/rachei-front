@@ -1,68 +1,70 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Rachei
 
-## Available Scripts
+**Rachei is a projet proudly designed by Ironhack SP students. Rachei is the sleekest and most practical way to split bills with your friends. Create your groups to share and follow your crew's expenses in real-time. Get insight, at any given moment, on how to balance all the group's expenses. Create your personal wallet and manage your pocket-money easily by paying your debts and reminding your friends of theirs.** 
+  **To discover the platform just follow** <a href="www.rachei.herokuapp.com"><strong>this link</strong></a>
 
-In the project directory, you can run:
 
-### `npm start`
+## Contribute
+Rachei is the product of a lot of teamwork from a group of junior coders, all pull requests are welcome !
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+To start :
+- Fork this repo
+- Clone this repo
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+When you're done, enter on your console:
+- git add .
+- git commit -m "[ comment your code ]"
+- git push origin master
 
-### `npm test`
+Then create a Pull Request to suggest any optimizations to the team.
+Thanks!
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+## Setup
+Rachei's engine is built with React and MongoDB.
+The site was deployed with Heroku.
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The following dependencies must be installed :
+- express (4.16.4),
+- body-parser (1.19.0),
+- cookie-session (1.3.3),
+- dotenv (8.0.0),
+- google-trends-api (4.9.0),
+- hbs (4.0.4),
+- mongoose (5.5.7),
+- bcryptjs (2.4.3),
+- connect-flash (0.1.1),
+- passport (0.4.0),
+- passport-google-oauth20 (2.0.0),
+- passport-local (1.0.0),
+- express-session (1.16.1).
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Arvore de Rotas
+"/"  (landing page) <br>
+ ↳ 'Como funciona ?' => "/"    <br>
+ ↳ 'Cadastrar' => "/signin"   <br>
+ -------------------↳ 'Cadastrar' => "/auth/local" <br>
+ ↳ 'Entrar' => "/login"  <br>
+-------------------↳ 'Entrar' => "/dashboard" <br>
+-------------------↳ 'Entrar com Google' => "/auth/google" <br>
+-----------------------------------------↳ 'Meus Paineis' => "/dashboard"  <br>
+-----------------------------------------↳ 'Duvidas' => "/"  <br>
+-----------------------------------------↳ 'Sair' => "/logout" <br>
+-----------------------------------------↳ 'Ver Painel' => "/read/:panelId" <br>
+--------------------------------------------------------------------------------↳ 'Voltar aos Meus Paineis' => "/dashboard"  <br>
+--------------------------------------------------------------------------------↳ 'Editar' => "/read/:panelId"     (abertura de pop-up)<br>
+-----------------------------------------------------------------------------------------------------↳ 'Editar' => "/update/:panelId"  <br>
+--------------------------------------------------------------------------------↳ 'Deletar' => "/delete/:panelId" <br>
+-----------------------------------------↳ '+' => "/dashboard"      (abertura de pop-up)<br>
+---------------------------------------------------------------------↳ 'Criar' => "/panel"  <br>
+--------------------------------------------------------------------------------↳ 'Voltar aos Meus Paineis' => "/dashboard"  <br>
+-----------------------------------------↳ 'Comparar paineis' => "/battle"  <br>
+--------------------------------------------------------------------------------↳ 'Voltar aos Meus Paineis' => "/dashboard"  <br>
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+## Authors
+Marcelo Oliveira - @marbmo <br>
+Paul Divet - @pdiv55 <br>
+Fred Conti - @fredericonti <br>
+José Luiz Coe - @joseluizcoe <br>
+Gabriel Sicuto - @gsicuto
