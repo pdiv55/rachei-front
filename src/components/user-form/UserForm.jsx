@@ -329,9 +329,8 @@ class UserForm extends Component {
             </div>
             <div className="centered-button">
               {this.state.isEdit ? (
-                <Link to="/" className="button is-warning is-large">
-                  <FontAwesomeIcon icon={faEdit} />
-                  Editar
+                <Link to="/" className="button is-link is-large">
+                  Salvar
                 </Link>
               ) : (
                 <button

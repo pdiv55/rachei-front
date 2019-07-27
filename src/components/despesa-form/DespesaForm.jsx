@@ -272,9 +272,8 @@ class DespesaForm extends Component {
           <div className="centered-button">
             {this.state.isEdit ? (
               <div>
-                <Link to="/" className="button is-warning">
-                  <FontAwesomeIcon icon={faEdit} />
-                  Editar
+                <Link to="/" className="button is-link">
+                  Salvar
                 </Link>
                 <Link to="/" className="button is-danger">
                   <FontAwesomeIcon icon={faTrashAlt} />
