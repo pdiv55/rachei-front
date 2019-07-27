@@ -234,11 +234,11 @@ class RachadaForm extends Component {
               <div>
                 <Link to="/" className="button is-warning">
                   <FontAwesomeIcon icon={faEdit} />
-                  Editar
+                  Editar Rachada
                 </Link>
                 <Link to="/" className="button is-danger">
                   <FontAwesomeIcon icon={faTrashAlt} />
-                  Deletar
+                  Deletar Rachada
                 </Link>
               </div>
             ) : (
