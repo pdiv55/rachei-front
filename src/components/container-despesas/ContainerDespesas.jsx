@@ -8,9 +8,6 @@ class ContainerDespesas extends Component {
     const { expenses, users, rachada } = this.props;
     return (
       <div className="despesa-container">
-        {expenses.map((element, index) => (
-          <DespesaTile key={index} expense={element} />
-        ))}
         <div className="totals-container">
           <div className="info-total">
             <p className="title is-5">Total Rachada</p>
@@ -31,6 +28,12 @@ class ContainerDespesas extends Component {
             <p className="title is-5">Meu Total</p>
             <p>numero</p>
           </div>
+        </div>
+
+        <div>
+          {expenses.map((element, index) => (
+            <DespesaTile key={index} expense={element} />
+          ))}
         </div>
       </div>
     );

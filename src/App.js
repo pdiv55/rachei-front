@@ -78,7 +78,11 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-        <NavBar loggedin={this.state.loggedin} user={this.state.user} updateStatus={this.updateLoginStatus} />
+        <NavBar
+          loggedin={this.state.loggedin}
+          user={this.state.user}
+          updateStatus={this.updateLoginStatus}
+        />
         <Switch>
           <Route
             exact
@@ -88,11 +92,12 @@ class App extends Component {
           <Route path="/user-form" component={UserForm} />
           <Route
             path="/signin"
-            render={() => {
+            render={props => {
               return (
                 <Signin
                   loginUser={this.loginUser}
                   loggedin={this.state.loggedin}
+                  {...props}
                 />
               );
             }}

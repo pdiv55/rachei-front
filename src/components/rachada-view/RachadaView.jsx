@@ -69,7 +69,7 @@ class RachadaView extends Component {
             Equilibrio
           </button>
         </div>
-        <div className="containers-container">
+        <div>
           {this.state.equilibrio ? (
             <ContainerEquilibrio />
           ) : (

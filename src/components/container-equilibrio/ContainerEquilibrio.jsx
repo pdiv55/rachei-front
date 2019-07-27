@@ -10,13 +10,13 @@ class ContainerEquilibrio extends Component {
     return (
       <div className="equilibrio-container">
         <div className="result-container">
-          <p className="title is-4">Resumo</p>
+          <p className="title is-4 equilibrio-subtitle">Resumo</p>
           {results.map(() => (
             <ResultTile />
           ))}
         </div>
         <div className="how-to-container">
-          <p className="title is-4">Como equilibrar ?</p>
+          <p className="title is-4 equilibrio-subtitle">Como equilibrar ?</p>
           {equilibrios.map(() => (
             <EquilibrioTile />
           ))}

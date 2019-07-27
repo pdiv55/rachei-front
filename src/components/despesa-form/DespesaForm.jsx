@@ -51,8 +51,8 @@ class DespesaForm extends Component {
       items = [...this.state.users];
       const filteredItems = items.filter(e => {
         return e.name.toUpperCase().indexOf(state.toUpperCase()) > -1;
-      })
-      this.setState({ usersSearch: filteredItems })
+      });
+      this.setState({ usersSearch: filteredItems });
     } else {
       this.setState({ users: this.state.users });
     }
@@ -97,20 +97,26 @@ class DespesaForm extends Component {
       name: this.state.name,
       date: this.state.date,
       group: this.props.match.params,
-      users: users,
+      users: users
     };
 
     const chosenToUsers = this.state.chosenToUsers;
 
     const individualExpenses = chosenToUsers.map(element => {
       return {
-        value: parseInt(this.state.value/chosenToUsers.length),
+        value: parseInt(this.state.value / chosenToUsers.length),
         from: this.state.chosenFromUser._id,
-        to: element,
-      }
-    })
+        to: element
+      };
+    });
 
-    axios.post(process.env.REACT_APP_DEV_API_URL + "/expenses/create/" + this.props.match.params.id, { expense, individualExpenses })
+    axios
+      .post(
+        process.env.REACT_APP_DEV_API_URL +
+          "/expenses/create/" +
+          this.props.match.params.id,
+        { expense, individualExpenses }
+      )
       .then(response => {
         // this.setState({
         //   name: "",
@@ -167,7 +173,7 @@ class DespesaForm extends Component {
               <input
                 className="input"
                 type="number"
-                placeholder="ex: 36.00"
+                placeholder="ex: 36,00"
                 name="value"
                 value={this.state.value}
                 onChange={e => this.handleChange(e)}
