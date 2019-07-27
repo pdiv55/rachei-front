@@ -4,6 +4,9 @@
   **To discover the platform just follow** <a href="www.rachei.herokuapp.com"><strong>this link</strong></a>
 
 
+**_Attention: this is the repo for the front part of the app, please make sure you also visit the repo with the back-end code_** <a href="https://github.com/pdiv55/rachei-back">**_here_**</a>
+
+
 ## Contribute
 Rachei is the product of a lot of teamwork from a group of junior coders, all pull requests are welcome !
 
@@ -21,46 +24,36 @@ Thanks!
 
 
 ## Setup
-Rachei's engine is built with React and MongoDB.
-The site was deployed with Heroku.
+Rachei's _front_ engine is built with NodeJS, Mongoose and ExpressJS.
+The website was deployed with Heroku.
 
 The following dependencies must be installed :
-- express (4.16.4),
-- body-parser (1.19.0),
-- cookie-session (1.3.3),
-- dotenv (8.0.0),
-- google-trends-api (4.9.0),
-- hbs (4.0.4),
-- mongoose (5.5.7),
-- bcryptjs (2.4.3),
-- connect-flash (0.1.1),
-- passport (0.4.0),
-- passport-google-oauth20 (2.0.0),
-- passport-local (1.0.0),
-- express-session (1.16.1).
+- fortawesome/fontawesome-svg-core (v. 1.2.19),
+- fortawesome/free-solid-svg-icons (v. 5.9.0), 
+- fortawesome/react-fontawesome"(v. 0.1.4), 
+- axios (v. 0.19.0), 
+- bulma (v. 0.7.5),  
+- dotenv (v. 8.0.0), 
+- react (v. 16.8.6),  
+- react-dom (v. 16.8.6), 
+- react-router-dom (v. 5.0.1), 
+- react-scripts (v. 3.0.1)
 
 
-## Arvore de Rotas
-"/"  (landing page) <br>
- ↳ 'Como funciona ?' => "/"    <br>
- ↳ 'Cadastrar' => "/signin"   <br>
- -------------------↳ 'Cadastrar' => "/auth/local" <br>
- ↳ 'Entrar' => "/login"  <br>
--------------------↳ 'Entrar' => "/dashboard" <br>
--------------------↳ 'Entrar com Google' => "/auth/google" <br>
------------------------------------------↳ 'Meus Paineis' => "/dashboard"  <br>
------------------------------------------↳ 'Duvidas' => "/"  <br>
------------------------------------------↳ 'Sair' => "/logout" <br>
------------------------------------------↳ 'Ver Painel' => "/read/:panelId" <br>
---------------------------------------------------------------------------------↳ 'Voltar aos Meus Paineis' => "/dashboard"  <br>
---------------------------------------------------------------------------------↳ 'Editar' => "/read/:panelId"     (abertura de pop-up)<br>
------------------------------------------------------------------------------------------------------↳ 'Editar' => "/update/:panelId"  <br>
---------------------------------------------------------------------------------↳ 'Deletar' => "/delete/:panelId" <br>
------------------------------------------↳ '+' => "/dashboard"      (abertura de pop-up)<br>
----------------------------------------------------------------------↳ 'Criar' => "/panel"  <br>
---------------------------------------------------------------------------------↳ 'Voltar aos Meus Paineis' => "/dashboard"  <br>
------------------------------------------↳ 'Comparar paineis' => "/battle"  <br>
---------------------------------------------------------------------------------↳ 'Voltar aos Meus Paineis' => "/dashboard"  <br>
+## Route-Tree
+
+"/"  ---> HOME <br>
+"/user-form"  ---> USER FORM (for signup or user info edition) <br>
+"/signin"  ---> SIGNIN <br>
+"/forgot-password"  ---> FORGOT PASSWORD (to have a password recovery email sent to you) <br>
+"/new-password/:token"  --> NEW PASSWORD (to update your password) <br>
+"/my-rachadas"  ---> MY RACHADAS (dashboard with all groups where the user is a member) <br>
+"/rachada-form/:id"  ---> RACHADA FORM (to create or edit groups) <br>
+"/rachada/:id"  ---> RACHADA VIEW (dashboard with all the group's expenses and balance insights) <br>
+"/despesa-form/:id"  --> DESPESA FORM (to create or edit expenses) <br>
+"/my-carteira"  ---> CARTEIRA (dashboard to manage personal wallet) <br>
+"/deposit"  ---> DEPOSIT (to desposit money on your personal wallet) <br>
+"/logout"  ---> LOGOUT
 
 ## Authors
 Marcelo Oliveira - @marbmo <br>

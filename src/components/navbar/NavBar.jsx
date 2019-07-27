@@ -93,9 +93,9 @@ class NavBar extends Component {
                     className="profile-pic"
                   >
                     {user.profilePicture ? (
-                      <FontAwesomeIcon icon={faUser} />
+                      <img src={user.profilePicture} alt="profile-pic" />
                     ) : (
-                      <img url={user.profilePicture} alt="profile-pic" />
+                      <FontAwesomeIcon icon={faUser} />
                     )}
                   </Link>
                   <p className="title is-6">Oi, {user.name} 👋</p>

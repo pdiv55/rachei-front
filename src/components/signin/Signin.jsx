@@ -37,7 +37,7 @@ class Signin extends Component {
       password: this.state.password
     };
     const stateArray = Object.entries(this.state);
-    for (let i = 0; i <= 2; i++) {
+    for (let i = 0; i < 2; i++) {
       if (stateArray[i][1] === "") {
         this.setState({ message: "Necessário preencher todos os campos" });
       }

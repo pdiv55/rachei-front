@@ -223,24 +223,10 @@ class RachadaForm extends Component {
                       ~ {element.name} + {element.surname}
                     </p>
                   </div>
-                  <button className="is-danger">X</button>
+                  <button className="delete-member">X</button>
                 </div>
               );
             })}
-          </div>
-
-          <div className="field">
-            <label className="label">Currency</label>
-            <div className="control">
-              <input
-                className="input"
-                type="text"
-                placeholder="ex: Euros (EUR)"
-                onChange={this.handleCurrencySearch}
-                onBlur={this.handleCurrencyBlur}
-              />
-            </div>
-            {this.state.isCurrencySearch ? <SuggestionBox /> : ""}
           </div>
 
           <div className="centered-button">
@@ -256,11 +242,6 @@ class RachadaForm extends Component {
                 </Link>
               </div>
             ) : (
-              ""
-            )}
-          </div>
-        </div>
-        <div className="centered-button">
           <button
             type="submit"
             className="button is-link is-large"
@@ -268,10 +249,11 @@ class RachadaForm extends Component {
           >
             Criar Rachada
           </button>
+          )};
+        </div>
         </div>
       </form>
-    );
-  }
-}
-
+    )}
+            }
+            
 export default RachadaForm;
