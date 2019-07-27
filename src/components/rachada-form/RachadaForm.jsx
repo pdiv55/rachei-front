@@ -249,7 +249,7 @@ class RachadaForm extends Component {
           >
             Criar Rachada
           </button>
-          )};
+          )}
         </div>
         </div>
       </form>

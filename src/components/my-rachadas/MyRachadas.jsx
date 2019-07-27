@@ -75,7 +75,7 @@ class MyRachadas extends Component {
         <div className="centered-button">
           <Link
             className="button is-primary is-rounded is-large"
-            to="/rachada-form"
+            to="/rachada-form/new"
           >
             Criar Rachada
           </Link>
