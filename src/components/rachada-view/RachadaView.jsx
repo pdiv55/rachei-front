@@ -5,15 +5,16 @@ import ContainerEquilibrio from "../container-equilibrio/ContainerEquilibrio";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
 import "./rachada-view.css";
+import axios from '../../utils/interceptor';
 
 class RachadaView extends Component {
   constructor(props) {
     super(props);
     this.state = {
       equilibrio: false,
-      users: this.props.location.state.users,
-      expenses: this.props.location.state.expenses,
-      rachada: this.props.location.state.rachada
+      users: [],
+      expenses: [],
+      rachada: this.props.location.state.rachada,
     };
   }
 
@@ -24,6 +25,21 @@ class RachadaView extends Component {
   handleDespesasContainerChange = () => {
     this.setState({ equilibrio: false });
   };
+
+  componentWillMount () {
+    const expenses = axios.get(process.env.REACT_APP_DEV_API_URL + `/expenses/group/${this.props.location.state.rachada._id}`);
+    const users = axios.get(process.env.REACT_APP_DEV_API_URL + `/users/group/${this.props.location.state.rachada._id}`);
+    Promise.all([expenses, users])
+    .then(data => {
+      this.setState({
+        expenses: data[0].data,
+        users: data[1].data,
+      })
+    })
+    .catch(error => {
+      console.log(error);
+    })
+  }
 
   render() {
     return (
@@ -69,14 +85,14 @@ class RachadaView extends Component {
             Equilibrio
           </button>
         </div>
-        <div>
-          {this.state.equilibrio ? (
+        <div className="containers-container">
+          {(this.state.equilibrio && this.state.expenses) ? (
             <ContainerEquilibrio />
           ) : (
             <ContainerDespesas
               expenses={this.state.expenses}
-              rachada={this.state.rachada}
               users={this.state.users}
+              rachada={this.props.location.state.rachada._id}
             />
           )}
         </div>

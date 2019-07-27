@@ -11,8 +11,6 @@ const RachadaTile = props => {
           pathname: `/rachada/${rachada._id}`,
           state: {
             rachada: rachada,
-            users: users,
-            expenses: expenses
           }
         }}
       >
