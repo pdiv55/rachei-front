@@ -5,11 +5,12 @@ import DespesaTile from "./DespesaTile";
 
 class ContainerDespesas extends Component {
   render() {
-    const { expenses, users, rachada } = this.props;
+    const { rachada, users, expenses } = this.props;
+
     return (
       <div className="despesa-container">
         {expenses.map((element, index) => (
-          <DespesaTile key={index} expense={element} />
+          <DespesaTile key={index} expense={element} users={users} rachada={rachada}/>
         ))}
         <div className="totals-container">
           <div className="info-total">
@@ -18,7 +19,7 @@ class ContainerDespesas extends Component {
           </div>
           <Link
             to={{
-              pathname: `/despesa-form/${rachada._id}`,
+              pathname: `/despesa-form/${rachada}`,
               state: {
                 users: users
               }

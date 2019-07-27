@@ -18,6 +18,7 @@ class DespesaForm extends Component {
       name: "",
       value: "",
       date: "",
+      message: '',
       isMemberSearch: false,
       isEdit: false,
       users: this.props.location.state.users,
@@ -97,7 +98,8 @@ class DespesaForm extends Component {
       name: this.state.name,
       date: this.state.date,
       group: this.props.match.params,
-      users: users,
+      from: this.state.chosenFromUser._id,
+      to: this.state.chosenToUsers,
     };
 
     const chosenToUsers = this.state.chosenToUsers;
@@ -110,16 +112,21 @@ class DespesaForm extends Component {
       }
     })
 
-    axios.post(process.env.REACT_APP_DEV_API_URL + "/expenses/create/" + this.props.match.params.id, { expense, individualExpenses })
+    let url = process.env.REACT_APP_DEV_API_URL + "/expenses/create/" + this.props.match.params.id;
+    if(this.isEdit) {
+      url = process.env.REACT_APP_DEV_API_URL + "/expenses/update/" + this.props.match.params.id;
+    }
+    axios.post(url, { expense, individualExpenses })
       .then(response => {
-        // this.setState({
-        //   name: "",
-        //   value: "",
-        //   date: "",
-        //   from: "",
-        //   to: [],
-        //   chosenFromUser: ""
-        // })
+        this.setState({
+          name: "",
+          value: "",
+          date: "",
+          from: "",
+          to: [],
+          chosenFromUser: "",
+          message: response.data.message
+        })
       })
       .catch(error => {
         console.log(error);
