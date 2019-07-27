@@ -13,7 +13,7 @@ class RachadaView extends Component {
       equilibrio: false,
       users: this.props.location.state.users,
       expenses: this.props.location.state.expenses,
-      rachada: this.props.location.state.rachada,
+      rachada: this.props.location.state.rachada
     };
   }
 
@@ -33,7 +33,15 @@ class RachadaView extends Component {
             {"< Retornar ao Meu Painel"}
           </Link>
           <div>
-            <Link to="/rachada-form" className="button is-warning">
+            <Link
+              to={{
+                pathname: "/rachada-form",
+                state: {
+                  isEdit: true
+                }
+              }}
+              className="button is-warning"
+            >
               <FontAwesomeIcon icon={faEdit} />
               Editar
             </Link>
@@ -65,7 +73,11 @@ class RachadaView extends Component {
           {this.state.equilibrio ? (
             <ContainerEquilibrio />
           ) : (
-            <ContainerDespesas expenses={this.state.expenses} rachada={this.state.rachada} users={this.state.users}/>
+            <ContainerDespesas
+              expenses={this.state.expenses}
+              rachada={this.state.rachada}
+              users={this.state.users}
+            />
           )}
         </div>
       </div>

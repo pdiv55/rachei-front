@@ -27,6 +27,14 @@ class RachadaForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentWillMount() {
+    if (this.props.location.state) {
+      if (this.props.location.state.isEdit) {
+        this.setState({ isEdit: true });
+      }
+    }
+  }
+
   getUsers() {
     axios
       .get(process.env.REACT_APP_DEV_API_URL + "/users/")

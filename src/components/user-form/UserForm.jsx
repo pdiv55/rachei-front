@@ -19,6 +19,7 @@ class UserForm extends Component {
       password: "",
       repassword: "",
       file: "",
+      fileUrl: "",
       field: "",
       validationClass: "",
       fieldMessage: "",
@@ -76,7 +77,11 @@ class UserForm extends Component {
   }
 
   handleFile(event) {
-    this.setState({ file: event.target.files[0] });
+    const file = URL.createObjectURL(event.target.files[0]);
+    this.setState({
+      file: event.target.files[0],
+      fileUrl: file
+    });
   }
 
   handleFormSubmit(event) {
@@ -94,7 +99,7 @@ class UserForm extends Component {
     for (let i = 0; i <= 6; i++) {
       if (stateArray[i][1] === "") {
         formValidator = false;
-        this.setState({ message: 'Necessário preencher todos os campos' })
+        this.setState({ message: "Necessário preencher todos os campos" });
       }
     }
 
@@ -116,7 +121,12 @@ class UserForm extends Component {
             if (this.state.file) {
               const formData = new FormData();
               formData.append("image", this.state.file);
-              axios.post(process.env.REACT_APP_DEV_API_URL + "/files/upload/user/" + response.data.data._id, formData);
+              axios.post(
+                process.env.REACT_APP_DEV_API_URL +
+                  "/files/upload/user/" +
+                  response.data.data._id,
+                formData
+              );
             }
           } else {
             this.setState({
@@ -132,6 +142,7 @@ class UserForm extends Component {
   }
 
   render() {
+    console.log(this.state.file);
     return (
       <form onSubmit={this.handleFormSubmit}>
         {this.state.isEdit ? (
@@ -167,6 +178,11 @@ class UserForm extends Component {
 
         <div className="form-container">
           <div className="upload-wrapper">
+            {this.state.fileUrl ? (
+              <img src={this.state.fileUrl} className="profile-pic-added" />
+            ) : (
+              ""
+            )}
             <button className="button is-primary camera">
               <FontAwesomeIcon icon={faCamera} />+
               <input
