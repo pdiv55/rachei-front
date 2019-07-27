@@ -51,9 +51,10 @@ class RachadaView extends Component {
           <div>
             <Link
               to={{
-                pathname: "/rachada-form",
+                pathname: `/rachada-form/${this.state.rachada._id}`,
                 state: {
-                  isEdit: true
+                  isEdit: true,
+                  rachada: this.state.rachada,
                 }
               }}
               className="button is-warning"

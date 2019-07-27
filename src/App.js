@@ -113,7 +113,7 @@ class App extends Component {
           />
           <ProtectedRoute
             loggedIn={this.state.loggedin}
-            path="/rachada-form"
+            path="/rachada-form/:id"
             component={RachadaForm}
           />
           <ProtectedRoute

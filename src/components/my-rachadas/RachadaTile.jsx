@@ -3,7 +3,7 @@ import Link from "../link/Link";
 import "./my-rachadas.css";
 
 const RachadaTile = props => {
-  const { rachada, users, expenses } = props;
+  const { rachada } = props;
   return (
     <div className="rachada-tile">
       <Link

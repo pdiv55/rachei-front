@@ -67,19 +67,19 @@ class Home extends Component {
             </Link>
           </div>
         </section>
-        <section class="hero is-medium is-dark is-bold astronaut-section">
-          <div class="hero-body astronaut">
+        <section className="hero is-medium is-dark is-bold astronaut-section">
+          <div className="hero-body astronaut">
             <div>
-              <h1 class="title">"Monstros do código"</h1>
-              <h2 class="subtitle">José L.C.</h2>
+              <h1 className="title">"Monstros do código"</h1>
+              <h2 className="subtitle">José L.C.</h2>
             </div>
             <div>
-              <h1 class="title">"Gênios do business"</h1>
-              <h2 class="subtitle">Sany C.</h2>
+              <h1 className="title">"Gênios do business"</h1>
+              <h2 className="subtitle">Sany C.</h2>
             </div>
             <div>
-              <h1 class="title">"Lindos maravilhosos"</h1>
-              <h2 class="subtitle">Wilkor R.</h2>
+              <h1 className="title">"Lindos maravilhosos"</h1>
+              <h2 className="subtitle">Wilkor R.</h2>
             </div>
           </div>
         </section>

@@ -4,18 +4,33 @@ import Link from "../link/Link";
 import DespesaTile from "./DespesaTile";
 
 class ContainerDespesas extends Component {
+  constructor (props) {
+    super(props);
+
+    this.state = {
+      total: 0,
+    }
+  }
+
+  static getDerivedStateFromProps (props, state) {
+    const { expenses } = props;
+    if (expenses.length > 0) {
+      const values = expenses.map(element => element.value);
+      const total = values.reduce((accumulator, currentValue) => parseInt(accumulator) + parseInt(currentValue));
+      state.total = total;
+    }
+    return null;
+  }
+
   render() {
     const { rachada, users, expenses } = this.props;
 
     return (
       <div className="despesa-container">
-        {expenses.map((element, index) => (
-          <DespesaTile key={index} expense={element} users={users} rachada={rachada}/>
-        ))}
         <div className="totals-container">
           <div className="info-total">
             <p className="title is-5">Total Rachada</p>
-            <p>numero</p>
+            <p>R${this.state.total},00</p>
           </div>
           <Link
             to={{
@@ -28,15 +43,11 @@ class ContainerDespesas extends Component {
           >
             Adicionar Despesa
           </Link>
-          <div className="info-total">
-            <p className="title is-5">Meu Total</p>
-            <p>numero</p>
-          </div>
         </div>
 
         <div>
           {expenses.map((element, index) => (
-            <DespesaTile key={index} expense={element} />
+            <DespesaTile key={index} expense={element} users={users} rachada={rachada}/>
           ))}
         </div>
       </div>

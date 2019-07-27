@@ -27,15 +27,6 @@ class RachadaForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentWillMount() {
-    if (this.props.location.state) {
-      if (this.props.location.state.isEdit) {
-        this.setState({ isEdit: true });
-      }
-    }
-    if (this.state.users.length <= 0) this.getUsers();
-  }
-
   getUsers() {
     axios
       .get(process.env.REACT_APP_DEV_API_URL + "/users/")
@@ -106,9 +97,15 @@ class RachadaForm extends Component {
       currency: this.state.currency,
       users: chosenUsers
     };
-    axios
-      .post(process.env.REACT_APP_DEV_API_URL + "/groups/create/", group)
-      .then(response => {
+
+    let action = 'create'
+    if(this.state.isEdit) {
+      action = 'update';
+    }
+    let url = `${process.env.REACT_APP_DEV_API_URL}/group/${action}/${this.props.match.params.id}`;
+
+    axios.post(url, group)
+    .then(response => {
         this.setState({
           name: "",
           description: "",
@@ -120,6 +117,20 @@ class RachadaForm extends Component {
       .catch(err => {
         console.log(err);
       });
+  }
+
+  componentWillMount() {
+    if (this.props.location.state) {
+      if (this.props.location.state.isEdit) {
+        this.setState({ 
+          isEdit: true,
+          chosenUsers: this.props.location.state.rachada.users,
+          name: this.props.location.state.rachada.name,
+          description: this.props.location.state.rachada.description,
+        });
+      }
+    }
+    if (this.state.users.length <= 0) this.getUsers();
   }
 
   render() {

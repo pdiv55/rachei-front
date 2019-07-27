@@ -112,10 +112,11 @@ class DespesaForm extends Component {
       };
     });
 
-    let url = process.env.REACT_APP_DEV_API_URL + "/expenses/create/" + this.props.match.params.id;
-    if(this.isEdit) {
-      url = process.env.REACT_APP_DEV_API_URL + "/expenses/update/" + this.props.match.params.id;
+    let action = 'create'
+    if(this.state.isEdit) {
+      action = 'update';
     }
+    let url = `${process.env.REACT_APP_DEV_API_URL}/expenses/${action}/${this.props.match.params.id}`;
     axios.post(url, { expense, individualExpenses })
       .then(response => {
         this.setState({
@@ -131,6 +132,23 @@ class DespesaForm extends Component {
       .catch(error => {
         console.log(error);
       });
+  }
+
+  componentWillMount () {
+    if (this.props.location.state.isEdit) {
+      let toUsers = this.props.location.state.expense.to;
+      toUsers = toUsers.map(element => {
+        return element._id;
+      })
+      this.setState({
+        isEdit: this.props.location.state.isEdit,
+        chosenFromUser: this.props.location.state.expense.from,
+        chosenToUsers: toUsers,
+        value: this.props.location.state.expense.value,
+        date: this.props.location.state.expense.date,
+        name: this.props.location.state.expense.name
+      })
+    }
   }
 
   render() {
@@ -235,13 +253,19 @@ class DespesaForm extends Component {
           <div className="field">
             <label className="label">Para</label>
             <div className="checkbox-container">
-              {this.state.users.map((element, index) => (
+              {this.state.users.map((element, index) => {
+                let checked = false;
+                if (this.state.chosenToUsers.indexOf(element._id) > 0) {
+                  checked = true;
+                }
+                return (
                 <MemberCheckbox
                   key={index}
                   user={element}
                   handleUser={this.handleChosenUsers}
+                  checked={checked}
                 />
-              ))}
+              )})}
             </div>
           </div>
 
