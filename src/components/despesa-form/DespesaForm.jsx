@@ -4,7 +4,6 @@ import "./despesa-form.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTrashAlt,
-  faEdit,
   faFileInvoice
 } from "@fortawesome/free-solid-svg-icons";
 import MemberCheckbox from "../member-checkbox/MemberCheckbox";

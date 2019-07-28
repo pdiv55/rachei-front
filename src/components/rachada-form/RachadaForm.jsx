@@ -232,13 +232,13 @@ class RachadaForm extends Component {
           <div className="centered-button">
             {this.state.isEdit ? (
               <div>
-                <Link to="/" className="button is-warning">
+                <Link to="/" className="button is-link">
                   <FontAwesomeIcon icon={faEdit} />
-                  Editar Rachada
+                  Salvar
                 </Link>
                 <Link to="/" className="button is-danger">
                   <FontAwesomeIcon icon={faTrashAlt} />
-                  Deletar Rachada
+                  Deletar
                 </Link>
               </div>
             ) : (
