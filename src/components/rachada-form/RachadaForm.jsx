@@ -11,12 +11,14 @@ class RachadaForm extends Component {
     super(props);
 
     this.state = {
+      allUsers: [],
       users: [],
       chosenUsers: [],
       name: "",
       description: "",
       currency: "",
       currentsearch: "",
+      usersSearch: [],
       isMemberSearch: false,
       isCurrencySearch: false,
       isEdit: false
@@ -32,16 +34,14 @@ class RachadaForm extends Component {
       .get(process.env.REACT_APP_DEV_API_URL + "/users/")
       .then(response => {
         this.setState({
-          users: response.data
+          allUsers: response.data,
+          users: response.data,
+          usersSearch: response.data
         });
       })
       .catch(error => {
         console.log(error);
       });
-  }
-
-  componentWillMount() {
-    if (this.state.users.length <= 0) this.getUsers();
   }
 
   handleChange(event) {
@@ -52,32 +52,29 @@ class RachadaForm extends Component {
 
   handleMemberSearch = event => {
     const state = event.target.value;
-    this.setState({ currentsearch: state, isMemberSearch: true });
+    const oldText = this.state.currentsearch;
     if (state === "") {
       this.setState({ isMemberSearch: false });
     } else {
       this.setState({ isMemberSearch: true });
     }
+    let items;
+    if (state !== oldText) {
+      items = [...this.state.users];
+      const filteredItems = items.filter(e => {
+        return e.name.toUpperCase().indexOf(state.toUpperCase()) > -1;
+      });
+      this.setState({ usersSearch: filteredItems });
+    } else {
+      this.setState({ users: this.state.users });
+    }
+    this.setState({ currentsearch: state });
   };
 
   handleMemberBlur = () => {
     setTimeout(() => {
       this.setState({ isMemberSearch: false, currentsearch: "" });
     }, 100);
-  };
-
-  handleCurrencySearch = event => {
-    const state = event.target.value;
-    this.setState({ currentsearch: state });
-    if (state === "") {
-      this.setState({ isCurrencySearch: false });
-    } else {
-      this.setState({ isCurrencySearch: true });
-    }
-  };
-
-  handleCurrencyBlur = () => {
-    this.setState({ isCurrencySearch: false });
   };
 
   handleChosenUsers(user) {
@@ -88,6 +85,19 @@ class RachadaForm extends Component {
       return chosenUsers.indexOf(element) < 0;
     });
     this.setState({ chosenUsers: chosenUsers, users: users });
+  }
+
+  deleteChosenUser (id) {
+    let chosenUsers = this.state.chosenUsers;
+    chosenUsers = chosenUsers.filter(element => element._id !== id)
+    let users = this.state.allUsers;
+    for (let i = 0; i < chosenUsers.length; i++) {
+      users = users.filter(element => element._id !== chosenUsers[i]._id)
+    }
+    this.setState({ 
+      chosenUsers: chosenUsers,
+      users: users
+    });
   }
 
   handleSubmit(event) {
@@ -101,9 +111,15 @@ class RachadaForm extends Component {
       currency: this.state.currency,
       users: chosenUsers
     };
-    axios
-      .post(process.env.REACT_APP_DEV_API_URL + "/groups/create/", group)
-      .then(response => {
+
+    let action = 'create'
+    if(this.state.isEdit) {
+      action = `update/${this.props.match.params.id}`;
+    }
+    let url = `${process.env.REACT_APP_DEV_API_URL}/groups/${action}/`;
+
+    axios.post(url, group)
+    .then(response => {
         this.setState({
           name: "",
           description: "",
@@ -115,6 +131,20 @@ class RachadaForm extends Component {
       .catch(err => {
         console.log(err);
       });
+  }
+
+  componentWillMount() {
+    if (this.props.location.state) {
+      if (this.props.location.state.isEdit) {
+        this.setState({ 
+          isEdit: true,
+          chosenUsers: this.props.location.state.rachada.users,
+          name: this.props.location.state.rachada.name,
+          description: this.props.location.state.rachada.description,
+        });
+      }
+    }
+    if (this.state.users.length <= 0) this.getUsers();
   }
 
   render() {
@@ -190,7 +220,7 @@ class RachadaForm extends Component {
             </div>
             {this.state.isMemberSearch ? (
               <SuggestionBox
-                items={this.state.users}
+                items={this.state.usersSearch}
                 pickItem={this.handleChosenUsers}
               />
             ) : (
@@ -207,23 +237,10 @@ class RachadaForm extends Component {
                       ~ {element.name} + {element.surname}
                     </p>
                   </div>
+                  <button type="button" className="delete-member" onClick={() => this.deleteChosenUser(element._id)}>X</button>
                 </div>
               );
             })}
-          </div>
-
-          <div className="field">
-            <label className="label">Currency</label>
-            <div className="control">
-              <input
-                className="input"
-                type="text"
-                placeholder="ex: Euros (EUR)"
-                onChange={this.handleCurrencySearch}
-                onBlur={this.handleCurrencyBlur}
-              />
-            </div>
-            {this.state.isCurrencySearch ? <SuggestionBox /> : ""}
           </div>
 
           <div className="centered-button">
@@ -231,19 +248,14 @@ class RachadaForm extends Component {
               <div>
                 <Link to="/" className="button is-warning">
                   <FontAwesomeIcon icon={faEdit} />
-                  Editar
+                  Editar Rachada
                 </Link>
                 <Link to="/" className="button is-danger">
                   <FontAwesomeIcon icon={faTrashAlt} />
-                  Deletar
+                  Deletar Rachada
                 </Link>
               </div>
             ) : (
-              ""
-            )}
-          </div>
-        </div>
-        <div className="centered-button">
           <button
             type="submit"
             className="button is-link is-large"
@@ -251,10 +263,11 @@ class RachadaForm extends Component {
           >
             Criar Rachada
           </button>
+          )}
+        </div>
         </div>
       </form>
-    );
-  }
-}
-
+    )}
+            }
+            
 export default RachadaForm;

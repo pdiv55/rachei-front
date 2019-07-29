@@ -9,6 +9,8 @@ class Signin extends Component {
     this.state = {
       username: "",
       password: "",
+      message: "",
+      successSignup: "",
       redirect: false
     };
 
@@ -16,6 +18,7 @@ class Signin extends Component {
   }
 
   componentWillReceiveProps(props) {
+    console.log(props);
     if (props.loggedin) {
       this.setState({ redirect: true });
     }
@@ -33,7 +36,19 @@ class Signin extends Component {
       username: this.state.username,
       password: this.state.password
     };
+    const stateArray = Object.entries(this.state);
+    for (let i = 0; i < 2; i++) {
+      if (stateArray[i][1] === "") {
+        this.setState({ message: "Necessário preencher todos os campos" });
+      }
+    }
     this.props.loginUser(user);
+  }
+
+  componentWillMount() {
+    if (this.props.location.state) {
+      this.setState({ successSignup: this.props.location.state.message });
+    }
   }
 
   render() {
@@ -48,6 +63,20 @@ class Signin extends Component {
               <h2 className="subtitle">
                 Conecte-se a sua conta para acessar todas suas rachadas
               </h2>
+              {this.state.message ? (
+                <div className="notification is-warning">
+                  <strong>{this.state.message}</strong>
+                </div>
+              ) : (
+                ""
+              )}
+              {this.state.successSignup ? (
+                <div className="notification is-success">
+                  <strong>{this.state.successSignup}</strong>
+                </div>
+              ) : (
+                ""
+              )}
             </div>
 
             <div className="form-container">
@@ -71,7 +100,7 @@ class Signin extends Component {
                 <label className="label">Senha</label>
                 <div>
                   <input
-                    className="input is-danger"
+                    className="input"
                     type="password"
                     name="password"
                     value={this.state.password}
@@ -80,7 +109,6 @@ class Signin extends Component {
                     }}
                   />
                 </div>
-                <p className="help is-danger">This password is invalid</p>
               </div>
 
               <div className="centered-button">

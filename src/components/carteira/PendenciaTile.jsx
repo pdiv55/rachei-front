@@ -12,7 +12,6 @@ class PendenciaTile extends Component {
 
   render() {
     const { expense } = this.props;
-    console.log(expense);
     return (
       <div className="notification pendency-tile">
         <div className="info-pendency-tile">
@@ -24,7 +23,7 @@ class PendenciaTile extends Component {
           )}
           <p className="title is-5">Total</p>
         </div>
-        <div className="centered-button">
+        <div>
           {this.state.isEarning ? (
             <Link className="button is-primary" to="/">
               Cobrar

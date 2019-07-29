@@ -5,14 +5,15 @@ import ContainerEquilibrio from "../container-equilibrio/ContainerEquilibrio";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
 import "./rachada-view.css";
+import axios from '../../utils/interceptor';
 
 class RachadaView extends Component {
   constructor(props) {
     super(props);
     this.state = {
       equilibrio: false,
-      users: this.props.location.state.users,
-      expenses: this.props.location.state.expenses,
+      users: [],
+      expenses: [],
       rachada: this.props.location.state.rachada,
     };
   }
@@ -25,6 +26,21 @@ class RachadaView extends Component {
     this.setState({ equilibrio: false });
   };
 
+  componentWillMount () {
+    const expenses = axios.get(process.env.REACT_APP_DEV_API_URL + `/expenses/group/${this.props.location.state.rachada._id}`);
+    const users = axios.get(process.env.REACT_APP_DEV_API_URL + `/users/group/${this.props.location.state.rachada._id}`);
+    Promise.all([expenses, users])
+    .then(data => {
+      this.setState({
+        expenses: data[0].data,
+        users: data[1].data,
+      })
+    })
+    .catch(error => {
+      console.log(error);
+    })
+  }
+
   render() {
     return (
       <div>
@@ -33,7 +49,16 @@ class RachadaView extends Component {
             {"< Retornar ao Meu Painel"}
           </Link>
           <div>
-            <Link to="/rachada-form" className="button is-warning">
+            <Link
+              to={{
+                pathname: `/rachada-form/${this.state.rachada._id}`,
+                state: {
+                  isEdit: true,
+                  rachada: this.state.rachada,
+                }
+              }}
+              className="button is-warning"
+            >
               <FontAwesomeIcon icon={faEdit} />
               Editar
             </Link>
@@ -62,10 +87,14 @@ class RachadaView extends Component {
           </button>
         </div>
         <div className="containers-container">
-          {this.state.equilibrio ? (
-            <ContainerEquilibrio />
+          {(this.state.equilibrio && this.state.expenses) ? (
+            <ContainerEquilibrio users={this.state.users} expenses={this.state.expenses} />
           ) : (
-            <ContainerDespesas expenses={this.state.expenses} rachada={this.state.rachada} users={this.state.users}/>
+            <ContainerDespesas
+              expenses={this.state.expenses}
+              users={this.state.users}
+              rachada={this.props.location.state.rachada._id}
+            />
           )}
         </div>
       </div>

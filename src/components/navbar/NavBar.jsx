@@ -6,24 +6,24 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import axios from "../../utils/interceptor";
 
 class NavBar extends Component {
-
   constructor(props) {
     super(props);
 
     this.logout = this.logout.bind(this);
   }
 
-  logout () {
+  logout() {
     const { updateStatus } = this.props;
-    axios.get(process.env.REACT_APP_DEV_API_URL + "/auth/logout/")
-    .then(() => {
-      console.log('entrou');
-      localStorage.removeItem('authorization');
-      updateStatus(true);
-    })
-    .catch(error => {
-      console.log(error);
-    })
+    axios
+      .get(process.env.REACT_APP_DEV_API_URL + "/auth/logout/")
+      .then(() => {
+        console.log("entrou");
+        localStorage.removeItem("authorization");
+        updateStatus(true);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   render() {
@@ -92,11 +92,15 @@ class NavBar extends Component {
                     }}
                     className="profile-pic"
                   >
-                    <FontAwesomeIcon icon={faUser} />
+                    {user.profilePicture ? (
+                      <img src={user.profilePicture} alt="profile-pic" />
+                    ) : (
+                      <FontAwesomeIcon icon={faUser} />
+                    )}
                   </Link>
                   <p className="title is-6">Oi, {user.name} 👋</p>
                   <button className="button is-danger" onClick={this.logout}>
-                      <strong>Log Out</strong>
+                    <strong>Log Out</strong>
                   </button>
                 </div>
               </div>

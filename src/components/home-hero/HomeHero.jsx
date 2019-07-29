@@ -5,7 +5,7 @@ class HomeHero extends Component {
   render() {
     return (
       <div>
-        <section className="hero is-info is-fullheight-with-navbar">
+        <section className="hero home-hero is-info is-fullheight-with-navbar">
           <div className="hero-body">
             <div className="container has-text-centered">
               <p className="title title-special is-1 is-spaced">

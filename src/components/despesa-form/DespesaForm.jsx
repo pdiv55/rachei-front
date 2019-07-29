@@ -18,12 +18,14 @@ class DespesaForm extends Component {
       name: "",
       value: "",
       date: "",
+      message: '',
       isMemberSearch: false,
       isEdit: false,
+      allUsers: this.props.location.state.users,
       users: this.props.location.state.users,
       usersSearch: this.props.location.state.users,
       currentsearch: "",
-      chosenFromUser: "",
+      chosenFromUser: '',
       chosenToUsers: []
     };
 
@@ -51,8 +53,8 @@ class DespesaForm extends Component {
       items = [...this.state.users];
       const filteredItems = items.filter(e => {
         return e.name.toUpperCase().indexOf(state.toUpperCase()) > -1;
-      })
-      this.setState({ usersSearch: filteredItems })
+      });
+      this.setState({ usersSearch: filteredItems });
     } else {
       this.setState({ users: this.state.users });
     }
@@ -87,6 +89,14 @@ class DespesaForm extends Component {
     }
   }
 
+  deleteChosenUser () {
+    const users = this.state.allUsers;
+    this.setState({ 
+      chosenFromUser: '',
+      users: users
+    });
+  }
+
   handleSubmit(event) {
     event.preventDefault();
 
@@ -97,33 +107,58 @@ class DespesaForm extends Component {
       name: this.state.name,
       date: this.state.date,
       group: this.props.match.params,
-      users: users,
+      from: this.state.chosenFromUser._id,
+      to: this.state.chosenToUsers,
+      value: this.state.value,
     };
 
     const chosenToUsers = this.state.chosenToUsers;
 
     const individualExpenses = chosenToUsers.map(element => {
       return {
-        value: parseInt(this.state.value/chosenToUsers.length),
+        value: parseInt(this.state.value / chosenToUsers.length),
         from: this.state.chosenFromUser._id,
-        to: element,
-      }
-    })
+        to: element
+      };
+    });
 
-    axios.post(process.env.REACT_APP_DEV_API_URL + "/expenses/create/" + this.props.match.params.id, { expense, individualExpenses })
+    let action = 'create'
+    if(this.state.isEdit) {
+      action = 'update';
+    }
+    let url = `${process.env.REACT_APP_DEV_API_URL}/expenses/${action}/${this.props.match.params.id}`;
+    axios.post(url, { expense, individualExpenses })
       .then(response => {
-        // this.setState({
-        //   name: "",
-        //   value: "",
-        //   date: "",
-        //   from: "",
-        //   to: [],
-        //   chosenFromUser: ""
-        // })
+        this.setState({
+          name: "",
+          value: "",
+          date: "",
+          from: "",
+          to: [],
+          chosenFromUser: "",
+          message: response.data.message
+        })
       })
       .catch(error => {
         console.log(error);
       });
+  }
+
+  componentWillMount () {
+    if (this.props.location.state.isEdit) {
+      let toUsers = this.props.location.state.expense.to;
+      toUsers = toUsers.map(element => {
+        return element._id;
+      })
+      this.setState({
+        isEdit: this.props.location.state.isEdit,
+        chosenFromUser: this.props.location.state.expense.from,
+        chosenToUsers: toUsers,
+        value: this.props.location.state.expense.value,
+        date: this.props.location.state.expense.date,
+        name: this.props.location.state.expense.name
+      })
+    }
   }
 
   render() {
@@ -167,7 +202,7 @@ class DespesaForm extends Component {
               <input
                 className="input"
                 type="number"
-                placeholder="ex: 36.00"
+                placeholder="ex: 36,00"
                 name="value"
                 value={this.state.value}
                 onChange={e => this.handleChange(e)}
@@ -219,6 +254,7 @@ class DespesaForm extends Component {
                     {this.state.chosenFromUser.surname}
                   </p>
                 </div>
+                <button type="button" className="delete-member" onClick={() => this.deleteChosenUser()}>X</button>
               </div>
             ) : (
               ""
@@ -228,22 +264,27 @@ class DespesaForm extends Component {
           <div className="field">
             <label className="label">Para</label>
             <div className="checkbox-container">
-              {this.state.users.map((element, index) => (
+              {this.state.users.map((element, index) => {
+                let checked = false;
+                if (this.state.chosenToUsers.indexOf(element._id) > 0) {
+                  checked = true;
+                }
+                return (
                 <MemberCheckbox
                   key={index}
                   user={element}
                   handleUser={this.handleChosenUsers}
+                  checked={checked}
                 />
-              ))}
+              )})}
             </div>
           </div>
 
           <div className="centered-button">
             {this.state.isEdit ? (
               <div>
-                <Link to="/" className="button is-warning">
-                  <FontAwesomeIcon icon={faEdit} />
-                  Editar
+                <Link to="/" className="button is-link">
+                  Salvar
                 </Link>
                 <Link to="/" className="button is-danger">
                   <FontAwesomeIcon icon={faTrashAlt} />

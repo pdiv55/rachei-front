@@ -21,16 +21,23 @@
 .chart-tile-positive {
   display: flex;
   align-items: center;
-  width: 25%;
+  width: 40%;
+  text-align: end;
 }
 
-.chart-positive {
-  position: absolute;
-  height: 30px;
-  width: 100px;
-  opacity: 0.3;
-  background-color: green;
+.positive {
+  border-radius: 10px;
+  background-color: rgba(0,255,0,0.3);
   z-index: 1;
+  text-align: left;
+  position: relative;
+  height: 35px
+}
+
+.positive p {
+  position: absolute;
+  top: -3px;
+  font-weight: bold;
 }
 
 .chart-tile-negative {
@@ -38,16 +45,24 @@
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-  width: 25%;
+  width: 40%;
+  text-align: start;
 }
 
-.chart-negative {
-  position: absolute;
-  height: 30px;
-  width: 100px;
-  opacity: 0.3;
-  background-color: red;
+.negative {
+  border-radius: 10px;
+  background-color: rgba(255,0,0,0.3);
   z-index: 1;
+  text-align: right;
+  position: relative;
+  height: 35px;
+}
+
+.negative p {
+  position: absolute;
+  right: 0;
+  top: -3px;
+  font-weight: bold;
 }
 
 /* EQUILIBRIOS */
@@ -60,6 +75,11 @@
   margin: 3px !important;
   padding: 20px !important;
   border-bottom: 1px solid #cccc;
+}
+
+.equilibrio-subtitle {
+  padding-bottom: 10px;
+  border-bottom: 2px solid #ffdd57;
 }
 
 .equilibrio-tile {

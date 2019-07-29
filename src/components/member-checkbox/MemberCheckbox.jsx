@@ -2,7 +2,7 @@ import React from "react";
 import "../despesa-form/despesa-form.css";
 
 const MemberCheckbox = (props) => {
-  const { user, handleUser } = props;
+  const { checked, user, handleUser } = props;
 
   const onClickCheckBox = (event) => {
     handleUser(user._id, event.target.checked);
@@ -10,7 +10,7 @@ const MemberCheckbox = (props) => {
 
   return (
     <div className="checkbox-tile">
-      <input type="checkbox" name="member" className="checkbox" onClick={onClickCheckBox}/>
+      <input type="checkbox" name="member" className="checkbox" onClick={onClickCheckBox} defaultChecked={checked}/>
       <label className="label-checkbox">{user.name}</label>
     </div>
   );

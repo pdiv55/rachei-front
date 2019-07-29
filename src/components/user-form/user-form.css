@@ -1,12 +1,18 @@
 .camera {
   width: 8%;
-  margin: 0 auto 30px auto !important;
 }
 
 .upload-wrapper {
   overflow: hidden;
-  justify-content: center;
   display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .upload-wrapper button {
@@ -20,4 +26,16 @@
   width: 53px;
   height: 40px;
   opacity: 0;
+}
+
+.profile-pic-added {
+  border: 1px solid;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 40px;
+  padding: 7px;
 }

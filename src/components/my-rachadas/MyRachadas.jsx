@@ -66,7 +66,7 @@ class MyRachadas extends Component {
         <div className="rachada-tile-container">
           {rachadas ? (
             rachadas.map((rachada, index) => {
-              return <RachadaTile key={index} rachada={rachada} users={rachada.users} expenses={rachada.expenses}/>;
+              return <RachadaTile key={index} rachada={rachada}/>;
             })
           ) : (
             <p>Você não tem nenhuma rachada!</p>
@@ -75,7 +75,7 @@ class MyRachadas extends Component {
         <div className="centered-button">
           <Link
             className="button is-primary is-rounded is-large"
-            to="/rachada-form"
+            to="/rachada-form/new"
           >
             Criar Rachada
           </Link>

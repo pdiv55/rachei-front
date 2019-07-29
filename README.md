@@ -1,68 +1,63 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Rachei
 
-## Available Scripts
+**Rachei is a projet proudly designed by Ironhack SP students. Rachei is the sleekest and most practical way to split bills with your friends. Create your groups to share and follow your crew's expenses in real-time. Get insight, at any given moment, on how to balance all the group's expenses. Create your personal wallet and manage your pocket-money easily by paying your debts and reminding your friends of theirs.** 
+  **To discover the platform just follow** <a href="www.rachei.herokuapp.com"><strong>this link</strong></a>
 
-In the project directory, you can run:
 
-### `npm start`
+**_Attention: this is the repo for the front part of the app, please make sure you also visit the repo with the back-end code_** <a href="https://github.com/pdiv55/rachei-back">**_here_**</a>
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+## Contribute
+Rachei is the product of a lot of teamwork from a group of junior coders, all pull requests are welcome !
 
-### `npm test`
+To start :
+- Fork this repo
+- Clone this repo
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+When you're done, enter on your console:
+- git add .
+- git commit -m "[ comment your code ]"
+- git push origin master
 
-### `npm run build`
+Then create a Pull Request to suggest any optimizations to the team.
+Thanks!
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+## Setup
+Rachei's _front_ engine is built with NodeJS, Mongoose and ExpressJS.
+The website was deployed with Heroku.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The following dependencies must be installed :
+- fortawesome/fontawesome-svg-core (v. 1.2.19),
+- fortawesome/free-solid-svg-icons (v. 5.9.0), 
+- fortawesome/react-fontawesome"(v. 0.1.4), 
+- axios (v. 0.19.0), 
+- bulma (v. 0.7.5),  
+- dotenv (v. 8.0.0), 
+- react (v. 16.8.6),  
+- react-dom (v. 16.8.6), 
+- react-router-dom (v. 5.0.1), 
+- react-scripts (v. 3.0.1)
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Route-Tree
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+"/"  ---> HOME <br>
+"/user-form"  ---> USER FORM (for signup or user info edition) <br>
+"/signin"  ---> SIGNIN <br>
+"/forgot-password"  ---> FORGOT PASSWORD (to have a password recovery email sent to you) <br>
+"/new-password/:token"  --> NEW PASSWORD (to update your password) <br>
+"/my-rachadas" (protected route)  ---> MY RACHADAS (dashboard with all groups where the user is a member) <br>
+"/rachada-form/:id"  (protected route)  ---> RACHADA FORM (to create or edit groups) <br>
+"/rachada/:id" (protected route)   ---> RACHADA VIEW (dashboard with all the group's expenses and balance insights) <br>
+"/despesa-form/:id" (protected route)   --> DESPESA FORM (to create or edit expenses) <br>
+"/my-carteira"  (protected route)  ---> CARTEIRA (dashboard to manage personal wallet) <br>
+"/deposit"  (protected route)  ---> DEPOSIT (to desposit money on your personal wallet) <br>
+"/logout"  (protected route)  ---> LOGOUT
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+## Authors
+Marcelo Oliveira - @marbmo <br>
+Paul Divet - @pdiv55 <br>
+Fred Conti - @fredericonti <br>
+José Luiz Coe - @joseluizcoe <br>
+Gabriel Sicuto - @gsicuto

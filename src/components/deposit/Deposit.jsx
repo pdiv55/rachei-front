@@ -12,13 +12,13 @@ class Deposit extends Component {
   }
 
   handleChange(event) {
-    this.setState({ email: event.target.value });
+    this.setState({ value: event.target.value });
   }
 
   handleFormSubmit(event) {
     event.preventDefault();
     const user = {
-      email: this.state.value
+      value: this.state.value
     };
     this.props.loginUser(user);
   }
@@ -38,9 +38,9 @@ class Deposit extends Component {
               <div>
                 <input
                   className="input"
-                  type="email"
-                  name="email"
-                  placeholder="ex: 10.00"
+                  type="number"
+                  name="value"
+                  placeholder="ex: 10,00"
                   value={this.state.value}
                   onChange={e => {
                     this.handleChange(e);

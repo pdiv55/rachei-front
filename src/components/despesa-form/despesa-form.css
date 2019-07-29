@@ -21,3 +21,10 @@
 .label-checkbox {
   margin-left: 20px !important;
 }
+
+.delete-member {
+  background-color: none !important;
+  border: none !important;
+  font-weight: bold !important;
+  color: darkred !important;
+}
