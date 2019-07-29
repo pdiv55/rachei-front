@@ -19,7 +19,7 @@ class SuggestionLine extends Component {
           <p>{item.username}</p>
         </div>
         <div className="suggestion-info">
-          <p className="real-name">~ {item.name} + {item.surname}</p>
+          <p className="real-name">~ {item.name} {item.surname}</p>
         </div>
       </div>
     );

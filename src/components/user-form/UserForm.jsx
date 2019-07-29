@@ -33,14 +33,6 @@ class UserForm extends Component {
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
 
-  componentWillMount() {
-    if (this.props.location.state) {
-      if (this.props.location.state.isEdit) {
-        this.setState({ isEdit: true });
-      }
-    }
-  }
-
   handleChange(event) {
     const state = {};
     state[event.target.name] = event.target.value;
@@ -109,8 +101,13 @@ class UserForm extends Component {
     }
 
     if (formValidator) {
+      let action = 'auth/signup';
+      if(this.state.isEdit) {
+        action = `users/update/${this.props.user._id}`;
+      }
+      let url = `${process.env.REACT_APP_DEV_API_URL}/${action}/`;
       axios
-        .post(process.env.REACT_APP_DEV_API_URL + "/auth/signup", state)
+        .post(url, state)
         .then(response => {
           this.setState({
             redirect: true,
@@ -130,6 +127,21 @@ class UserForm extends Component {
         .catch(error => {
           console.error(error);
         });
+    }
+  }
+
+  componentWillMount() {
+    if (this.props.location.state) {
+      if (this.props.location.state.isEdit) {
+        this.setState({ 
+          isEdit: true,
+          username: this.props.user.username,
+          name: this.props.user.name,
+          surname: this.props.user.surname,
+          cpf: this.props.user.cpf,
+          email: this.props.user.email,
+        });
+      }
     }
   }
 

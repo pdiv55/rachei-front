@@ -89,7 +89,10 @@ class App extends Component {
             path="/"
             render={() => <Home loggedin={this.state.loggedin} />}
           />
-          <Route path="/user-form" component={UserForm} />
+          <Route path="/user-form" render={(props) => {
+            return <UserForm user={this.state.user} {...props} />
+          }}
+          />
           <Route
             path="/signin"
             render={props => {
@@ -114,7 +117,9 @@ class App extends Component {
           <ProtectedRoute
             loggedIn={this.state.loggedin}
             path="/rachada-form/:id"
-            component={RachadaForm}
+            render={(props) => {
+              return <RachadaForm user={this.state.user} {...props}/>
+            }}
           />
           <ProtectedRoute
             loggedIn={this.state.loggedin}
