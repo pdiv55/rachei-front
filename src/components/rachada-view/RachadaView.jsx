@@ -3,7 +3,7 @@ import Link from "../link/Link";
 import ContainerDespesas from "../container-despesas/ContainerDespesas";
 import ContainerEquilibrio from "../container-equilibrio/ContainerEquilibrio";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import "./rachada-view.css";
 import axios from '../../utils/interceptor';
 
@@ -60,12 +60,8 @@ class RachadaView extends Component {
               className="button is-warning"
             >
               <FontAwesomeIcon icon={faEdit} />
-              Editar
+              Editar Rachada
             </Link>
-            <a className="button is-danger" href="/">
-              <FontAwesomeIcon icon={faTrashAlt} />
-              Deletar
-            </a>
           </div>
         </div>
         <div className="title-container-special">
