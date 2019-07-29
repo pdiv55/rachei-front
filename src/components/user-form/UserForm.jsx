@@ -4,7 +4,7 @@ import Link from "../link/Link";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCamera, faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faCamera } from "@fortawesome/free-solid-svg-icons";
 require("dotenv").config();
 
 class UserForm extends Component {
