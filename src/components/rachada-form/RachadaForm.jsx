@@ -33,10 +33,13 @@ class RachadaForm extends Component {
     axios
       .get(process.env.REACT_APP_DEV_API_URL + "/users/")
       .then(response => {
+        let users = response.data;
+        users = users.filter(element => {
+          return element._id !== this.props.user._id;
+        });
         this.setState({
           allUsers: response.data,
-          users: response.data,
-          usersSearch: response.data
+          users: users,
         });
       })
       .catch(error => {
@@ -112,7 +115,7 @@ class RachadaForm extends Component {
       users: chosenUsers
     };
 
-    let action = 'create'
+    let action = 'create';
     if(this.state.isEdit) {
       action = `update/${this.props.match.params.id}`;
     }
@@ -133,6 +136,10 @@ class RachadaForm extends Component {
       });
   }
 
+  deleteGroup() {
+    
+  }
+
   componentWillMount() {
     if (this.props.location.state) {
       if (this.props.location.state.isEdit) {
@@ -143,7 +150,14 @@ class RachadaForm extends Component {
           description: this.props.location.state.rachada.description,
         });
       }
+    } else {
+      const chosenUsers = this.state.chosenUsers;
+      chosenUsers.push(this.props.user); 
+      this.setState({ chosenUsers: chosenUsers });
     }
+  }
+
+  componentDidMount() {
     if (this.state.users.length <= 0) this.getUsers();
   }
 
@@ -246,14 +260,14 @@ class RachadaForm extends Component {
           <div className="centered-button">
             {this.state.isEdit ? (
               <div>
-                <Link to="/" className="button is-link">
+                <button to="/" className="button is-link">
                   <FontAwesomeIcon icon={faEdit} />
                   Salvar
-                </Link>
-                <Link to="/" className="button is-danger">
+                </button>
+                <button to="/" className="button is-danger">
                   <FontAwesomeIcon icon={faTrashAlt} />
                   Deletar
-                </Link>
+                </button>
               </div>
             ) : (
           <button
