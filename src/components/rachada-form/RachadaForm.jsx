@@ -11,12 +11,14 @@ class RachadaForm extends Component {
     super(props);
 
     this.state = {
+      allUsers: [],
       users: [],
       chosenUsers: [],
       name: "",
       description: "",
       currency: "",
       currentsearch: "",
+      usersSearch: [],
       isMemberSearch: false,
       isCurrencySearch: false,
       isEdit: false
@@ -32,7 +34,9 @@ class RachadaForm extends Component {
       .get(process.env.REACT_APP_DEV_API_URL + "/users/")
       .then(response => {
         this.setState({
-          users: response.data
+          allUsers: response.data,
+          users: response.data,
+          usersSearch: response.data
         });
       })
       .catch(error => {
@@ -48,32 +52,29 @@ class RachadaForm extends Component {
 
   handleMemberSearch = event => {
     const state = event.target.value;
-    this.setState({ currentsearch: state, isMemberSearch: true });
+    const oldText = this.state.currentsearch;
     if (state === "") {
       this.setState({ isMemberSearch: false });
     } else {
       this.setState({ isMemberSearch: true });
     }
+    let items;
+    if (state !== oldText) {
+      items = [...this.state.users];
+      const filteredItems = items.filter(e => {
+        return e.name.toUpperCase().indexOf(state.toUpperCase()) > -1;
+      });
+      this.setState({ usersSearch: filteredItems });
+    } else {
+      this.setState({ users: this.state.users });
+    }
+    this.setState({ currentsearch: state });
   };
 
   handleMemberBlur = () => {
     setTimeout(() => {
       this.setState({ isMemberSearch: false, currentsearch: "" });
     }, 100);
-  };
-
-  handleCurrencySearch = event => {
-    const state = event.target.value;
-    this.setState({ currentsearch: state });
-    if (state === "") {
-      this.setState({ isCurrencySearch: false });
-    } else {
-      this.setState({ isCurrencySearch: true });
-    }
-  };
-
-  handleCurrencyBlur = () => {
-    this.setState({ isCurrencySearch: false });
   };
 
   handleChosenUsers(user) {
@@ -84,6 +85,19 @@ class RachadaForm extends Component {
       return chosenUsers.indexOf(element) < 0;
     });
     this.setState({ chosenUsers: chosenUsers, users: users });
+  }
+
+  deleteChosenUser (id) {
+    let chosenUsers = this.state.chosenUsers;
+    chosenUsers = chosenUsers.filter(element => element._id !== id)
+    let users = this.state.allUsers;
+    for (let i = 0; i < chosenUsers.length; i++) {
+      users = users.filter(element => element._id !== chosenUsers[i]._id)
+    }
+    this.setState({ 
+      chosenUsers: chosenUsers,
+      users: users
+    });
   }
 
   handleSubmit(event) {
@@ -100,9 +114,9 @@ class RachadaForm extends Component {
 
     let action = 'create'
     if(this.state.isEdit) {
-      action = 'update';
+      action = `update/${this.props.match.params.id}`;
     }
-    let url = `${process.env.REACT_APP_DEV_API_URL}/group/${action}/${this.props.match.params.id}`;
+    let url = `${process.env.REACT_APP_DEV_API_URL}/groups/${action}/`;
 
     axios.post(url, group)
     .then(response => {
@@ -206,7 +220,7 @@ class RachadaForm extends Component {
             </div>
             {this.state.isMemberSearch ? (
               <SuggestionBox
-                items={this.state.users}
+                items={this.state.usersSearch}
                 pickItem={this.handleChosenUsers}
               />
             ) : (
@@ -223,7 +237,7 @@ class RachadaForm extends Component {
                       ~ {element.name} + {element.surname}
                     </p>
                   </div>
-                  <button className="delete-member">X</button>
+                  <button type="button" className="delete-member" onClick={() => this.deleteChosenUser(element._id)}>X</button>
                 </div>
               );
             })}

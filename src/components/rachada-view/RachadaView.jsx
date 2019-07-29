@@ -88,7 +88,7 @@ class RachadaView extends Component {
         </div>
         <div className="containers-container">
           {(this.state.equilibrio && this.state.expenses) ? (
-            <ContainerEquilibrio />
+            <ContainerEquilibrio users={this.state.users} expenses={this.state.expenses} />
           ) : (
             <ContainerDespesas
               expenses={this.state.expenses}

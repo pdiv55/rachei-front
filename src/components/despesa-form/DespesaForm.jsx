@@ -21,10 +21,11 @@ class DespesaForm extends Component {
       message: '',
       isMemberSearch: false,
       isEdit: false,
+      allUsers: this.props.location.state.users,
       users: this.props.location.state.users,
       usersSearch: this.props.location.state.users,
       currentsearch: "",
-      chosenFromUser: "",
+      chosenFromUser: '',
       chosenToUsers: []
     };
 
@@ -88,6 +89,14 @@ class DespesaForm extends Component {
     }
   }
 
+  deleteChosenUser () {
+    const users = this.state.allUsers;
+    this.setState({ 
+      chosenFromUser: '',
+      users: users
+    });
+  }
+
   handleSubmit(event) {
     event.preventDefault();
 
@@ -100,6 +109,7 @@ class DespesaForm extends Component {
       group: this.props.match.params,
       from: this.state.chosenFromUser._id,
       to: this.state.chosenToUsers,
+      value: this.state.value,
     };
 
     const chosenToUsers = this.state.chosenToUsers;
@@ -244,6 +254,7 @@ class DespesaForm extends Component {
                     {this.state.chosenFromUser.surname}
                   </p>
                 </div>
+                <button type="button" className="delete-member" onClick={() => this.deleteChosenUser()}>X</button>
               </div>
             ) : (
               ""

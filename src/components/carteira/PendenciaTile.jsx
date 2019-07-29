@@ -12,7 +12,6 @@ class PendenciaTile extends Component {
 
   render() {
     const { expense } = this.props;
-    console.log(expense);
     return (
       <div className="notification pendency-tile">
         <div className="info-pendency-tile">

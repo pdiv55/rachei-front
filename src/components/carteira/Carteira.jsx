@@ -42,8 +42,8 @@ class Carteira extends Component {
         </div>
 
         <div className="pendency-container">
-          {expenses.map((expense) => (
-            <PendenciaTile expense={expense}/>
+          {expenses.map((expense, index) => (
+            <PendenciaTile key={index} expense={expense}/>
           ))}
         </div>
 
