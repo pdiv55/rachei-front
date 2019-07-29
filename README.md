@@ -47,13 +47,13 @@ The following dependencies must be installed :
 "/signin"  ---> SIGNIN <br>
 "/forgot-password"  ---> FORGOT PASSWORD (to have a password recovery email sent to you) <br>
 "/new-password/:token"  --> NEW PASSWORD (to update your password) <br>
-"/my-rachadas"  ---> MY RACHADAS (dashboard with all groups where the user is a member) <br>
-"/rachada-form/:id"  ---> RACHADA FORM (to create or edit groups) <br>
-"/rachada/:id"  ---> RACHADA VIEW (dashboard with all the group's expenses and balance insights) <br>
-"/despesa-form/:id"  --> DESPESA FORM (to create or edit expenses) <br>
-"/my-carteira"  ---> CARTEIRA (dashboard to manage personal wallet) <br>
-"/deposit"  ---> DEPOSIT (to desposit money on your personal wallet) <br>
-"/logout"  ---> LOGOUT
+"/my-rachadas" (protected route)  ---> MY RACHADAS (dashboard with all groups where the user is a member) <br>
+"/rachada-form/:id"  (protected route)  ---> RACHADA FORM (to create or edit groups) <br>
+"/rachada/:id" (protected route)   ---> RACHADA VIEW (dashboard with all the group's expenses and balance insights) <br>
+"/despesa-form/:id" (protected route)   --> DESPESA FORM (to create or edit expenses) <br>
+"/my-carteira"  (protected route)  ---> CARTEIRA (dashboard to manage personal wallet) <br>
+"/deposit"  (protected route)  ---> DEPOSIT (to desposit money on your personal wallet) <br>
+"/logout"  (protected route)  ---> LOGOUT
 
 ## Authors
 Marcelo Oliveira - @marbmo <br>
