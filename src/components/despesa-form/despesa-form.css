@@ -28,3 +28,41 @@
   font-weight: bold !important;
   color: darkred !important;
 }
+
+.upload-wrapper {
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.upload-wrapper button {
+  border-radius: 8px;
+  font-size: 20px;
+}
+
+.upload-wrapper input[type="file"] {
+  position: absolute;
+  left: 0;
+  width: 53px;
+  height: 40px;
+  opacity: 0;
+}
+
+.profile-pic-added {
+  border: 1px solid;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 40px;
+  padding: 7px;
+}
