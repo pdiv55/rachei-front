@@ -90,10 +90,10 @@ class NavBar extends Component {
                         isEdit: true
                       }
                     }}
-                    className="profile-pic"
+                    className="profile-pic-container"
                   >
                     {user.profilePicture ? (
-                      <img src={user.profilePicture} alt="profile-pic" />
+                      <img src={user.profilePicture} alt="profile-pic" className="profile-pic"/>
                     ) : (
                       <FontAwesomeIcon icon={faUser} />
                     )}
