@@ -4,7 +4,7 @@ import "./container-despesas.css";
 
 const DespesaTile = (props) => {
   const { rachada, users, expense } = props;
-  console.log(expense);
+
   return (
     <Link to={{
       pathname: `/despesa-form/${expense._id}`,

@@ -127,11 +127,16 @@ class DespesaForm extends Component {
     const expense = {
       name: this.state.name,
       date: this.state.date,
-      group: this.props.match.params,
+      group: this.props.match.params.id,
       from: this.state.chosenFromUser._id,
       to: this.state.chosenToUsers,
       value: value,
     };
+
+
+    if (this.props.location.state.rachada) {
+      expense.group = this.props.location.state.rachada;
+    }
 
     const chosenToUsers = this.state.chosenToUsers;
 
@@ -146,6 +151,7 @@ class DespesaForm extends Component {
         };
         individualExpenses.push(individualExpense);
       }
+      return '';
     });
 
     let action = 'create'
@@ -166,7 +172,6 @@ class DespesaForm extends Component {
           message: response.data.message
         })
       this.setState({redirect: true})
-      })
       if (this.state.file) {
         const formData = new FormData();
         formData.append("image", this.state.file);
@@ -209,6 +214,7 @@ class DespesaForm extends Component {
   }
 
   render() {
+    console.log(this.props);
     return (
       <React.Fragment>
         {this.state.redirect 
@@ -275,7 +281,7 @@ class DespesaForm extends Component {
             <div className="control">
               <input
                 className="input"
-                type="number"
+                type="text"
                 placeholder="ex: 36,00"
                 name="value"
                 value={this.state.value}

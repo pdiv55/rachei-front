@@ -17,7 +17,7 @@ class RachadaForm extends Component {
       chosenUsers: [],
       name: "",
       description: "",
-      currency: "",
+      message: '',
       currentsearch: "",
       usersSearch: [],
       isMemberSearch: false,
@@ -108,13 +108,19 @@ class RachadaForm extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
+
+    if (this.state.name === '' || this.state.description === '' || this.state.chosenUsers === '') {
+      window.scrollTo(0, 0);
+      this.setState({ message: 'Necessário preencher todos os campos' });
+      return;
+    }
+
     const chosenUsers = this.state.chosenUsers.map(element => {
       return element._id;
     });
     const group = {
       name: this.state.name,
       description: this.state.description,
-      currency: this.state.currency,
       users: chosenUsers
     };
 
@@ -205,6 +211,13 @@ class RachadaForm extends Component {
           )}
         </div>
         <div className="form-container">
+          {this.state.message ? (
+            <div className="notification is-warning">
+              <strong>{this.state.message}</strong>
+            </div>
+          ) : (
+            ""
+          )}
           <div className="field">
             <label className="label">Name</label>
             <div className="control">

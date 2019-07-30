@@ -1,3 +1,4 @@
+/* eslint-disable no-loop-func */
 import React from "react";
 import "./container-equilibrio.css";
 import ResultTile from "./ResultTile";
@@ -72,6 +73,7 @@ const ContainerEquilibrio = (props) => {
       } else if (key.split('&').indexOf(element.from._id) === 1 && key.split('&').indexOf(element.to._id) === 0) {
         return equilibrios[key].value -= element.value;
       }
+      return '';
     })
   }
 

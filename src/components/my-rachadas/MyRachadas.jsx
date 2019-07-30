@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import "./my-rachadas.css";
 import Link from "../link/Link";
 import RachadaTile from "./RachadaTile";
-import SuggestionBox from "../suggestion-box/SuggestionBox";
 import axios from '../../utils/interceptor';
 
 class MyRachadas extends Component {

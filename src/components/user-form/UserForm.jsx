@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import React, { Component } from "react";
 import "./user-form.css";
 import Link from "../link/Link";
@@ -5,7 +6,6 @@ import axios from "axios";
 import { Redirect } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
-require("dotenv").config();
 
 class UserForm extends Component {
   constructor(props) {
@@ -82,11 +82,22 @@ class UserForm extends Component {
 
   handleFormUpdate(event) {
     event.preventDefault();
-    const state = this.state;
+    const user = {
+      username: this.state.username,
+      name: this.state.name,
+      surname: this.state.surname,
+      cpf: this.state.cpf,
+      email: this.state.email,
+    };
+
+    if (this.state.password !== '') {
+      user.password = this.state.password;
+    }
+
     let action = `users/update/${this.props.user._id}`;
     let url = `${process.env.REACT_APP_DEV_API_URL}/${action}/`;
       axios
-        .post(url, state)
+        .post(url, user)
         .then(response => {
           this.setState({
             redirect: true,
@@ -104,7 +115,7 @@ class UserForm extends Component {
           }
         })
         .catch(error => {
-          console.error(error);
+          console.log(error);
         });
         window.scrollTo(0, 0);
     }
