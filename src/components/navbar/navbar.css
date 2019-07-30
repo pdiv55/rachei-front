@@ -14,7 +14,7 @@
   margin: 0 10px !important;
 }
 
-.profile-pic {
+.profile-pic-container {
   border: 1px solid;
   width: 40px;
   height: 40px;
@@ -23,4 +23,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.profile-pic {
+  width:100% !important;
 }

@@ -133,6 +133,7 @@ class RachadaForm extends Component {
           users: [],
           chosenUsers: []
         });
+      this.setState({redirect: true})
       })
       .catch(err => {
         console.log(err);
@@ -173,7 +174,7 @@ class RachadaForm extends Component {
     <React.Fragment>
       {this.state.redirect 
         ? 
-        (<Redirect to="my-rachadas" />)
+        (<Redirect to="/my-rachadas" />)
         :
       (<form onSubmit={this.handleSubmit}>
         {this.state.isEdit ? (

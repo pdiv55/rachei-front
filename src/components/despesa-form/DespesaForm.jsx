@@ -21,6 +21,7 @@ class DespesaForm extends Component {
       message: '',
       isMemberSearch: false,
       isEdit: false,
+      redirect: false,
       allUsers: this.props.location.state.users,
       users: this.props.location.state.users,
       usersSearch: this.props.location.state.users,
@@ -32,6 +33,7 @@ class DespesaForm extends Component {
     this.handleChosenUsers = this.handleChosenUsers.bind(this);
     this.handleFromUser = this.handleFromUser.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.deleteExpense = this.deleteExpense.bind(this);
   }
 
   handleChange(event) {
@@ -138,12 +140,19 @@ class DespesaForm extends Component {
           chosenFromUser: "",
           message: response.data.message
         })
-      // <Redirect to="/rachada/${this.props}"/>
-      console.log(this.props)
+      this.setState({redirect: true})
       })
       .catch(error => {
         console.log(error);
       });
+  }
+
+  deleteExpense() {
+    let url = `${process.env.REACT_APP_DEV_API_URL}/expenses/delete/${this.props.match.params.id}`;
+    axios.delete(url)
+    .then(() => {
+      this.setState({redirect: true})
+    })
   }
 
   componentWillMount () {
@@ -165,9 +174,14 @@ class DespesaForm extends Component {
 
   render() {
     return (
-      <div>
-        <Link to="/rachada" className="button return">
-          {"< Retornar à Rachada"}
+      <React.Fragment>
+        {this.state.redirect 
+        ? 
+        (<Redirect to="/my-rachadas" />)
+        :
+      (<div>
+        <Link to="/my-rachadas" className="button return">
+          {"< Retornar ao Meu Painel"}
         </Link>
         <div className="title-container">
           {this.state.isEdit ? (
@@ -285,13 +299,13 @@ class DespesaForm extends Component {
           <div className="centered-button">
             {this.state.isEdit ? (
               <div>
-                <Link to="/" className="button is-link">
+                <button to="/" className="button is-link">
                   Salvar
-                </Link>
-                <Link to="/" className="button is-danger">
+                </button>
+                <button className="button is-danger" onClick={this.deleteExpense}>
                   <FontAwesomeIcon icon={faTrashAlt} />
                   Deletar
-                </Link>
+                </button>
               </div>
             ) : (
               <button
@@ -304,9 +318,11 @@ class DespesaForm extends Component {
             )}
           </div>
         </form>
-      </div>
-    );
+        </div>
+    )
   }
+  </React.Fragment>
+)}
 }
 
 export default DespesaForm;
