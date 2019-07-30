@@ -31,6 +31,7 @@ class UserForm extends Component {
     };
 
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
+    this.handleFormUpdate = this.handleFormUpdate.bind(this);
   }
 
   handleChange(event) {
@@ -78,6 +79,35 @@ class UserForm extends Component {
       fileUrl: file
     });
   }
+
+  handleFormUpdate(event) {
+    event.preventDefault();
+    const state = this.state;
+    let action = `users/update/${this.props.user._id}`;
+    let url = `${process.env.REACT_APP_DEV_API_URL}/${action}/`;
+      axios
+        .post(url, state)
+        .then(response => {
+          this.setState({
+            redirect: true,
+            successResponse: "Usuario atualizado com sucesso"
+          });
+          if (this.state.file) {
+            const formData = new FormData();
+            formData.append("image", this.state.file);
+            axios.post(
+              process.env.REACT_APP_DEV_API_URL +
+                "/files/upload/user/" +
+                response.data.data._id,
+              formData
+            );
+          }
+        })
+        .catch(error => {
+          console.error(error);
+        });
+        window.scrollTo(0, 0);
+    }
 
   handleFormSubmit(event) {
     event.preventDefault();
@@ -157,7 +187,7 @@ class UserForm extends Component {
       );
     } else {
       return (
-        <form onSubmit={this.handleFormSubmit}>
+        <form>
           {this.state.isEdit ? (
             <Link to="/my-rachadas" className="button return">
               {"< Retornar ao Meu Painel"}
@@ -341,14 +371,14 @@ class UserForm extends Component {
             </div>
             <div className="centered-button">
               {this.state.isEdit ? (
-                <Link to="/" className="button is-link is-large">
+                <button type="submit" className="button is-link is-large" onClick={this.handleFormUpdate}>
                   Salvar
-                </Link>
+                </button>
               ) : (
                 <button
                   type="submit"
                   className="button is-link is-large"
-                  onSubmit={this.handleFormSubmit}
+                  onClick={this.handleFormSubmit}
                 >
                   Criar Conta
                 </button>

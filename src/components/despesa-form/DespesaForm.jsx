@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Link from "../link/Link";
+import { Redirect } from "react-router-dom";
 import "./despesa-form.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -137,6 +138,8 @@ class DespesaForm extends Component {
           chosenFromUser: "",
           message: response.data.message
         })
+      // <Redirect to="/rachada/${this.props}"/>
+      console.log(this.props)
       })
       .catch(error => {
         console.log(error);
