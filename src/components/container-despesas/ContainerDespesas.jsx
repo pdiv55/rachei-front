@@ -30,7 +30,7 @@ class ContainerDespesas extends Component {
         <div className="totals-container">
           <div className="info-total">
             <p className="title is-5">Total Rachada</p>
-            <p>R${this.state.total},00</p>
+            <p>R${this.state.total}</p>
           </div>
           <Link
             to={{

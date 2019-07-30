@@ -12,27 +12,32 @@ class MyRachadas extends Component {
     this.state = {
       isSearch: false,
       groups: [],
+      currentSearch: '',
+      groupsSearch: [],
+      allGroups: [],
     };
   }
 
   handleSearch = event => {
     const state = event.target.value;
-    this.setState({ currentsearch: state });
-    if (state === "") {
-      this.setState({ isSearch: false });
+    const oldText = this.state.currentsearch;
+    let items;
+    if (state !== oldText) {
+      items = [...this.state.allGroups];
+      const filteredItems = items.filter(e => {
+        return e.name.toUpperCase().indexOf(state.toUpperCase()) > -1;
+      });
+      this.setState({ groups: filteredItems });
     } else {
-      this.setState({ isSearch: true });
+      this.setState({ groups: this.state.allGroups });
     }
-  };
-
-  handleBlur = () => {
-    this.setState({ isSearch: false });
+    this.setState({ currentsearch: state });
   };
 
   componentWillMount() {
     axios.get(process.env.REACT_APP_DEV_API_URL + "/groups/user/")
     .then(response => {
-      this.setState({ groups: response.data });
+      this.setState({ groups: response.data, allGroups: response.data });
     })
     .catch(error => {
       console.log(error);
@@ -40,7 +45,6 @@ class MyRachadas extends Component {
   }
 
   render() {
-    const rachadas = this.state.groups;
     return (
       <div>
         <div className="title-container">
@@ -57,15 +61,13 @@ class MyRachadas extends Component {
               type="text"
               placeholder="Procure uma rachada"
               onChange={this.handleSearch}
-              onBlur={this.handleBlur}
             />
-            {this.state.isSearch ? <SuggestionBox /> : ""}
           </div>
         </div>
 
         <div className="rachada-tile-container">
-          {rachadas ? (
-            rachadas.map((rachada, index) => {
+          {this.state.groups ? (
+            this.state.groups.map((rachada, index) => {
               return <RachadaTile key={index} rachada={rachada}/>;
             })
           ) : (

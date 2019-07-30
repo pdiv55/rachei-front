@@ -114,36 +114,42 @@ class DespesaForm extends Component {
 
     const chosenToUsers = this.state.chosenToUsers;
 
-    const individualExpenses = chosenToUsers.map(element => {
-      return {
-        value: parseInt(this.state.value / chosenToUsers.length),
-        from: this.state.chosenFromUser._id,
-        to: element
-      };
+    const individualExpenses = [];
+    
+    chosenToUsers.map(element => {
+      if (element !== this.state.chosenFromUser._id) {
+        const individualExpense = {
+          value: parseInt(this.state.value / chosenToUsers.length),
+          from: this.state.chosenFromUser._id,
+          to: element
+        };
+        individualExpenses.push(individualExpense);
+      }
     });
+
+    console.log(individualExpenses);
 
     let action = 'create'
     if(this.state.isEdit) {
       action = 'update';
     }
+
     let url = `${process.env.REACT_APP_DEV_API_URL}/expenses/${action}/${this.props.match.params.id}`;
     axios.post(url, { expense, individualExpenses })
-      .then(response => {
-        this.setState({
-          name: "",
-          value: "",
-          date: "",
-          from: "",
-          to: [],
-          chosenFromUser: "",
-          message: response.data.message
-        })
-      // <Redirect to="/rachada/${this.props}"/>
-      console.log(this.props)
+    .then(response => {
+      this.setState({
+        name: "",
+        value: "",
+        date: "",
+        from: "",
+        to: [],
+        chosenFromUser: "",
+        message: response.data.message
       })
-      .catch(error => {
-        console.log(error);
-      });
+    })
+    .catch(error => {
+      console.log(error);
+    });
   }
 
   componentWillMount () {
