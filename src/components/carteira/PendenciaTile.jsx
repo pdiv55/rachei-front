@@ -15,13 +15,13 @@ class PendenciaTile extends Component {
     return (
       <div className="notification pendency-tile">
         <div className="info-pendency-tile">
-          <p className="title is-5">Name Member</p>
+          <p className="title is-5">{expense[1].name}</p>
           {this.state.isEarning ? (
             <p className="subtitle is-7">te deve</p>
           ) : (
             <p className="subtitle is-7">espera</p>
           )}
-          <p className="title is-5">Total</p>
+          <p className="title is-5">R${expense[1].total}</p>
         </div>
         <div>
           {this.state.isEarning ? (

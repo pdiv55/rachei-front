@@ -1,3 +1,4 @@
+/* eslint-disable no-loop-func */
 import React from "react";
 import "./container-equilibrio.css";
 import ResultTile from "./ResultTile";
@@ -68,10 +69,11 @@ const ContainerEquilibrio = (props) => {
   for (let key in equilibrios) {
     individualExpenses.map(element => {
       if (key.split('&').indexOf(element.from._id) === 0 && key.split('&').indexOf(element.to._id) === 1) {
-        equilibrios[key].value += element.value;
+        return equilibrios[key].value += element.value;
       } else if (key.split('&').indexOf(element.from._id) === 1 && key.split('&').indexOf(element.to._id) === 0) {
-        equilibrios[key].value -= element.value;
+        return equilibrios[key].value -= element.value;
       }
+      return '';
     })
   }
 

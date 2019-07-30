@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import React, { Component } from "react";
 import "./user-form.css";
 import Link from "../link/Link";
@@ -5,7 +6,6 @@ import axios from "axios";
 import { Redirect } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
-require("dotenv").config();
 
 class UserForm extends Component {
   constructor(props) {
@@ -31,6 +31,7 @@ class UserForm extends Component {
     };
 
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
+    this.handleFormUpdate = this.handleFormUpdate.bind(this);
   }
 
   handleChange(event) {
@@ -78,6 +79,46 @@ class UserForm extends Component {
       fileUrl: file
     });
   }
+
+  handleFormUpdate(event) {
+    event.preventDefault();
+    const user = {
+      username: this.state.username,
+      name: this.state.name,
+      surname: this.state.surname,
+      cpf: this.state.cpf,
+      email: this.state.email,
+    };
+
+    if (this.state.password !== '') {
+      user.password = this.state.password;
+    }
+
+    let action = `users/update/${this.props.user._id}`;
+    let url = `${process.env.REACT_APP_DEV_API_URL}/${action}/`;
+      axios
+        .post(url, user)
+        .then(response => {
+          this.setState({
+            redirect: true,
+            successResponse: "Usuario atualizado com sucesso"
+          });
+          if (this.state.file) {
+            const formData = new FormData();
+            formData.append("image", this.state.file);
+            axios.post(
+              process.env.REACT_APP_DEV_API_URL +
+                "/files/upload/user/" +
+                response.data.data._id,
+              formData
+            );
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+        window.scrollTo(0, 0);
+    }
 
   handleFormSubmit(event) {
     event.preventDefault();
@@ -157,7 +198,7 @@ class UserForm extends Component {
       );
     } else {
       return (
-        <form onSubmit={this.handleFormSubmit}>
+        <form>
           {this.state.isEdit ? (
             <Link to="/my-rachadas" className="button return">
               {"< Retornar ao Meu Painel"}
@@ -169,7 +210,7 @@ class UserForm extends Component {
             {this.state.isEdit ? (
               <h1 className="title">Edite seu Cadastro de Rachador</h1>
             ) : (
-              <h1 className="title">Cadastro de Rachador 🚀</h1>
+              <h1 className="title">Cadastro de Rachador <span role="img" aria-label="rocket">🚀</span></h1>
             )}
             {this.state.isEdit ? (
               <h2 className="subtitle">
@@ -341,14 +382,14 @@ class UserForm extends Component {
             </div>
             <div className="centered-button">
               {this.state.isEdit ? (
-                <Link to="/" className="button is-link is-large">
+                <button type="submit" className="button is-link is-large" onClick={this.handleFormUpdate}>
                   Salvar
-                </Link>
+                </button>
               ) : (
                 <button
                   type="submit"
                   className="button is-link is-large"
-                  onSubmit={this.handleFormSubmit}
+                  onClick={this.handleFormSubmit}
                 >
                   Criar Conta
                 </button>
