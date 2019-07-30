@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import Link from "../link/Link";
+import { Redirect } from "react-router-dom";
 import SuggestionBox from "../suggestion-box/SuggestionBox";
 import "./rachada-form.css";
 import axios from "../../utils/interceptor";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 
 class RachadaForm extends Component {
   constructor(props) {
@@ -21,12 +22,14 @@ class RachadaForm extends Component {
       usersSearch: [],
       isMemberSearch: false,
       isCurrencySearch: false,
-      isEdit: false
+      isEdit: false,
+      redirect: false
     };
 
     this.getUsers = this.getUsers.bind(this);
     this.handleChosenUsers = this.handleChosenUsers.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.deleteGroup = this.deleteGroup.bind(this);
   }
 
   getUsers() {
@@ -137,7 +140,11 @@ class RachadaForm extends Component {
   }
 
   deleteGroup() {
-    
+    let url = `${process.env.REACT_APP_DEV_API_URL}/groups/delete/${this.props.match.params.id}`;
+    axios.delete(url)
+    .then(() => {
+      this.setState({redirect: true})
+    })
   }
 
   componentWillMount() {
@@ -163,7 +170,12 @@ class RachadaForm extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+    <React.Fragment>
+      {this.state.redirect 
+        ? 
+        (<Redirect to="my-rachadas" />)
+        :
+      (<form onSubmit={this.handleSubmit}>
         {this.state.isEdit ? (
           <Link to="/rachada" className="button return">
             {"< Retornar à Rachada"}
@@ -248,11 +260,14 @@ class RachadaForm extends Component {
                   </div>
                   <div className="suggestion-info">
                     <p className="real-name">
-                      ~ {element.name} + {element.surname}
+                      ~ {element.name} {element.surname}
                     </p>
                   </div>
-                  <button type="button" className="delete-member" onClick={() => this.deleteChosenUser(element._id)}>X</button>
-                </div>
+                  {this.state.isEdit ?
+                  ""
+                : (<button type="button" className="delete-member" onClick={() => this.deleteChosenUser(element._id)}>X</button>)
+                }
+                  </div>
               );
             })}
           </div>
@@ -261,10 +276,9 @@ class RachadaForm extends Component {
             {this.state.isEdit ? (
               <div>
                 <button to="/" className="button is-link">
-                  <FontAwesomeIcon icon={faEdit} />
                   Salvar
                 </button>
-                <button to="/" className="button is-danger">
+                <button className="button is-danger" onClick={this.deleteGroup}>
                   <FontAwesomeIcon icon={faTrashAlt} />
                   Deletar
                 </button>
@@ -282,6 +296,8 @@ class RachadaForm extends Component {
         </div>
       </form>
     )}
-            }
-            
-export default RachadaForm;
+    </React.Fragment>
+    )
+  }
+}
+  export default RachadaForm
