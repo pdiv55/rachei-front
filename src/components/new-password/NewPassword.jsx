@@ -24,7 +24,7 @@ class NewPassword extends Component {
   handleFormSubmit(event) {
     event.preventDefault();
     const user = {
-      email: this.state.password
+      password: this.state.password
     };
     this.props.loginUser(user);
   }
@@ -75,7 +75,7 @@ class NewPassword extends Component {
                 <input
                   className="input"
                   type="password"
-                  name="password"
+                  name="repassword"
                   value={this.state.repassword}
                   onChange={e => {
                     this.handleChange(e);
