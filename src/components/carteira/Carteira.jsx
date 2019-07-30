@@ -10,15 +10,34 @@ class Carteira extends Component {
 
     this.state = {
       expenses: [],
+      total: 0,
     }
+    this.organizeExpenses = this.organizeExpenses.bind(this);
+  }
+
+  organizeExpenses (e) {
+    const toExpenses = e[1];
+    let total = 0;
+    const expensesObject = {};
+    toExpenses.map(element => {
+      total += element.value;
+      if (expensesObject[element.from._id]) {
+        return expensesObject[element.from._id].total += element.value;
+      } else {
+        return expensesObject[element.from._id] = {
+          name: element.from.name,
+          total: element.value,
+        }
+      }
+    })
+    const expenses = Object.entries(expensesObject);
+    this.setState({ total: total, expenses: expenses });
   }
 
   componentWillMount () {
     axios.get(process.env.REACT_APP_DEV_API_URL + "/expenses/user/")
     .then(response => {
-      this.setState({
-        expenses: response.data,
-      })
+      this.organizeExpenses(response.data);
     })
     .catch(error => {
       console.log(error);
@@ -37,8 +56,8 @@ class Carteira extends Component {
         </div>
 
         <div className="wallet-container">
-          <p className="title is-5">Seu Saldo</p>
-          <p>numero</p>
+          <p className="title is-5">Seu Saldo Devedor</p>
+          <p>R${this.state.total}</p>
         </div>
 
         <div className="pendency-container">

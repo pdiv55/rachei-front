@@ -199,7 +199,7 @@ class UserForm extends Component {
             {this.state.isEdit ? (
               <h1 className="title">Edite seu Cadastro de Rachador</h1>
             ) : (
-              <h1 className="title">Cadastro de Rachador 🚀</h1>
+              <h1 className="title">Cadastro de Rachador <span role="img" aria-label="rocket">🚀</span></h1>
             )}
             {this.state.isEdit ? (
               <h2 className="subtitle">

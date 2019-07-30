@@ -99,11 +99,30 @@ class DespesaForm extends Component {
     });
   }
 
+  handleFile(event) {
+    const file = URL.createObjectURL(event.target.files[0]);
+    this.setState({
+      file: event.target.files[0],
+      fileUrl: file
+    });
+  }
+
   handleSubmit(event) {
     event.preventDefault();
 
+    if (this.state.name === '' || this.state.value === '' || this.state.date === '' || this.state.chosenFromUser === '' || this.state.chosenToUsers === []) {
+      window.scrollTo(0, 0);
+      this.setState({ message: 'Necessário preencher todos os campos' });
+      return;
+    }
+
     const users = [...this.state.chosenToUsers];
     users.push(this.state.chosenFromUser._id);
+
+    let value = this.state.value;
+    if (this.state.value.toString().indexOf(',') < 0) {
+      value += ',00';
+    }
 
     const expense = {
       name: this.state.name,
@@ -111,23 +130,29 @@ class DespesaForm extends Component {
       group: this.props.match.params,
       from: this.state.chosenFromUser._id,
       to: this.state.chosenToUsers,
-      value: this.state.value,
+      value: value,
     };
 
     const chosenToUsers = this.state.chosenToUsers;
 
-    const individualExpenses = chosenToUsers.map(element => {
-      return {
-        value: parseInt(this.state.value / chosenToUsers.length),
-        from: this.state.chosenFromUser._id,
-        to: element
-      };
+    const individualExpenses = [];
+    
+    chosenToUsers.map(element => {
+      if (element !== this.state.chosenFromUser._id) {
+        const individualExpense = {
+          value: parseInt(this.state.value / chosenToUsers.length),
+          from: this.state.chosenFromUser._id,
+          to: element
+        };
+        individualExpenses.push(individualExpense);
+      }
     });
 
     let action = 'create'
     if(this.state.isEdit) {
       action = 'update';
     }
+
     let url = `${process.env.REACT_APP_DEV_API_URL}/expenses/${action}/${this.props.match.params.id}`;
     axios.post(url, { expense, individualExpenses })
       .then(response => {
@@ -142,9 +167,20 @@ class DespesaForm extends Component {
         })
       this.setState({redirect: true})
       })
-      .catch(error => {
-        console.log(error);
-      });
+      if (this.state.file) {
+        const formData = new FormData();
+        formData.append("image", this.state.file);
+        axios.post(
+          process.env.REACT_APP_DEV_API_URL +
+            "/files//upload/expense/" +
+            response.data.data._id,
+          formData
+        );
+      }
+    })
+    .catch(error => {
+      console.log(error);
+    });
   }
 
   deleteExpense() {
@@ -193,11 +229,33 @@ class DespesaForm extends Component {
             Entre as informaçoes da despesa para rachar o valor com seus amigos
           </h2>
         </div>
-
         <form className="form-container" onSubmit={this.handleSubmit}>
-          <button className="button is-primary bill">
-            <FontAwesomeIcon icon={faFileInvoice} />+
-          </button>
+          {this.state.message ? (
+            <div className="notification is-warning">
+              <strong>{this.state.message}</strong>
+            </div>
+          ) : (
+            ""
+          )}
+          <div className="upload-wrapper">
+            {this.state.fileUrl ? (
+                <img
+                  src={this.state.fileUrl}
+                  className="profile-pic-added"
+                  alt="profile-pic"
+                />
+              ) : (
+                ""
+              )}
+            <button className="button is-primary bill">
+              <FontAwesomeIcon icon={faFileInvoice} />+
+              <input
+                  type="file"
+                  name="image"
+                  onChange={e => this.handleFile(e)}
+                />
+            </button>
+          </div>
           <div className="field">
             <label className="label">Name</label>
             <div className="control">
